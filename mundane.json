@@ -12,7 +12,7 @@
     "attackSpeed": "1,10s",
     "delay": "-",
     "mana": "3",
-    "number": "1",  // <-- Bu vergül çatışmırdı
+    "number": "1", 
     "image": "mundane/photo1.png",
     "story": "Bu bir savaşçıdır. Güçlü ve cesur bir savaşçıdır."
   },

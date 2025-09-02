@@ -7,6 +7,15 @@ function createCardElement(data) {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
     
+    // Resim ve detay butonu ekleme
+    const imageAndInfoSection = document.createElement('div');
+    imageAndInfoSection.className = 'card-image-section';
+    imageAndInfoSection.innerHTML = `
+        <img src="${data.image}" alt="${data.name}" class="card-image">
+        <button class="info-button" data-info-id="${data.name}">Ətraflı</button>
+    `;
+    cardContainer.appendChild(imageAndInfoSection);
+
     if (data.isMulti) {
         const cardInner = document.createElement('div');
         cardInner.className = 'card-inner';
@@ -27,6 +36,9 @@ function createCardElement(data) {
         cardContainer.addEventListener('click', (e) => {
             if (e.target.closest('.flip-button')) {
                 cardContainer.classList.toggle('is-flipped');
+            } else if (e.target.closest('.info-button')) {
+                // Bilgi butonu tıklandığında modali aç
+                showMoreInfoModal(data);
             }
         });
 
@@ -35,6 +47,14 @@ function createCardElement(data) {
         const singleCard = createCardContent(data);
         singleCard.classList.add('card-single');
         cardContainer.appendChild(singleCard);
+        
+        // Tek kart için bilgi butonu olayını ayarla
+        const infoButton = cardContainer.querySelector('.info-button');
+        if (infoButton) {
+            infoButton.addEventListener('click', () => {
+                showMoreInfoModal(data);
+            });
+        }
     }
 
     if (data.rarity.toLowerCase() === 'ethereal') {
@@ -63,15 +83,15 @@ function createCardContent(data) {
         </div>
         
         <div class="stats-section visible" data-section-id="main-stats">
-      <div class="stat-item"><b>Can <i class="fa-solid fa-heart"></i></b><span>${data.stats.health}</span></div>
-      <div class="stat-item"><b>Qalxan <i class="fa-solid fa-shield-halved"></i></b><span>${data.stats.shield}</span></div>
-      <div class="stat-item"><b>Hasar <i class="fa-solid fa-hammer"></i></b><span>${data.stats.damage}</span></div>
-      <div class="stat-item"><b>S.B.H <i class="fa-solid fa-bolt"></i></b><span>${data.stats.sps}</span></div>
-      <div class="stat-item"><b>Saldırı Hızı <i class="fa-solid fa-tachometer-alt"></i></b><span>${data.stats.attackSpeed}</span></div>
-      <div class="stat-item"><b>Gecikmə <i class="fa-solid fa-clock"></i></b><span>${data.stats.delay}</span></div>
-      <div class="stat-item"><b>Mana <i class="fa-solid fa-certificate"></i></b><span>${data.stats.mana}</span></div>
-      <div class="stat-item"><b>Say <i class="fa-solid fa-user"></i></b><span>${data.stats.number}</span></div>
-    </div>
+            <div class="stat-item"><b>Can <i class="fa-solid fa-heart"></i></b><span>${data.stats.health}</span></div>
+            <div class="stat-item"><b>Qalxan <i class="fa-solid fa-shield-halved"></i></b><span>${data.stats.shield}</span></div>
+            <div class="stat-item"><b>Hasar <i class="fa-solid fa-hammer"></i></b><span>${data.stats.damage}</span></div>
+            <div class="stat-item"><b>S.B.H <i class="fa-solid fa-bolt"></i></b><span>${data.stats.sps}</span></div>
+            <div class="stat-item"><b>Saldırı Hızı <i class="fa-solid fa-tachometer-alt"></i></b><span>${data.stats.attackSpeed}</span></div>
+            <div class="stat-item"><b>Gecikmə <i class="fa-solid fa-clock"></i></b><span>${data.stats.delay}</span></div>
+            <div class="stat-item"><b>Mana <i class="fa-solid fa-certificate"></i></b><span>${data.stats.mana}</span></div>
+            <div class="stat-item"><b>Say <i class="fa-solid fa-user"></i></b><span>${data.stats.number}</span></div>
+        </div>
         
         <div class="stats-section" data-section-id="additional-stats">
             <div class="stat-item"><b>Menzil <i class="fa-solid fa-road"></i></b><span>${data.additionalStats.range}</span></div>
@@ -102,6 +122,58 @@ function createCardContent(data) {
     });
 
     return content;
+}
+
+// Detay penceresini yaradan funksiya
+function showMoreInfoModal(data) {
+    // Önceki modalı kapat
+    const existingModal = document.querySelector('.modal-overlay');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Modal HTML'i oluştur
+    const modalHTML = `
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <div class="modal-header">
+                    <h2>${data.name}</h2>
+                    <span class="badge">${data.isHybrid ? `${data.type[0]}/${data.type[1]}` : data.type[0]}</span>
+                </div>
+                <img src="${data.image}" alt="${data.name}" class="modal-image">
+                <div class="modal-body">
+                    <p><b>Rarity:</b> ${data.rarity}</p>
+                    <p><b>Story:</b> ${data.story}</p>
+                    <hr>
+                    <h3>Əsas Stats</h3>
+                    <p><b>Can:</b> ${data.stats.health}</p>
+                    <p><b>Qalxan:</b> ${data.stats.shield}</p>
+                    <p><b>Hasar:</b> ${data.stats.damage}</p>
+                    <p><b>S.B.H:</b> ${data.stats.sps}</p>
+                    <p><b>Saldırı Hızı:</b> ${data.stats.attackSpeed}</p>
+                    <p><b>Gecikmə:</b> ${data.stats.delay}</p>
+                    <p><b>Mana:</b> ${data.stats.mana}</p>
+                    <p><b>Say:</b> ${data.stats.number}</p>
+                    <hr>
+                    <h3>Əlavə Stats</h3>
+                    <p><b>Menzil:</b> ${data.additionalStats.range}</p>
+                    <p><b>Hız:</b> ${data.additionalStats.speed}</p>
+                    <p><b>Kritik Şansı:</b> ${data.additionalStats.criticalChance}</p>
+                    <p><b>Can Çalma Şansı:</b> ${data.additionalStats.lifestealChance}</p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Kapatma olayını ayarla
+    document.querySelector('.modal-overlay').addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
+            document.querySelector('.modal-overlay').remove();
+        }
+    });
 }
 
 // Kartları render edən funksiya

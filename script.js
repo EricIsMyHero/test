@@ -60,7 +60,7 @@ function createCardContent(data) {
             <button class="active" data-section="main-stats">Əsas</button>
             <button data-section="additional-stats">Əlavə</button>
             <button data-section="trait">Özəllik</button>
-            <button data-section="show-levels">Səviyyələr</button>
+            <button data-section="showlevels">Səviyyələr</button>
         </div>
         
         <div class="stats-section visible" data-section-id="main-stats">
@@ -85,10 +85,10 @@ function createCardContent(data) {
             <div class="trait trait-center">${data.trait}</div>
         </div>
 
-<div class="stats-section" data-section-id="show-levels">
-            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-1"></i></b><span>${data.stats.level1}</span></div>
-            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-2"></i></b><span>${data.stats.level2}</span></div>
-            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-3"></i></b><span>${data.stats.level3}</span></div>
+<div class="stats-section" data-section-id="showlevels">
+            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-1"></i></b><span>${data.showlevels.level1}</span></div>
+            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-2"></i></b><span>${data.showlevel.level2}</span></div>
+            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-3"></i></b><span>${data.showlevels.level3}</span></div>
         </div>
         
     `;

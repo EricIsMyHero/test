@@ -1,4 +1,5 @@
-[{
+[
+  {
   "name": "Hammies",
   "type": ["Heyvan"],
   "rarity": "Mundane",
@@ -24,8 +25,7 @@
     "lifestealChance": "0%"
   }
 },
-
-  {
+   {
     "name": "Hamm",
     "type": ["Heyvan"],
     "rarity": "Arcane",

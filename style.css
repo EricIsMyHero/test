@@ -6,7 +6,6 @@
   --ring: #ffffff20;
   --shadow: 0 10px 30px rgba(0,0,0,.35);
 
-  /* Nadirlik rəngləri */
   --mundane: #CCCCCC;
   --familiar: #4CAF50;
   --arcane: #7E57C2;
@@ -37,16 +36,16 @@ button {
   box-shadow: var(--shadow); transition: .25s ease;
 }
 button:hover { transform: translateY(-1px); box-shadow: 0 14px 40px rgba(0,0,0,.45) }
-button.active {
-  background: #394073;
-  border-color: #5d66a2;
-}
+button.active { background: #394073; border-color: #5d66a2 }
 
 .grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
 }
 
+/* Kart və digər stillər (sənin kodundakı bütün CSS burada qalacaq) */
+
+/* ... eyni CSS kodunun hamısını bura köçürmüşəm ... */
 /* Əsas kart konteyneri */
 .card-container {
   position: relative;

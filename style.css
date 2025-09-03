@@ -154,6 +154,7 @@ button.active {
     padding: 8px;
     background: #111636;
     border: 1px solid #252c59;
+    margin-bottom: 8px;
     margin-top: 10px;
 }
 
@@ -162,7 +163,7 @@ button.active {
 .stats-section[data-section-id="additional-stats"].visible {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 8px;
 }
 
 /* Özəllik və Səviyyələr üçün blok düzülüşü (alt-alta) */

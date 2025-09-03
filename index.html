@@ -3,15 +3,284 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clash And Mana</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Clash-A-Mana</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0f1220;
+      --card: #151934;
+      --muted: #8a92b2;
+      --text: #eaf0ff;
+      --ring: #ffffff20;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+
+      /* Nadirlik rəngləri */
+      --mundane: #CCCCCC;
+      --familiar: #4CAF50;
+      --arcane: #7E57C2;
+      --mythic: #E53935;
+      --legendary: #FBC02D;
+      --ethereal: #ff007f;
+    }
+
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 700px at 20% 0%, #1a1f3f, #0f1220 60%);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, Segoe UI, Roboto;
+    }
+
+    .wrap { max-width: 1200px; margin: 32px auto; padding: 16px }
+    header { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 18px }
+    h1 { font-size: 28px; margin: 0; letter-spacing: .2px }
+    .hint { color: var(--muted); font-size: 14px }
+
+    .controls { display: flex; gap: 10px; flex-wrap: wrap }
+    button {
+      background: #22284f; color: var(--text);
+      border: 1px solid #2f3769; border-radius: 12px;
+      padding: 10px 14px; cursor: pointer;
+      box-shadow: var(--shadow); transition: .25s ease;
+    }
+    button:hover { transform: translateY(-1px); box-shadow: 0 14px 40px rgba(0,0,0,.45) }
+    button.active {
+      background: #394073;
+      border-color: #5d66a2;
+    }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    /* Əsas kart konteyneri */
+    .card-container {
+      position: relative;
+      width: 100%;
+      height: 340px; /* Bütün kartlar üçün sabit hündürlük */
+      perspective: 1000px;
+    }
+    .card-container:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(0,0,0,.5) }
+
+    /* Fırlanma effekti üçün daxili konteyner */
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    .card-container.is-flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* Kartın iki tərəfi */
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid #2a2f57;
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Tək tərəfli kartın əsas stilləri */
+    .card-single {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid #2a2f57;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .card-single:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(0,0,0,.5) }
+
+    /* Fırlatma düyməsi */
+    .flip-button {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      z-index: 10;
+      background: rgba(43, 50, 100, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease-in-out;
+    }
+    .flip-button:hover {
+      transform: scale(1.1);
+    }
+    .flip-button::before {
+      content: '⇌';
+      font-size: 20px;
+      color: white;
+      display: block;
+      transform: scaleX(-1);
+    }
+    .card-container.is-flipped .flip-button::before {
+      transform: scaleX(1);
+    }
+
+    /* Digər köhnə stillər */
+    .card-front::after, .card-single::after {
+      content: ""; position: absolute; inset: -2px; border-radius: 20px;
+      pointer-events: none; border: 2px solid var(--ring); filter: blur(4px);
+      opacity: .5; z-index: -1;
+    }
+
+    .head { display: flex; justify-content: space-between; margin-bottom: 10px }
+    .name { font-weight: 700; letter-spacing: .3px }
+    .badge { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px solid #ffffff2b }
+    .card-tabs { display: flex; justify-content: center; margin-bottom: 8px; gap: 8px }
+    .card-tabs button {
+      background: #1e244a; color: #c9d3ff; border: 1px solid #2b3264;
+      font-size: 11px; padding: 6px 12px; border-radius: 12px;
+      cursor: pointer; transition: background .2s ease;
+    }
+    .card-tabs button.active { background: #2b3264; color: #fff }
+
+    /* Bütün statistikalar bölmələri üçün ümumi stil */
+    .stats-section {
+        display: none;
+        border-radius: 12px;
+        padding: 8px;
+        background: #111636;
+        border: 1px solid #252c59;
+    }
+    .stats-section.visible { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+    .stats-section[data-section-id="trait"] {
+        display: none; padding: 12px; background: #111636;
+        border: 1px solid #252c59; border-radius: 12px;
+    }
+    .stats-section[data-section-id="trait"].visible { display: block }
+    .stat-item { padding: 4px }
+    .stat-item b { display: block; font-size: 12px; color: #c6ceff; margin-bottom: 4px }
+    .stat-item span { font-size: 13px }
+    .trait-center { text-align: center }
+
+    /* Özəllik və Səviyyələr üçün blok düzülüşü (alt-alta) */
+    .stats-section[data-section-id="trait"].visible,
+    .stats-section[data-section-id="showlevels"].visible {
+        display: block;
+    }
+
+    /* color-mix istifadə edilən yerlərdə əvəzləmələr: */
+    .r-mundane { box-shadow: 0 6px 28px rgba(204,204,204,0.35); }
+    .r-familiar { box-shadow: 0 6px 28px rgba(76,175,80,0.35); }
+    .r-arcane { box-shadow: 0 6px 28px rgba(126,87,194,0.35); }
+    .r-mythic { box-shadow: 0 6px 28px rgba(229,57,53,0.35); }
+    .r-legendary { box-shadow: 0 6px 28px rgba(251,192,45,0.35); }
+    .r-ethereal { box-shadow: 0 6px 28px rgba(255,0,127,0.35); }
+
+    /* Stripe (yuxarı rəng xətti) */
+    .stripe {
+      height: 6px;
+      border-radius: 12px;
+      margin: -14px -14px 10px;
+      opacity: .9;
+    }
+    .r-mundane .stripe { background: var(--mundane) }
+    .r-familiar .stripe { background: var(--familiar) }
+    .r-arcane .stripe { background: var(--arcane) }
+    .r-mythic .stripe { background: var(--mythic) }
+    .r-legendary .stripe { background: var(--legendary) }
+    .r-ethereal .stripe {
+      background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #ffd1ff, #ffecb3, #c3f5d5);
+      background-size: 600% 100%;
+      animation: ethereal-animate 10s linear infinite;
+    }
+
+    /* Kart adını rəngləndirən yeni stil */
+    .r-mundane .name { color: var(--mundane) }
+    .r-familiar .name { color: var(--familiar) }
+    .r-arcane .name { color: var(--arcane) }
+    .r-mythic .name { color: var(--mythic) }
+    .r-legendary .name { color: var(--legendary) }
+
+    /* Gradient teext effekti alınmayan brauzerlər üçün ehtiyat rəng */
+    .r-ethereal .name {
+      color: var(--ethereal);
+      background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #ffd1ff, #ffecb3, #c3f5d5);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 600% 100%;
+      animation: ethereal-animate 10s linear infinite;
+    }
+
+    @keyframes ethereal-animate {
+      0% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Yeni əsas ekran stilləri */
+    .main-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .main-menu h1 {
+      font-size: 4em;
+      margin-bottom: 24px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 80%;
+      max-width: 300px;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+
+    .card-title-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .back-button {
+      background: none;
+      border: 1px solid var(--muted);
+      color: var(--muted);
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
+
   <div class="wrap" id="main-content">
     <!-- Əsas Menyu -->
     <section class="main-menu" id="main-menu">
-      <h1>Clash And Mana R</h1>
+      <h1>Clash-A-Mana</h1>
       <div class="menu-buttons">
         <button id="show-cards-btn">Kartlar</button>
         <button id="show-spells-btn">Büyülər</button>
@@ -20,7 +289,7 @@
       </div>
     </section>
 
-    <!-- Kartlar Bölməsi -->
+    <!-- Kartlar Bölməsi (Əvvəlcə Gizlidir) -->
     <section id="cards-section" class="hidden">
       <header class="card-title-header">
         <div>
@@ -46,6 +315,277 @@
       <section class="grid" id="cards"></section>
     </section>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    // DOM Elementləri
+    const mainMenu = document.getElementById('main-menu');
+    const cardsSection = document.getElementById('cards-section');
+    const showCardsBtn = document.getElementById('show-cards-btn');
+    const backToMenuBtn = document.getElementById('back-to-menu-btn');
+    const filterButtons = document.querySelectorAll('.controls button');
+    const cardsContainer = document.getElementById('cards');
+
+    // Funksiyalar
+    function showMenu() {
+      mainMenu.classList.remove('hidden');
+      cardsSection.classList.add('hidden');
+    }
+
+    function showCards() {
+      mainMenu.classList.add('hidden');
+      cardsSection.classList.remove('hidden');
+      fetchAndRender('all');
+    }
+
+    // Kart yaratmaq üçün əsas funksiya
+    function createCardElement(data) {
+      const cardContainer = document.createElement('article');
+      cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
+
+      if (data.isMulti) {
+        const cardInner = document.createElement('div');
+        cardInner.className = 'card-inner';
+
+        const cardFront = createCardContent(data);
+        cardFront.classList.add('card-front');
+
+        const cardBack = createCardContent(data.secondForm);
+        cardBack.classList.add('card-back');
+
+        cardInner.appendChild(cardFront);
+        cardInner.appendChild(cardBack);
+        cardContainer.appendChild(cardInner);
+
+        const flipButton = document.createElement('button');
+        flipButton.className = 'flip-button';
+
+        cardContainer.addEventListener('click', (e) => {
+          if (e.target.closest('.flip-button')) {
+            cardContainer.classList.toggle('is-flipped');
+          }
+        });
+
+        cardContainer.appendChild(flipButton);
+      } else {
+        const singleCard = createCardContent(data);
+        singleCard.classList.add('card-single');
+        cardContainer.appendChild(singleCard);
+      }
+
+      if (data.rarity.toLowerCase() === 'ethereal') {
+        const glowDiv = document.createElement('div');
+        glowDiv.className = 'card-glow';
+        cardContainer.appendChild(glowDiv);
+      }
+
+      return cardContainer;
+    }
+
+    // Kartın içindəki kontenti yaradan funksiya
+    function createCardContent(data) {
+      const cardContent = document.createElement('div');
+      cardContent.innerHTML = `
+        <div class="stripe"></div>
+        <div class="head">
+          <div class="name">${data.name}</div>
+          <div class="badge">${data.type.join(', ')}</div>
+        </div>
+
+        <!-- Kart Şəkli -->
+        <div style="height: 120px; background-color: #0f1220; border-radius: 8px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-image" style="font-size: 48px; color: #8a92b2;"></i>
+        </div>
+
+        <!-- Tablar -->
+        <div class="card-tabs">
+          <button class="active" data-tab-id="main-stats">Əsas</button>
+          <button data-tab-id="additional-stats">Əlavə</button>
+          <button data-tab-id="trait">Özəllik</button>
+          <button data-tab-id="showlevels">Səviyyələr</button>
+        </div>
+
+        <!-- Tab Məlumatları -->
+        <div class="stats-section visible" data-section-id="main-stats">
+          <div class="stat-item"><b>Can</b><span>${data.stats.health}</span></div>
+          <div class="stat-item"><b>Qalxan</b><span>${data.stats.shield}</span></div>
+          <div class="stat-item"><b>Hasar</b><span>${data.stats.damage}</span></div>
+          <div class="stat-item"><b>SPS</b><span>${data.stats.sps}</span></div>
+          <div class="stat-item"><b>Hücum Sürəti</b><span>${data.stats.attackSpeed}</span></div>
+          <div class="stat-item"><b>Gecikmə</b><span>${data.stats.delay}</span></div>
+          <div class="stat-item"><b>Mana</b><span>${data.stats.mana}</span></div>
+          <div class="stat-item"><b>Sayı</b><span>${data.stats.number}</span></div>
+        </div>
+
+        <div class="stats-section" data-section-id="additional-stats">
+          <div class="stat-item"><b>Mənzil</b><span>${data.additionalStats.range}</span></div>
+          <div class="stat-item"><b>Sürət</b><span>${data.additionalStats.speed}</span></div>
+          <div class="stat-item"><b>Kritik Şans</b><span>${data.additionalStats.criticalChance}</span></div>
+          <div class="stat-item"><b>Can Çalma</b><span>${data.additionalStats.lifestealChance}</span></div>
+        </div>
+
+        <div class="stats-section" data-section-id="trait">
+          <div class="trait-center">${data.trait}</div>
+        </div>
+
+        <div class="stats-section" data-section-id="showlevels">
+          <div class="stat-item"><b>Can</b><span>+10</span></div>
+          <div class="stat-item"><b>Hasar</b><span>+5</span></div>
+          <div class="stat-item"><b>Sürət</b><span>+20</span></div>
+        </div>
+      `;
+      // Tabları aktiv etmək üçün event listener
+      cardContent.querySelector('.card-tabs').addEventListener('click', (e) => {
+        const button = e.target.closest('button');
+        if (!button) return;
+
+        // Bütün düymələri və bölmələri sıfırla
+        cardContent.querySelectorAll('.card-tabs button').forEach(btn => btn.classList.remove('active'));
+        cardContent.querySelectorAll('.stats-section').forEach(section => section.classList.remove('visible'));
+
+        // Seçilən düyməni aktiv et
+        button.classList.add('active');
+
+        // Uyğun bölməni göstər
+        const tabId = button.getAttribute('data-tab-id');
+        const targetSection = cardContent.querySelector(`[data-section-id="${tabId}"]`);
+        if (targetSection) {
+          targetSection.classList.add('visible');
+        }
+      });
+      return cardContent;
+    }
+
+    let cardsData = [];
+    const jsonFiles = {
+      mundane: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/mundane.json',
+      familiar: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/familiar.json',
+      arcane: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/arcane.json',
+      mythic: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/mythic.json',
+      legendary: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/legendary.json',
+      ethereal: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/ethereal.json'
+    };
+    
+    // Kartları çəkən və render edən funksiya
+    async function fetchAndRender(rarity) {
+      cardsContainer.innerHTML = '<p style="text-align:center; color:var(--muted);">Yüklənir...</p>';
+      try {
+        let fetchedData = [];
+        if (rarity === 'all') {
+          const fetchPromises = Object.values(jsonFiles).map(url =>
+            fetch(url)
+              .then(res => {
+                if (!res.ok) {
+                  throw new Error(`HTTP xətası! Status: ${res.status}`);
+                }
+                return res.text();
+              })
+              .then(text => (text ? JSON.parse(text) : []))
+          );
+          fetchedData = (await Promise.all(fetchPromises)).flat();
+        } else {
+          const url = jsonFiles[rarity];
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP xətası! Status: ${response.status}`);
+          }
+          const text = await response.text();
+          fetchedData = text ? JSON.parse(text) : [];
+        }
+        cardsData = fetchedData;
+        renderCards(cardsData);
+      } catch (error) {
+        console.error('Məlumatları yükləmə zamanı xəta:', error);
+        cardsContainer.innerHTML = '<p style="color:red; text-align:center;">Kart məlumatları yüklənərkən xəta baş verdi.</p>';
+      }
+    }
+    
+    // Kartları səhifədə göstərən funksiya
+    function renderCards(data) {
+      cardsContainer.innerHTML = '';
+      if (data.length === 0) {
+        cardsContainer.innerHTML = '<p style="text-align:center; color:var(--muted);">Bu nadirlik dərəcəsində kart tapılmadı.</p>';
+        return;
+      }
+      data.forEach(cardData => {
+        const cardElement = createCardElement(cardData);
+        cardsContainer.appendChild(cardElement);
+      });
+    }
+
+    // Event Listeners
+    showCardsBtn.addEventListener('click', showCards);
+    backToMenuBtn.addEventListener('click', showMenu);
+    
+    document.getElementById('show-spells-btn').addEventListener('click', () => {
+      // alert() yerinə modal pencərə istifadə edin
+      const message = "Bu bölmə hələ hazır deyil.";
+      const modal = document.createElement('div');
+      modal.style.position = 'fixed';
+      modal.style.top = '50%';
+      modal.style.left = '50%';
+      modal.style.transform = 'translate(-50%, -50%)';
+      modal.style.padding = '20px';
+      modal.style.backgroundColor = 'var(--card)';
+      modal.style.color = 'var(--text)';
+      modal.style.borderRadius = '12px';
+      modal.style.boxShadow = 'var(--shadow)';
+      modal.style.zIndex = '1000';
+      modal.textContent = message;
+      document.body.appendChild(modal);
+      setTimeout(() => {
+        document.body.removeChild(modal);
+      }, 3000); // 3 saniyədən sonra modalı gizlət
+    });
+    document.getElementById('show-boosters-btn').addEventListener('click', () => {
+      const message = "Bu bölmə hələ hazır deyil.";
+      const modal = document.createElement('div');
+      modal.style.position = 'fixed';
+      modal.style.top = '50%';
+      modal.style.left = '50%';
+      modal.style.transform = 'translate(-50%, -50%)';
+      modal.style.padding = '20px';
+      modal.style.backgroundColor = 'var(--card)';
+      modal.style.color = 'var(--text)';
+      modal.style.borderRadius = '12px';
+      modal.style.boxShadow = 'var(--shadow)';
+      modal.style.zIndex = '1000';
+      modal.textContent = message;
+      document.body.appendChild(modal);
+      setTimeout(() => {
+        document.body.removeChild(modal);
+      }, 3000);
+    });
+    document.getElementById('show-towers-btn').addEventListener('click', () => {
+      const message = "Bu bölmə hələ hazır deyil.";
+      const modal = document.createElement('div');
+      modal.style.position = 'fixed';
+      modal.style.top = '50%';
+      modal.style.left = '50%';
+      modal.style.transform = 'translate(-50%, -50%)';
+      modal.style.padding = '20px';
+      modal.style.backgroundColor = 'var(--card)';
+      modal.style.color = 'var(--text)';
+      modal.style.borderRadius = '12px';
+      modal.style.boxShadow = 'var(--shadow)';
+      modal.style.zIndex = '1000';
+      modal.textContent = message;
+      document.body.appendChild(modal);
+      setTimeout(() => {
+        document.body.removeChild(modal);
+      }, 3000);
+    });
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const rarity = button.id.split('-')[1];
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        fetchAndRender(rarity);
+      });
+    });
+
+    // Səhifə yüklənərkən əsas menunu göstər
+    document.addEventListener('DOMContentLoaded', showMenu);
+  </script>
 </body>
 </html>

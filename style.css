@@ -153,7 +153,6 @@ button.active {
     padding: 8px;
     background: #111636;
     border: 1px solid #252c59;
-    margin-top: 10px; /* Daha yaxşı boşluq üçün əlavə edildi */
 }
 
 /* Əsas və Əlavə statistikalar üçün grid düzülüşü */

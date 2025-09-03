@@ -162,7 +162,7 @@ button.active {
 .stats-section[data-section-id="additional-stats"].visible {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 16px;
 }
 
 /* Özəllik və Səviyyələr üçün blok düzülüşü (alt-alta) */

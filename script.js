@@ -87,7 +87,7 @@ function createCardContent(data) {
 
 <div class="stats-section" data-section-id="showlevels">
             <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-1"></i></b><span>${data.showlevels.level1}</span></div>
-            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-2"></i></b><span>${data.showlevel.level2}</span></div>
+            <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-2"></i></b><span>${data.showlevels.level2}</span></div>
             <div class="stat-item"><b>Səviyyə <i class="fa-solid fa-3"></i></b><span>${data.showlevels.level3}</span></div>
         </div>
         

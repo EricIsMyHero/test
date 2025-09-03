@@ -456,14 +456,21 @@
     }
 
     let cardsData = [];
-    const jsonFiles = {
-      mundane: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/mundane.json',
-      familiar: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/familiar.json',
-      arcane: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/arcane.json',
-      mythic: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/mythic.json',
-      legendary: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/legendary.json',
-      ethereal: 'https://raw.githubusercontent.com/AnarMamedov/clash-and-mana/main/ethereal.json'
-    };
+        if (rarity === 'all') {
+            const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
+            const fetchPromises = rarities.map(r =>
+                fetch(`${r}.json`).then(async res => {
+                    if (!res.ok) {
+                        if (res.status === 404) {
+                            console.warn(`${r}.json tapılmadı, bu endərlik ötürülür.`);
+                            return [];
+                        }
+                        throw new Error(`${r}.json yüklənmədi`);
+                    }
+                    const text = await res.text();
+                    return text ? JSON.parse(text) : [];
+                })
+            );
     
     // Kartları çəkən və render edən funksiya
     async function fetchAndRender(rarity) {

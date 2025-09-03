@@ -7,14 +7,13 @@ function createCardElement(data) {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
     
-    // Resim ve detay butonu ekleme
-    const imageAndInfoSection = document.createElement('div');
-    imageAndInfoSection.className = 'card-image-section';
-    imageAndInfoSection.innerHTML = `
+    // Resim ekleme
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'card-image-section';
+    imageContainer.innerHTML = `
         <img src="${data.image}" alt="${data.name}" class="card-image">
-        <button class="info-button" data-info-id="${data.name}">Ətraflı</button>
     `;
-    cardContainer.appendChild(imageAndInfoSection);
+    cardContainer.appendChild(imageContainer);
 
     if (data.isMulti) {
         const cardInner = document.createElement('div');
@@ -36,9 +35,6 @@ function createCardElement(data) {
         cardContainer.addEventListener('click', (e) => {
             if (e.target.closest('.flip-button')) {
                 cardContainer.classList.toggle('is-flipped');
-            } else if (e.target.closest('.info-button')) {
-                // Bilgi butonu tıklandığında modali aç
-                showMoreInfoModal(data);
             }
         });
 
@@ -47,14 +43,6 @@ function createCardElement(data) {
         const singleCard = createCardContent(data);
         singleCard.classList.add('card-single');
         cardContainer.appendChild(singleCard);
-        
-        // Tek kart için bilgi butonu olayını ayarla
-        const infoButton = cardContainer.querySelector('.info-button');
-        if (infoButton) {
-            infoButton.addEventListener('click', () => {
-                showMoreInfoModal(data);
-            });
-        }
     }
 
     if (data.rarity.toLowerCase() === 'ethereal') {
@@ -80,6 +68,7 @@ function createCardContent(data) {
             <button class="active" data-section="main-stats">Əsas</button>
             <button data-section="additional-stats">Əlavə</button>
             <button data-section="trait">Özəllik</button>
+            <button class="info-button" data-info-id="${data.name}">Ətraflı</button>
         </div>
         
         <div class="stats-section visible" data-section-id="main-stats">
@@ -111,6 +100,12 @@ function createCardContent(data) {
             e.stopPropagation();
             const sectionId = button.dataset.section;
             
+            // "Ətraflı" düğmesine tıklandığında modalı göster
+            if (button.classList.contains('info-button')) {
+                showMoreInfoModal(data);
+                return;
+            }
+
             cardButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 

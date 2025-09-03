@@ -60,6 +60,7 @@ function createCardContent(data) {
             <button class="active" data-section="main-stats">Əsas</button>
             <button data-section="additional-stats">Əlavə</button>
             <button data-section="trait">Özəllik</button>
+            <button data-section="show-levels">Səviyyələr</button>
         </div>
         
         <div class="stats-section visible" data-section-id="main-stats">
@@ -83,6 +84,13 @@ function createCardContent(data) {
         <div class="stats-section" data-section-id="trait">
             <div class="trait trait-center">${data.trait}</div>
         </div>
+
+<div class="stats-section" data-section-id="show-levels">
+            <div class="stat-item"><b>Səviyyə 1<i class="fa-solid fa-1"></i></b><span>${data.additionalStats.level1}</span></div>
+            <div class="stat-item"><b>Səviyyə 2<i class="fa-solid fa-2"></i></b><span>${data.additionalStats.level2}</span></div>
+            <div class="stat-item"><b>Səviyyə 3<i class="fa-solid fa-3"></i></b><span>${data.additionalStats.level3}</span></div>
+        </div>
+        
     `;
 
     const cardButtons = content.querySelectorAll('.card-tabs button');

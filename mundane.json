@@ -14,7 +14,7 @@
     "delay": "-",
     "mana": "3",
     "number": "1", 
-    "image": "mundane/photo1.png",
+    "image": data-image="mundane/photo1.png",
     "story": "Bu bir savaşçıdır. Güçlü ve cesur bir savaşçıdır."
   },
   "trait": "<b>İlk 12</b> saniyə, <b>+20%</b> Hız bonusu qazanar",

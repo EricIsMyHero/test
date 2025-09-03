@@ -148,13 +148,34 @@ button.active {
 }
 .card-tabs button.active { background: #2b3264; color: #fff }
 .stats-section {
-  display: none; border-radius: 12px; padding: 8px;
-  background: #111636; border: 1px solid #252c59;
+    display: none;
+    border-radius: 12px;
+    padding: 8px;
+    background: #111636;
+    border: 1px solid #252c59;
+    margin-top: 10px; /* Daha yaxşı boşluq üçün əlavə edildi */
 }
-.stats-section.visible { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
-.stats-section[data-section-id="trait"] {
-  display: none; padding: 12px; background: #111636;
-  border: 1px solid #252c59; border-radius: 12px;
+
+/* Əsas və Əlavə statistikalar üçün grid düzülüşü */
+.stats-section[data-section-id="main-stats"],
+.stats-section[data-section-id="additional-stats"] {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.stats-section[data-section-id="main-stats"].visible,
+.stats-section[data-section-id="additional-stats"].visible {
+    display: grid;
+}
+
+/* Özəllik və Səviyyələr üçün blok düzülüşü */
+.stats-section[data-section-id="trait"],
+.stats-section[data-section-id="showlevels"] {
+    display: block;
+}
+
+.stats-section[data-section-id="trait"].visible,
+.stats-section[data-section-id="showlevels"].visible {
+    display: block;
 }
 .stats-section[data-section-id="trait"].visible { display: block }
 .stat-item { padding: 4px }

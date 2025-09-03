@@ -22,7 +22,7 @@
       "criticalChance": "5%",
       "lifestealChance": "0%"
     },
-    "show-levels": {
+    "showlevels": {
       "level1": "+5% Can",
       "level2": "+7% Hız",
       "level3": "+7% Hasar"
@@ -51,7 +51,7 @@
       "criticalChance": "5%",
       "lifestealChance": "5%"
     },
-    "show-levels": {
+    "showlevels": {
       "level1": "+5% Can",
       "level2": "+7% Hız",
       "level3": "+7% Hasar"
@@ -80,7 +80,7 @@
       "criticalChance": "5%",
       "lifestealChance": "0%"
    },
-    "show-levels": {
+    "showlevels": {
       "level1": "+5% Can",
       "level2": "+7% Hız",
       "level3": "+7% Hasar"
@@ -109,7 +109,7 @@
       "criticalChance": "5%",
       "lifestealChance": "0%"
     },
-    "show-levels": {
+    "showlevels": {
       "level1": "+5% Can",
       "level2": "+7% Hız",
       "level3": "+7% Hasar"
@@ -138,7 +138,7 @@
       "criticalChance": "5%",
       "lifestealChance": "0%"
     },
-    "show-levels": {
+    "showlevels": {
       "level1": "+5% Can",
       "level2": "+7% Hız",
       "level3": "+7% Hasar"
@@ -167,7 +167,7 @@
       "criticalChance": "10%",
       "lifestealChance": "25%"
     },
-    "show-levels": {
+    "showlevels": {
       "level1": "+5% Can",
       "level2": "+7% Hız",
       "level3": "+7% Hasar"
@@ -196,7 +196,7 @@
       "criticalChance": "0%",
       "lifestealChance": "0%"
     },
-    "show-levels": {
+    "showlevels": {
       "level1": "+5% Can",
       "level2": "+7% Hız",
       "level3": "+7% Hasar"

@@ -11,7 +11,7 @@
   <div class="wrap" id="main-content">
     <!-- Əsas Menyu -->
     <section class="main-menu" id="main-menu">
-      <h1>Clas-A-Mana: Real-Time Card Arena</h1>
+      <h1>Clash-A-Mana: Real-Time Card Arena</h1>
       <div class="menu-buttons">
         <button id="show-cards-btn">Kartlar</button>
         <button id="show-spells-btn">Büyülər</button>
@@ -21,32 +21,33 @@
     </section>
 
     <!-- Kartlar Bölməsi -->
-    <header class="card-title-header">
-  <div>
-    <h1>Kartlar – Vizual demo</h1>
-    <div class="hint">
-      Burada oyunda olacaq bütün kartların ilkin demosu vardır. Unutmayın sadəcə bir DEMO-dur.
-    </div>
-  </div>
-  <div class="filter-container">
-    <button id="back-to-menu-btn" class="back-button">Geri</button>
-    <div class="top-filters">
-      <button class="filterBtn" data-rarity="mundane">Mundane</button>
-      <button class="filterBtn" data-rarity="familiar">Familiar</button>
-      <button class="filterBtn" data-rarity="arcane">Arcane</button>
-    </div>
-    <div class="bottom-filters">
-      <button class="filterBtn" data-rarity="mythic">Mythic</button>
-      <button class="filterBtn" data-rarity="legendary">Legendary</button>
-      <button class="filterBtn" data-rarity="ethereal">Ethereal</button>
-    </div>
-  </div>
-</header>
-
+    <section id="cards-section" class="hidden">
+      <header class="card-title-header">
+        <div>
+          <h1>Kartlar – Vizual demo</h1>
+          <div class="hint">
+            Burada oyunda olacaq bütün kartların ilkin demosu vardır. Unutmayın sadəcə bir DEMO-dur.
+          </div>
+        </div>
+        <div class="filter-container">
+          <button id="back-to-menu-btn" class="back-button">Geri</button>
+          <div class="top-filters">
+            <button class="filterBtn" data-rarity="mundane">Mundane</button>
+            <button class="filterBtn" data-rarity="familiar">Familiar</button>
+            <button class="filterBtn" data-rarity="arcane">Arcane</button>
+          </div>
+          <div class="bottom-filters">
+            <button class="filterBtn" data-rarity="mythic">Mythic</button>
+            <button class="filterBtn" data-rarity="legendary">Legendary</button>
+            <button class="filterBtn" data-rarity="ethereal">Ethereal</button>
+          </div>
+        </div>
+      </header>
 
       <section class="grid" id="cards"></section>
     </section>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>

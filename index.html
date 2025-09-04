@@ -29,25 +29,22 @@
             Burada oyunda olacaq bütün kartların ilkin demosu vardır. Unutmayın sadəcə bir DEMO-dur.
           </div>
         </div>
-        <div class="filter-container">
-          <button id="back-to-menu-btn" class="back-button">Geri</button>
-          <div class="top-filters">
-            <button class="filterBtn" data-rarity="mundane">Mundane</button>
-            <button class="filterBtn" data-rarity="familiar">Familiar</button>
-            <button class="filterBtn" data-rarity="arcane">Arcane</button>
-          </div>
-          <div class="bottom-filters">
-            <button class="filterBtn" data-rarity="mythic">Mythic</button>
-            <button class="filterBtn" data-rarity="legendary">Legendary</button>
-            <button class="filterBtn" data-rarity="ethereal">Ethereal</button>
-          </div>
-        </div>
+        <button id="back-to-menu-btn" class="back-button">Geri</button>
       </header>
+
+      <div class="controls">
+        <button id="filter-all" class="active">Bütün Kartlar</button>
+        <button id="filter-mundane">Mundane</button>
+        <button id="filter-familiar">Familiar</button>
+        <button id="filter-arcane">Arcane</button>
+        <button id="filter-mythic">Mythic</button>
+        <button id="filter-legendary">Legendary</button>
+        <button id="filter-ethereal">Ethereal</button>
+      </div>
 
       <section class="grid" id="cards"></section>
     </section>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

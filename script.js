@@ -47,7 +47,7 @@ function createCardElement(data) {
     return cardContainer;
 }
 
-// Kartın iç məzmununu yaradan funksiya
+// Kartın iç məzmununu yaradan köməkçi funksiya
 function createCardContent(data) {
     const content = document.createElement('div');
     const badgeText = data.isHybrid ? `${data.type[0]}/${data.type[1]}` : data.type[0];
@@ -64,36 +64,37 @@ function createCardContent(data) {
         </div>
         
         <div class="stats-section visible" data-section-id="main-stats">
-          <div class="stat-item"><b>Can</b><span>${data.stats.health}</span></div>
-          <div class="stat-item"><b>Qalxan</b><span>${data.stats.shield}</span></div>
-          <div class="stat-item"><b>Hasar</b><span>${data.stats.damage}</span></div>
-          <div class="stat-item"><b>S.B.H</b><span>${data.stats.sps}</span></div>
-          <div class="stat-item"><b>Saldırı Hızı</b><span>${data.stats.attackSpeed}</span></div>
-          <div class="stat-item"><b>Gecikmə</b><span>${data.stats.delay}</span></div>
-          <div class="stat-item"><b>Mana</b><span>${data.stats.mana}</span></div>
-          <div class="stat-item"><b>Say</b><span>${data.stats.number}</span></div>
-        </div>
+      <div class="stat-item"><b>Can <i class="fa-solid fa-heart"></i></b><span>${data.stats.health}</span></div>
+      <div class="stat-item"><b>Qalxan <i class="fa-solid fa-shield-halved"></i></b><span>${data.stats.shield}</span></div>
+      <div class="stat-item"><b>Hasar <i class="fa-solid fa-hand-fist"></i></b><span>${data.stats.damage}</span></div>
+      <div class="stat-item"><b>S.B.H <i class="fa-solid fa-bolt"></i></b><span>${data.stats.sps}</span></div>
+      <div class="stat-item"><b>Saldırı Hızı <i class="fa-solid fa-tachometer-alt"></i></b><span>${data.stats.attackSpeed}</span></div>
+      <div class="stat-item"><b>Gecikmə <i class="fa-solid fa-clock"></i></b><span>${data.stats.delay}</span></div>
+      <div class="stat-item"><b>Mana <i class="fa-solid fa-certificate"></i></b><span>${data.stats.mana}</span></div>
+      <div class="stat-item"><b>Say <i class="fa-solid fa-user"></i></b><span>${data.stats.number}</span></div>
+    </div>
         
         <div class="stats-section" data-section-id="additional-stats">
-            <div class="stat-item"><b>Menzil</b><span>${data.additionalStats.range}</span></div>
-            <div class="stat-item"><b>Hız</b><span>${data.additionalStats.speed}</span></div>
-            <div class="stat-item"><b>Kritik Şansı</b><span>${data.additionalStats.criticalChance}</span></div>
-            <div class="stat-item"><b>Kritik Hasar</b><span>${data.additionalStats.criticDamage}</span></div>
-            <div class="stat-item"><b>C.Çalma Şansı</b><span>${data.additionalStats.lifestealChance}</span></div>
-            <div class="stat-item"><b>Can Çalma</b><span>${data.additionalStats.lifesteal}</span></div>
-            <div class="stat-item"><b>Hasar Azaltma</b><span>${data.additionalStats.damageminimiser}</span></div>
-            <div class="stat-item"><b>Sıyrılma Şansı</b><span>${data.additionalStats.dodge}</span></div>
+            <div class="stat-item"><b>Menzil <i class="fa-solid fa-road"></i></b><span>${data.additionalStats.range}</span></div>
+            <div class="stat-item"><b>Hız <i class="fa-solid fa-person-running"></i></b><span>${data.additionalStats.speed}</span></div>
+            <div class="stat-item"><b>Kritik Şansı <i class="fa-solid fa-percent"></i></b><span>${data.additionalStats.criticalChance}</span></div>
+            <div class="stat-item"><b>Kritik Hasar <i class="fa-solid fa-crosshairs"></i></b><span>${data.additionalStats.criticDamage}</span></div>
+            <div class="stat-item"><b>C.Çalma Şansı <i class="fa-solid fa-percent "></i></b><span>${data.additionalStats.lifestealChance}</span></div>
+            <div class="stat-item"><b>Can Çalma <i class="fa-solid fa-skull-crossbones "></i></b><span>${data.additionalStats.lifesteal}</span></div>
+            <div class="stat-item"><b>Hasar Azaltma <i class="fa-solid fa-helmet-un "></i></b><span>${data.additionalStats.damageminimiser}</span></div>
+            <div class="stat-item"><b>Sıyrılma Şansı <i class="fa-solid fa-wind "></i></b><span>${data.additionalStats.dodge}</span></div>
         </div>
         
         <div class="stats-section" data-section-id="trait">
             <div class="trait trait-center">${data.trait}</div>
         </div>
 
-        <div class="stats-section" data-section-id="showlevels">
+<div class="stats-section" data-section-id="showlevels">
             <div class="stat-item"><b>Səviyyə 1</b><span>${data.showlevels.level1}</span></div>
             <div class="stat-item"><b>Səviyyə 2</b><span>${data.showlevels.level2}</span></div>
             <div class="stat-item"><b>Səviyyə 3</b><span>${data.showlevels.level3}</span></div>
         </div>
+        
     `;
 
     const cardButtons = content.querySelectorAll('.card-tabs button');
@@ -127,7 +128,7 @@ function renderCards(cardsToRender) {
     });
 }
 
-// JSON faylları oxuyan funksiya
+// Məlumatları endərliyə görə çəkən və göstərən funksiya
 async function fetchAndRender(rarity) {
     cardsContainer.innerHTML = '<p>Yüklənir...</p>';
     try {
@@ -135,7 +136,7 @@ async function fetchAndRender(rarity) {
         if (rarity === 'all') {
             const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
             const fetchPromises = rarities.map(r =>
-                fetch(`${basePath}/${r}.json`).then(async res => {
+                fetch(`${r}.json`).then(async res => {
                     if (!res.ok) {
                         if (res.status === 404) {
                             console.warn(`${r}.json tapılmadı, bu endərlik ötürülür.`);
@@ -150,7 +151,7 @@ async function fetchAndRender(rarity) {
             const results = await Promise.all(fetchPromises);
             cardsData = results.flat();
         } else {
-            const response = await fetch(`${basePath}/${rarity}.json`);
+            const response = await fetch(`${rarity}.json`);
             if (!response.ok) {
                 if (response.status === 404) {
                     console.warn(`${rarity}.json tapılmadı.`);

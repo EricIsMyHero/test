@@ -145,46 +145,47 @@ function renderCards(cardsToRender) {
 
 // Məlumatları endərliyə görə çəkən və göstərən funksiya
 async function fetchAndRender(rarity) {
-    cardsContainer.innerHTML = '<p>Yüklənir...</p>';
-    try {
-        let cardsData = [];
-        if (rarity === 'all') {
-            const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
-            const fetchPromises = rarities.map(r =>
-                fetch(`${r}.json`).then(async res => {
-                    if (!res.ok) {
-                        if (res.status === 404) {
-                            console.warn(`${r}.json tapılmadı, bu endərlik ötürülür.`);
-                            return [];
-                        }
-                        throw new Error(`${r}.json yüklənmədi`);
-                    }
-                    const text = await res.text();
-                    return text ? JSON.parse(text) : [];
-                })
-            );
-            const results = await Promise.all(fetchPromises);
-            cardsData = results.flat();
-        } else {
-            const response = await fetch(`${rarity}.json`);
-            if (!response.ok) {
-                if (response.status === 404) {
-                    console.warn(`${rarity}.json tapılmadı.`);
-                    cardsData = [];
-                } else {
-                    throw new Error(`HTTP xətası! Status: ${response.status}`);
-                }
-            } else {
-                const text = await response.text();
-                cardsData = text ? JSON.parse(text) : [];
+  cardsContainer.innerHTML = '<p>Yüklənir...</p>';
+  try {
+    let cardsData = [];
+    if (rarity === 'all') {
+      const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
+      const fetchPromises = rarities.map(r =>
+        fetch(`${r}.json`).then(async res => {
+          if (!res.ok) {
+            if (res.status === 404) {
+              console.warn(`${r}.json tapılmadı, bu endərlik ötürülür.`);
+              return [];
             }
+            throw new Error(`${r}.json yüklənmədi`);
+          }
+          const text = await res.text();
+          return text ? JSON.parse(text) : [];
+        })
+      );
+      const results = await Promise.all(fetchPromises);
+      cardsData = results.flat();
+    } else {
+      const response = await fetch(`${rarity}.json`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.warn(`${rarity}.json tapılmadı.`);
+          cardsData = [];
+        } else {
+          throw new Error(`HTTP xətası! Status: ${response.status}`);
         }
-        renderCards(cardsData);
-    } catch (error) {
-        console.error('Məlumatları yükləmə zamanı xəta:', error);
-        cardsContainer.innerHTML = '<p style="color:red;">Kart məlumatları yüklənərkən xəta baş verdi.</p>';
+      } else {
+        const text = await response.text();
+        cardsData = text ? JSON.parse(text) : [];
+      }
     }
+    renderCards(cardsData);
+  } catch (error) {
+    console.error('Məlumatları yükləmə zamanı xəta:', error);
+    cardsContainer.innerHTML = '<p style="color:red;">Kart məlumatları yüklənərkən xəta baş verdi.</p>';
+  }
 }
+
 
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);

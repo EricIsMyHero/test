@@ -279,3 +279,15 @@ filter: blur(8px);
 opacity: .9;
 z-index: -1;
 }
+.top-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bottom-filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}

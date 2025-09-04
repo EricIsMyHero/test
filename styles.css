@@ -279,32 +279,90 @@ filter: blur(8px);
 opacity: .9;
 z-index: -1;
 }
-.controls {
+
+/* Yükleme göstergesi (spinner) stilleri */
+.spinner-container {
   display: flex;
-  gap: 10px;
-  flex-wrap: nowrap; /* alt-üst olmasın */
-  justify-content: flex-start; /* düymələri sola hizala */
-  margin: 16px 0; /* konteyner ilə düymələr arası boşluq */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid var(--text);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
 }
 
-.controls button {
-  flex: 0 0 auto; /* düymələr sabit ölçüdə qalsın */
-  background: #22284f;
-  color: var(--text);
-  border: 1px solid #2f3769;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Modal stilleri */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background-color: var(--card);
+  padding: 20px;
   border-radius: 12px;
-  padding: 10px 14px;
-  cursor: pointer;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  position: relative;
   box-shadow: var(--shadow);
-  transition: .25s ease;
+}
+.close-button {
+  color: var(--text);
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal h2 {
+  color: var(--text);
+  text-align: center;
+}
+.modal-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+.modal-stat-item {
+  background-color: var(--bg);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+.modal-stat-item strong {
+  display: block;
+  font-size: 1.2em;
 }
 
-.controls button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 40px rgba(0,0,0,.45);
+/* Ethereal animasiya stilləri */
+.r-ethereal {
+  background: radial-gradient(circle at 50% 120%, var(--ethereal), transparent 70%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: ethereal-pulse 2s infinite;
 }
 
-.controls button.active {
-  background: #394073;
-  border-color: #5d66a2;
+@keyframes ethereal-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px var(--ethereal); }
+  50% { transform: scale(1.03); box-shadow: 0 0 20px var(--ethereal); }
+  100% { transform: scale(1); box-shadow: 0 0 10px var(--ethereal); }
 }

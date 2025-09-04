@@ -280,7 +280,52 @@ opacity: .9;
 z-index: -1;
 }
 
-/* Yükleme göstergesi (spinner) stilleri */
+
+/* Kartın böyüdülmüş versiyası üçün stillər (modal) */
+.modal-card-large {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.5);
+  z-index: 1000;
+  cursor: pointer;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.modal-card-large .card-content {
+  width: 100%;
+  height: 100%;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.modal-card-large.closing {
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+}
+
+.modal-card-large.closing ~ body::after {
+  opacity: 0;
+}
+
+.modal-card-large:not(.closing) ~ body::after {
+  opacity: 1;
+}
+
+/* Yükləmə göstəricisi (spinner) stilləri */
 .spinner-container {
   display: flex;
   justify-content: center;
@@ -299,59 +344,6 @@ z-index: -1;
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-/* Modal stilleri */
-.modal {
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-content {
-  background-color: var(--card);
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 90%;
-  max-height: 90%;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: var(--shadow);
-}
-.close-button {
-  color: var(--text);
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.modal h2 {
-  color: var(--text);
-  text-align: center;
-}
-.modal-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 20px;
-}
-.modal-stat-item {
-  background-color: var(--bg);
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-}
-.modal-stat-item strong {
-  display: block;
-  font-size: 1.2em;
 }
 
 /* Ethereal animasiya stilləri */

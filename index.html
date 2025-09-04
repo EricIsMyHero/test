@@ -3,7 +3,7 @@
 <head> 
   <meta charset="UTF-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Clash-A-TEST</title> 
+  <title>Clash-A-Mana</title> 
   <link rel="stylesheet" href="styles.css"> 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> 
 </head>
@@ -29,19 +29,21 @@
             Burada oyunda olacaq bütün kartların ilkin demosunun test saytı vardır. Unutmayın sadəcə bir DEMO-nun TESTİ-dir.
           </div>
         </div>
-        <button id="back-to-menu-btn" class="back-button">Geri</button>
+        <div class="filter-container">
+          <button id="back-to-menu-btn" class="back-button">Geri</button>
+          <div class="top-filters">
+            <button class="filterBtn" data-rarity="mundane">Mundane</button>
+            <button class="filterBtn" data-rarity="familiar">Familiar</button>
+            <button class="filterBtn" data-rarity="arcane">Arcane</button>
+          </div>
+          <div class="bottom-filters">
+            <button class="filterBtn" data-rarity="mythic">Mythic</button>
+            <button class="filterBtn" data-rarity="legendary">Legendary</button>
+            <button class="filterBtn" data-rarity="ethereal">Ethereal</button>
+          </div>
+        </div>
       </header>
-
-      <div class="controls">
-        <button id="filter-all" class="active">Bütün Kartlar</button>
-        <button id="filter-mundane">Mundane</button>
-        <button id="filter-familiar">Familiar</button>
-        <button id="filter-arcane">Arcane</button>
-        <button id="filter-mythic">Mythic</button>
-        <button id="filter-legendary">Legendary</button>
-        <button id="filter-ethereal">Ethereal</button>
-      </div>
-
+      <div id="loading-spinner" class="hidden">Yüklənir...</div>
       <section class="grid" id="cards"></section>
     </section>
   </div>

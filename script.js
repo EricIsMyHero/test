@@ -1,20 +1,21 @@
+// DOM Elementləri
 const mainMenu = document.getElementById('main-menu');
-const cardsContainer = document.getElementById('cards');
+const cardsSection = document.getElementById('cards-section');
 const showCardsBtn = document.getElementById('show-cards-btn');
 const backToMenuBtn = document.getElementById('back-to-menu-btn');
-const filterButtons = document.querySelectorAll('.filterBtn');
+const filterButtons = document.querySelectorAll('.controls button');
+const cardsContainer = document.getElementById('cards');
 
 function showMenu() {
   mainMenu.classList.remove('hidden');
-  cardsContainer.parentElement.classList.add('hidden'); // header + cards
+  cardsSection.classList.add('hidden');
 }
 
 function showCards() {
   mainMenu.classList.add('hidden');
-  cardsContainer.parentElement.classList.remove('hidden'); // header + cards
+  cardsSection.classList.remove('hidden');
   fetchAndRender('all');
 }
-
 
 // Kart yaratmaq üçün əsas funksiya
 function createCardElement(data) {

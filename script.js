@@ -6,12 +6,10 @@ const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 const loadingSpinner = document.getElementById('loading-spinner');
-const cardModal = document.getElementById('card-modal');
-const modalCardDetails = document.getElementById('modal-card-details');
-const closeModalBtn = document.querySelector('.close-button');
 
 let allCardsData = [];
 let currentFilter = 'all';
+let modalCard = null;
 
 function showMenu() {
   mainMenu.classList.remove('hidden');
@@ -30,23 +28,17 @@ async function fetchAndRender(filter) {
   loadingSpinner.classList.remove('hidden');
   cardsContainer.innerHTML = '';
   currentFilter = filter;
-
   try {
     if (allCardsData.length === 0) {
       const rarities = ['arcane', 'ethereal', 'familiar', 'legendary', 'mundane', 'mythic'];
-      for (const rarity of rarities) {
-        const response = await fetch(`${rarity}.json`);
-        if (!response.ok) throw new Error(`HTTP xətası! status: ${response.status}`);
-        const data = await response.json();
-        allCardsData = allCardsData.concat(data);
-      }
+      const fetches = rarities.map(rarity => fetch(`${rarity}.json`).then(response => response.json()));
+      const dataArrays = await Promise.all(fetches);
+      allCardsData = dataArrays.flat();
     }
-    
     let filteredData = allCardsData;
     if (filter !== 'all') {
       filteredData = allCardsData.filter(card => card.rarity.toLowerCase() === filter);
     }
-    
     renderCards(filteredData);
   } catch (error) {
     console.error('Məlumatları yükləmə zamanı xəta:', error);
@@ -80,48 +72,39 @@ function renderCards(cards) {
   cards.forEach(cardData => {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card r-${cardData.rarity.toLowerCase()}`;
-    
-    cardContainer.onclick = () => showCardDetails(cardData);
-
     const cardContent = createCardContent(cardData);
     cardContainer.appendChild(cardContent);
+    cardContainer.addEventListener('click', () => {
+      openCardAsModal(cardContainer);
+    });
     cardsContainer.appendChild(cardContainer);
   });
 }
 
-// Kart detallarını modalda göstərən funksiya
-function showCardDetails(cardData) {
-  modalCardDetails.innerHTML = `
-    <h2>${cardData.name}</h2>
-    <p><strong>Nadirliyi:</strong> <span class="r-${cardData.rarity.toLowerCase()}">${cardData.rarity}</span></p>
-    <p><strong>Növü:</strong> ${cardData.type.join(', ')}</p>
-    ---
-    <h3>Statistikalar</h3>
-    <div class="modal-stats">
-        <div class="modal-stat-item"><strong>Can:</strong> ${cardData.stats.health}</div>
-        <div class="modal-stat-item"><strong>Qalxan:</strong> ${cardData.stats.shield}</div>
-        <div class="modal-stat-item"><strong>Zərər:</strong> ${cardData.stats.damage}</div>
-        <div class="modal-stat-item"><strong>Vuruş Sürəti:</strong> ${cardData.stats.attackSpeed}</div>
-        <div class="modal-stat-item"><strong>Mana:</strong> ${cardData.stats.mana}</div>
-    </div>
-    ---
-    <h3>Xüsusiyyətlər</h3>
-    <p>${cardData.trait}</p>
-  `;
-  cardModal.classList.remove('hidden');
+function openCardAsModal(cardElement) {
+  if (modalCard) return; // Prevent multiple modals
+  const clonedCard = cardElement.cloneNode(true);
+  clonedCard.classList.add('modal-card-large');
+  document.body.appendChild(clonedCard);
+  modalCard = clonedCard;
+
+  // Add click listener to close modal
+  modalCard.addEventListener('click', () => {
+    closeCardModal();
+  });
 }
 
-// Modal pəncərəni bağlayan funksiya
-closeModalBtn.onclick = () => {
-  cardModal.classList.add('hidden');
-};
-
-// Pəncərənin hər hansı bir yerinə basanda modalları bağlayın
-window.onclick = (event) => {
-  if (event.target == cardModal) {
-    cardModal.classList.add('hidden');
+function closeCardModal() {
+  if (modalCard) {
+    modalCard.classList.add('closing');
+    modalCard.addEventListener('transitionend', () => {
+      if (modalCard && modalCard.parentElement) {
+        modalCard.parentElement.removeChild(modalCard);
+        modalCard = null;
+      }
+    }, { once: true });
   }
-};
+}
 
 // İstifadəçi seçimlərini yadda saxlamaq üçün funksiyalar
 function saveUserPreferences() {
@@ -159,21 +142,14 @@ filterButtons.forEach(button => {
   });
 });
 
-['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',()=> {
-    const modal=document.createElement('div');
-    modal.style.position='fixed';
-    modal.style.top='50%';
-    modal.style.left='50%';
-    modal.style.transform='translate(-50%, -50%)';
-    modal.style.padding='20px';
-    modal.style.backgroundColor='var(--card)';
-    modal.style.color='var(--text)';
-    modal.style.borderRadius='12px';
-    modal.style.boxShadow='var(--shadow)';
-    modal.style.zIndex='1000';
-    modal.textContent="Bu bölmə hələ hazır deyil.";
-    document.body.appendChild(modal);
-    setTimeout(()=>{document.body.removeChild(modal);},3000);
+['show-spells-btn', 'show-boosters-btn', 'show-towers-btn'].forEach(id => {
+  document.getElementById(id).addEventListener('click', () => {
+    alert("Bu bölmə hələ hazır deyil.");
   });
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCardModal();
+  }
 });

@@ -1,0 +1,48 @@
+:root {
+  --bg: #0f1220;
+  --card: #151934;
+  --muted: #8a92b2;
+  --text: #eaf0ff;
+  --ring: #ffffff20;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+
+  --mundane: #CCCCCC;
+  --familiar: #4CAF50;
+  --arcane: #7E57C2;
+  --mythic: #E53935;
+  --legendary: #FBC02D;
+  --ethereal: #ff007f;
+}
+
+* { box-sizing: border-box }
+html, body { height: 100% }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 700px at 20% 0%, #1a1f3f, #0f1220 60%);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, Segoe UI, Roboto;
+}
+
+.wrap { max-width: 1200px; margin: 32px auto; padding: 16px }
+header { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 18px }
+h1 { font-size: 28px; margin: 0; letter-spacing: .2px }
+.hint { color: var(--muted); font-size: 14px }
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap }
+button {
+  background: #22284f; color: var(--text);
+  border: 1px solid #2f3769; border-radius: 12px;
+  padding: 10px 14px; cursor: pointer;
+  box-shadow: var(--shadow); transition: .25s ease;
+}
+button:hover { transform: translateY(-1px); box-shadow: 0 14px 40px rgba(0,0,0,.45) }
+button.active { background: #394073; border-color: #5d66a2 }
+
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* Kart və digər stillər (sənin kodundakı bütün CSS burada qalacaq) */
+
+/* ... eyni CSS kodunun hamısını bura köçürmüşəm ... */

@@ -279,15 +279,17 @@ filter: blur(8px);
 opacity: .9;
 z-index: -1;
 }
-.top-filters {
+.filter-container {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
 }
 
-.bottom-filters {
+.top-filters, .bottom-filters {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
+

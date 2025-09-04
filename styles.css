@@ -279,3 +279,32 @@ filter: blur(8px);
 opacity: .9;
 z-index: -1;
 }
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap; /* alt-üst olmasın */
+  justify-content: flex-start; /* düymələri sola hizala */
+  margin: 16px 0; /* konteyner ilə düymələr arası boşluq */
+}
+
+.controls button {
+  flex: 0 0 auto; /* düymələr sabit ölçüdə qalsın */
+  background: #22284f;
+  color: var(--text);
+  border: 1px solid #2f3769;
+  border-radius: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: .25s ease;
+}
+
+.controls button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.45);
+}
+
+.controls button.active {
+  background: #394073;
+  border-color: #5d66a2;
+}

@@ -25,7 +25,7 @@ function showCards() {
   fetchAndRender(currentFilter);
 }
 
-// Kart məlumatlarını çəkən və göstərən funksiya
+// Kart məlumatlarnı çəkən və göstərən funksiya
 async function fetchAndRender(filter) {
   loadingSpinner.classList.remove('hidden');
   cardsContainer.innerHTML = '';

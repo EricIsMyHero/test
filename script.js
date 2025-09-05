@@ -5,9 +5,6 @@ const showCardsBtn = document.getElementById('show-cards-btn');
 const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
-// Yeni DOM elementləri
-const showTypesBtn = document.getElementById('show-types-btn');
-const typesVisualSection = document.getElementById('types-visual-section');
 
 function showMenu() {
   mainMenu.classList.remove('hidden');
@@ -137,15 +134,12 @@ function createCardContent(data) {
 // Kartları render edən funksiya
 function renderCards(cardsToRender) {
     cardsContainer.innerHTML = '';
-    // Şəkil bölməsini gizlədin
-    typesVisualSection.classList.add('hidden'); 
-    
     if (cardsToRender.length === 0) {
-      cardsContainer.innerHTML = '<p>Bu endərlikdə kart tapılmadı.</p>';
-      return;
+        cardsContainer.innerHTML = '<p>Bu endərlikdə kart tapılmadı.</p>';
+        return;
     }
     cardsToRender.forEach(data => {
-      cardsContainer.appendChild(createCardElement(data));
+        cardsContainer.appendChild(createCardElement(data));
     });
 }
 
@@ -192,24 +186,6 @@ async function fetchAndRender(rarity) {
   }
 }
 
-// Yeni funksionallıq: Kart tiplərini göstər
-showTypesBtn.addEventListener('click', () => {
-  const isHidden = typesVisualSection.classList.contains('hidden');
-  
-  if (isHidden) {
-    typesVisualSection.classList.remove('hidden');
-    cardsContainer.classList.add('hidden');
-    
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    
-  } else {
-    typesVisualSection.classList.add('hidden');
-    cardsContainer.classList.remove('hidden');
-    
-    document.getElementById('filter-all').classList.add('active');
-    fetchAndRender('all');
-  }
-});
 
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
@@ -235,9 +211,6 @@ backToMenuBtn.addEventListener('click', showMenu);
 
 filterButtons.forEach(button => {
   button.addEventListener('click', () => {
-    typesVisualSection.classList.add('hidden');
-    cardsContainer.classList.remove('hidden');
-    
     const rarity = button.id.split('-')[1];
     filterButtons.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
@@ -245,4 +218,18 @@ filterButtons.forEach(button => {
   });
 });
 
+// Yeni funksionallıq: Kart tiplərini göstər
+showTypesBtn.addEventListener('click', () => {
+  const isHidden = typesVisualSection.classList.contains('hidden');
+  if (isHidden) {
+    typesVisualSection.classList.remove('hidden');
+    cardsContainer.classList.add('hidden');
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+  } else {
+    typesVisualSection.classList.add('hidden');
+    cardsContainer.classList.remove('hidden');
+    document.getElementById('filter-all').classList.add('active');
+    fetchAndRender('all');
+  }
+});
 document.addEventListener('DOMContentLoaded', showMenu);

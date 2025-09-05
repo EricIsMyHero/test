@@ -9,16 +9,18 @@
 </head>
 <body>
   <div class="wrap" id="main-content">
+    <!-- Əsas Menyu -->
     <section class="main-menu" id="main-menu">
-      <h1>Clash-A-TEST: Real-Time TEST Arena</h1>
+      <h1>Clash-A-Test: Real-Time Test Arena</h1>
       <div class="menu-buttons">
         <button id="show-cards-btn">Kartlar</button>
         <button id="show-spells-btn">Büyülər</button>
         <button id="show-boosters-btn">Güçləndiricilər</button>
-        <button id="show-towers-btn">Qala silahlarına bax</button>
+        <button id="show-towers-btn">Qala silahları</button>
       </div>
     </section>
 
+    <!-- Kartlar Bölməsi -->
     <section id="cards-section" class="hidden">
       <header class="card-title-header">
         <div>
@@ -39,18 +41,10 @@
         <button id="filter-legendary">Legendary</button>
         <button id="filter-ethereal">Ethereal</button>
       </div>
-      <div id="cards" class="cards-grid"></div>
-      <div id="loading-spinner" class="spinner-container hidden">
-        <div class="spinner"></div>
-      </div>
+
+      <section class="grid" id="cards"></section>
     </section>
   </div>
-    <div id="card-modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <div id="modal-card-details"></div>
-    </div>
-</div>
   <script src="script.js"></script>
 </body>
 </html>

@@ -6,6 +6,11 @@ const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 
+// **Səhv buradaydı: aşağıdakı dəyişənlər HTML-də yoxdursa səhv çıxır**
+// Təhlükəsiz istifadəsi üçün yoxlama əlavə edirik
+const showTypesBtn = document.getElementById('show-types-btn');
+const typesVisualSection = document.getElementById('types-visual-section');
+
 function showMenu() {
   mainMenu.classList.remove('hidden');
   cardsSection.classList.add('hidden');
@@ -191,7 +196,9 @@ showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 
 ['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',()=>{
+  const el = document.getElementById(id);
+  if (!el) return; // Əgər element tapılmazsa səhv çıxmasın
+  el.addEventListener('click',()=>{
     const modal=document.createElement('div');
     modal.style.position='fixed';
     modal.style.top='50%';
@@ -219,17 +226,19 @@ filterButtons.forEach(button => {
 });
 
 // Yeni funksionallıq: Kart tiplərini göstər
-showTypesBtn.addEventListener('click', () => {
-  const isHidden = typesVisualSection.classList.contains('hidden');
-  if (isHidden) {
-    typesVisualSection.classList.remove('hidden');
-    cardsContainer.classList.add('hidden');
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-  } else {
-    typesVisualSection.classList.add('hidden');
-    cardsContainer.classList.remove('hidden');
-    document.getElementById('filter-all').classList.add('active');
-    fetchAndRender('all');
-  }
-});
+if (showTypesBtn && typesVisualSection) {
+  showTypesBtn.addEventListener('click', () => {
+    const isHidden = typesVisualSection.classList.contains('hidden');
+    if (isHidden) {
+      typesVisualSection.classList.remove('hidden');
+      cardsContainer.classList.add('hidden');
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+    } else {
+      typesVisualSection.classList.add('hidden');
+      cardsContainer.classList.remove('hidden');
+      document.getElementById('filter-all').classList.add('active');
+      fetchAndRender('all');
+    }
+  });
+}
 document.addEventListener('DOMContentLoaded', showMenu);

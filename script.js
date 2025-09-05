@@ -190,23 +190,26 @@ async function fetchAndRender(rarity) {
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 
-['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',()=>{
-    const modal=document.createElement('div');
-    modal.style.position='fixed';
-    modal.style.top='50%';
-    modal.style.left='50%';
-    modal.style.transform='translate(-50%, -50%)';
-    modal.style.padding='20px';
-    modal.style.backgroundColor='var(--card)';
-    modal.style.color='var(--text)';
-    modal.style.borderRadius='12px';
-    modal.style.boxShadow='var(--shadow)';
-    modal.style.zIndex='1000';
-    modal.textContent="Bu bölmə hələ hazır deyil.";
-    document.body.appendChild(modal);
-    setTimeout(()=>{document.body.removeChild(modal);},3000);
-  });
+['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id => {
+  const elem = document.getElementById(id);
+  if (elem) {
+    elem.addEventListener('click', () => {
+      const modal = document.createElement('div');
+      modal.style.position = 'fixed';
+      modal.style.top = '50%';
+      modal.style.left = '50%';
+      modal.style.transform = 'translate(-50%, -50%)';
+      modal.style.padding = '20px';
+      modal.style.backgroundColor = 'var(--card)';
+      modal.style.color = 'var(--text)';
+      modal.style.borderRadius = '12px';
+      modal.style.boxShadow = 'var(--shadow)';
+      modal.style.zIndex = '1000';
+      modal.textContent = "Bu bölmə hələ hazır deyil.";
+      document.body.appendChild(modal);
+      setTimeout(() => { document.body.removeChild(modal); }, 3000);
+    });
+  }
 });
 
 filterButtons.forEach(button => {

@@ -190,7 +190,7 @@ async function fetchAndRender(rarity) {
 
 
 // Yeni funksionallıq: Kart tiplərini göstər
-showTypesBtn.addEventListener('click', () => {
+show-types-btn.addEventListener('click', () => {
   const isHidden = typesVisualSection.classList.contains('hidden');
   
   if (isHidden) {

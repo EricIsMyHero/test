@@ -193,28 +193,24 @@ async function fetchAndRender(rarity) {
 showTypesBtn.addEventListener('click', () => {
   const isHidden = typesVisualSection.classList.contains('hidden');
   
-  // Şəkli göstər
   if (isHidden) {
     typesVisualSection.classList.remove('hidden');
-    cardsContainer.classList.add('hidden'); // Kart qutularını gizlədin
+    cardsContainer.classList.add('hidden');
     
-    // Filter düymələrini passivləşdirin
     filterButtons.forEach(btn => btn.classList.remove('active'));
     
-  // Şəkli gizlət və kartları göstər
   } else {
     typesVisualSection.classList.add('hidden');
     cardsContainer.classList.remove('hidden');
     
-    // Bütün Kartlar filterini aktivləşdirin
     document.getElementById('filter-all').classList.add('active');
     fetchAndRender('all');
   }
 });
 
-
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
+
 
 ['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
   document.getElementById(id).addEventListener('click',()=>{

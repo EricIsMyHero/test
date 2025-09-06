@@ -237,6 +237,10 @@ backToMenuBtn.addEventListener('click', showMenu);
 
 filterButtons.forEach(button => {
   button.addEventListener('click', () => {
+    // Şəkil bölməsini gizləyin, filterə basdıqda avtomatik kartlar görünsün
+    typesVisualSection.classList.add('hidden');
+    cardsContainer.classList.remove('hidden');
+    
     const rarity = button.id.split('-')[1];
     filterButtons.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');

@@ -188,6 +188,30 @@ async function fetchAndRender(rarity) {
 }
 
 
+// Yeni funksionallıq: Kart tiplərini göstər
+showTypesBtn.addEventListener('click', () => {
+  const isHidden = typesVisualSection.classList.contains('hidden');
+  
+  // Şəkli göstər
+  if (isHidden) {
+    typesVisualSection.classList.remove('hidden');
+    cardsContainer.classList.add('hidden'); // Kart qutularını gizlədin
+    
+    // Filter düymələrini passivləşdirin
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    
+  // Şəkli gizlət və kartları göstər
+  } else {
+    typesVisualSection.classList.add('hidden');
+    cardsContainer.classList.remove('hidden');
+    
+    // Bütün Kartlar filterini aktivləşdirin
+    document.getElementById('filter-all').classList.add('active');
+    fetchAndRender('all');
+  }
+});
+
+
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 

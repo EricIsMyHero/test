@@ -3,7 +3,7 @@ const mainMenu = document.getElementById('main-menu');
 const cardsSection = document.getElementById('cards-section');
 const showCardsBtn = document.getElementById('show-cards-btn');
 const backToMenuBtn = document.getElementById('back-to-menu-btn');
-const showTypesBtn = document.getElementBuId('show-types-btn');
+const showTypesBtn = document.getElementById('show-types-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 

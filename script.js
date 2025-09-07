@@ -7,31 +7,61 @@ const cardTypesBtn = document.getElementById('card-types-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 
-// Ana menyunu göstərən funksiya
+// Yeni: şəkil konteyneri
+let typesImageContainer;
+
+// Ana menyunu göstər
 function showMenu() {
   mainMenu.classList.remove('hidden');
   cardsSection.classList.add('hidden');
+  if (typesImageContainer) typesImageContainer.remove();
 }
 
-// Kartlar bölməsini göstərən funksiya
+// Kartlar bölməsini göstər
 function showCards() {
   mainMenu.classList.add('hidden');
   cardsSection.classList.remove('hidden');
+  if (typesImageContainer) typesImageContainer.remove();
   fetchAndRender('all');
+}
+
+// Kart tipləri şəkilini göstər
+function showTypes() {
+  mainMenu.classList.add('hidden');
+  cardsSection.classList.remove('hidden');
+  cardsContainer.innerHTML = '';
+
+  if (!typesImageContainer) {
+    typesImageContainer = document.createElement('div');
+    typesImageContainer.style.display = 'flex';
+    typesImageContainer.style.justifyContent = 'center';
+    typesImageContainer.style.alignItems = 'center';
+    typesImageContainer.style.padding = '20px';
+
+    const img = document.createElement('img');
+    img.src = 'kart-tipləri.png'; // şəkilin adı
+    img.alt = 'Kart Tipləri';
+    img.style.maxWidth = '100%';
+    img.style.borderRadius = '12px';
+    img.style.boxShadow = 'var(--shadow)';
+
+    typesImageContainer.appendChild(img);
+    cardsSection.appendChild(typesImageContainer);
+  }
 }
 
 // Kart yaratmaq üçün əsas funksiya
 function createCardElement(data) {
   const cardContainer = document.createElement('article');
   cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
-
+  
   if (data.isMulti) {
     const cardInner = document.createElement('div');
     cardInner.className = 'card-inner';
 
     const cardFront = createCardContent(data);
     cardFront.classList.add('card-front');
-
+    
     const cardBack = createCardContent(data.secondForm);
     cardBack.classList.add('card-back');
 
@@ -41,13 +71,11 @@ function createCardElement(data) {
 
     const flipButton = document.createElement('button');
     flipButton.className = 'flip-button';
-    flipButton.type = 'button';
-    flipButton.title = 'Flip';
-    flipButton.textContent = '↺';
 
-    flipButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      cardContainer.classList.toggle('is-flipped');
+    cardContainer.addEventListener('click', (e) => {
+      if (e.target.closest('.flip-button')) {
+        cardContainer.classList.toggle('is-flipped');
+      }
     });
 
     cardContainer.appendChild(flipButton);
@@ -71,17 +99,16 @@ function createCardElement(data) {
 function createCardContent(data) {
   const content = document.createElement('div');
   const badgeText = data.isHybrid ? `${data.type[0]}/${data.type[1]}` : data.type[0];
-
   content.innerHTML = `
     <div class="stripe"></div>
     <div class="head">
-      <div class="name">${data.name}</div><span class="badge">${badgeText}</span>
+        <div class="name">${data.name}</div><span class="badge">${badgeText}</span>
     </div>
     <div class="card-tabs">
-      <button class="active" data-section="main-stats">Əsas</button>
-      <button data-section="additional-stats">Əlavə</button>
-      <button data-section="trait">Özəllik</button>
-      <button data-section="showlevels">Səviyyələr</button>
+        <button class="active" data-section="main-stats">Əsas</button>
+        <button data-section="additional-stats">Əlavə</button>
+        <button data-section="trait">Özəllik</button>
+        <button data-section="showlevels">Səviyyələr</button>
     </div>
     <div class="stats-section visible" data-section-id="main-stats">
       <div class="stat-item"><b>Can <i class="fa-solid fa-heart"></i></b><span>${data.stats.health}</span></div>
@@ -98,36 +125,34 @@ function createCardContent(data) {
       <div class="stat-item"><b>Hız <i class="fa-solid fa-person-running"></i></b><span>${data.additionalStats.speed}</span></div>
       <div class="stat-item"><b>Kritik Şansı <i class="fa-solid fa-percent"></i></b><span>${data.additionalStats.criticalChance}</span></div>
       <div class="stat-item"><b>Kritik Hasar <i class="fa-solid fa-crosshairs"></i></b><span>${data.additionalStats.criticDamage}</span></div>
-      <div class="stat-item"><b>C.Çalma Şansı <i class="fa-solid fa-percent"></i></b><span>${data.additionalStats.lifestealChance}</span></div>
-      <div class="stat-item"><b>Can Çalma <i class="fa-solid fa-skull-crossbones"></i></b><span>${data.additionalStats.lifesteal}</span></div>
-      <div class="stat-item"><b>Hasar Azaltma <i class="fa-solid fa-helmet-un"></i></b><span>${data.additionalStats.damageminimiser}</span></div>
-      <div class="stat-item"><b>Sıyrılma Şansı <i class="fa-solid fa-wind"></i></b><span>${data.additionalStats.dodge}</span></div>
+      <div class="stat-item"><b>C.Çalma Şansı <i class="fa-solid fa-percent "></i></b><span>${data.additionalStats.lifestealChance}</span></div>
+      <div class="stat-item"><b>Can Çalma <i class="fa-solid fa-skull-crossbones "></i></b><span>${data.additionalStats.lifesteal}</span></div>
+      <div class="stat-item"><b>Hasar Azaltma <i class="fa-solid fa-helmet-un "></i></b><span>${data.additionalStats.damageminimiser}</span></div>
+      <div class="stat-item"><b>Sıyrılma Şansı <i class="fa-solid fa-wind "></i></b><span>${data.additionalStats.dodge}</span></div>
     </div>
     <div class="stats-section" data-section-id="trait">
-      <div class="trait trait-center">${data.trait}</div>
+        <div class="trait trait-center">${data.trait}</div>
     </div>
     <div class="stats-section" data-section-id="showlevels">
-      <div class="stat-item"><b>Səviyyə 1</b><span>${data.showlevels.level1}</span></div>
-      <div class="stat-item"><b>Səviyyə 2</b><span>${data.showlevels.level2}</span></div>
-      <div class="stat-item"><b>Səviyyə 3</b><span>${data.showlevels.level3}</span></div>
+        <div class="stat-item"><b>Səviyyə 1</b><span>${data.showlevels.level1}</span></div>
+        <div class="stat-item"><b>Səviyyə 2</b><span>${data.showlevels.level2}</span></div>
+        <div class="stat-item"><b>Səviyyə 3</b><span>${data.showlevels.level3}</span></div>
     </div>
   `;
 
-  // Tablar üçün eventləri əlavə et
   const cardButtons = content.querySelectorAll('.card-tabs button');
   cardButtons.forEach(button => {
     button.addEventListener('click', (e) => {
       e.stopPropagation();
       const sectionId = button.dataset.section;
-
+      
       cardButtons.forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
 
       content.querySelectorAll('.stats-section').forEach(section => {
         section.classList.remove('visible');
       });
-      const sectionToShow = content.querySelector(`[data-section-id="${sectionId}"]`);
-      if (sectionToShow) sectionToShow.classList.add('visible');
+      content.querySelector(`[data-section-id="${sectionId}"]`).classList.add('visible');
     });
   });
 
@@ -137,7 +162,7 @@ function createCardContent(data) {
 // Kartları render edən funksiya
 function renderCards(cardsToRender) {
   cardsContainer.innerHTML = '';
-  if (!cardsToRender || cardsToRender.length === 0) {
+  if (cardsToRender.length === 0) {
     cardsContainer.innerHTML = '<p>Bu endərlikdə kart tapılmadı.</p>';
     return;
   }
@@ -146,7 +171,7 @@ function renderCards(cardsToRender) {
   });
 }
 
-// Məlumatları endərliyə görə çəkən və göstərən funksiya
+// JSON məlumatları yüklə
 async function fetchAndRender(rarity) {
   cardsContainer.innerHTML = '<p>Yüklənir...</p>';
   try {
@@ -189,45 +214,32 @@ async function fetchAndRender(rarity) {
   }
 }
 
-// Yeni funksionallıq: Kart tiplərini göstər
-cardTypesBtn.addEventListener('click', () => {
-  window.open('card-types.png', '_blank'); 
-});
-
+// Eventlər
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
+cardTypesBtn.addEventListener('click', showTypes);
 
-// Modal göstərmək üçün funksiya
-function showModal(msg) {
-  const modal = document.createElement('div');
-  modal.style.position = 'fixed';
-  modal.style.top = '50%';
-  modal.style.left = '50%';
-  modal.style.transform = 'translate(-50%, -50%)';
-  modal.style.padding = '20px';
-  modal.style.backgroundColor = 'var(--card)';
-  modal.style.color = 'var(--text)';
-  modal.style.borderRadius = '12px';
-  modal.style.boxShadow = 'var(--shadow)';
-  modal.style.zIndex = '1000';
-  modal.textContent = msg;
-  document.body.appendChild(modal);
-  setTimeout(() => { document.body.removeChild(modal); }, 3000);
-}
-
-// Hələ hazır olmayan bölmələr üçün
-['show-spells-btn', 'show-boosters-btn', 'show-towers-btn'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    el.addEventListener('click', () => showModal("Bu bölmə hələ hazır deyil."));
-  }
+['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',()=>{
+    const modal=document.createElement('div');
+    modal.style.position='fixed';
+    modal.style.top='50%';
+    modal.style.left='50%';
+    modal.style.transform='translate(-50%, -50%)';
+    modal.style.padding='20px';
+    modal.style.backgroundColor='var(--card)';
+    modal.style.color='var(--text)';
+    modal.style.borderRadius='12px';
+    modal.style.boxShadow='var(--shadow)';
+    modal.style.zIndex='1000';
+    modal.textContent="Bu bölmə hələ hazır deyil.";
+    document.body.appendChild(modal);
+    setTimeout(()=>{document.body.removeChild(modal);},3000);
+  });
 });
 
-// Filter düymələrinin işləməsi
 filterButtons.forEach(button => {
   button.addEventListener('click', () => {
-    typesVisualSection.classList.add('hidden');
-    cardsContainer.classList.remove('hidden');
     const rarity = button.id.split('-')[1];
     filterButtons.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
@@ -235,5 +247,4 @@ filterButtons.forEach(button => {
   });
 });
 
-// Səhifə yükləndikdə əsas menyunu göstər
 document.addEventListener('DOMContentLoaded', showMenu);

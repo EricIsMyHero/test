@@ -6,6 +6,7 @@ const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const showTypesBtn = document.getElementById('show-types-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
+const typesVisualSection = document.getElementById('types-visual-section');
 
 function showMenu() {
   mainMenu.classList.remove('hidden');

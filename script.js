@@ -42,16 +42,7 @@ function createCardElement(data) {
         cardContainer.addEventListener('click', (e) => {
             if (e.target.closest('.flip-button')) {
                 cardContainer.classList.toggle('is-flipped');
-            };
-          const cardTitle = document.createElement('h2');
-cardTitle.textContent = data.name;
-
-if (data.flavorText) {
-    const flavorText = document.createElement('span');
-    flavorText.textContent = data.flavorText;
-    flavorText.className = 'flavor-text';
-    cardTitle.appendChild(flavorText);
-    }
+            }
         });
 
         cardContainer.appendChild(flipButton);
@@ -78,7 +69,11 @@ function createCardContent(data) {
     content.innerHTML = `
         <div class="stripe"></div>
         <div class="head">
-            <div class="name">${data.name}</div><span class="badge">${badgeText}</span>
+            <div class="name">
+                <h2>${data.name}</h2>
+                ${data.flavorText ? `<span class="flavor-text">${data.flavorText}</span>` : ''}
+            </div>
+            <span class="badge">${badgeText}</span>
         </div>
         <div class="card-tabs">
             <button class="active" data-section="main-stats">Əsas</button>

@@ -42,7 +42,16 @@ function createCardElement(data) {
         cardContainer.addEventListener('click', (e) => {
             if (e.target.closest('.flip-button')) {
                 cardContainer.classList.toggle('is-flipped');
-            }
+            };
+          const cardTitle = document.createElement('h2');
+cardTitle.textContent = data.name;
+
+if (data.flavorText) {
+    const flavorText = document.createElement('span');
+    flavorText.textContent = data.flavorText;
+    flavorText.className = 'flavor-text';
+    cardTitle.appendChild(flavorText);
+    }
         });
 
         cardContainer.appendChild(flipButton);

@@ -3,6 +3,7 @@
     "name": "Hamm",
     "type": ["Heyvan"],
     "rarity": "Legendary",
+    "flavorText": "Suikastchi",
     "isHybrid": false,
     "isMulti": false,
     "stats": {
@@ -36,6 +37,7 @@
     "name": "M-M",
     "type": ["Robot"],
     "rarity": "Legendary",
+    "flavorText": "Savaşcı",
     "isHybrid": false,
     "isMulti": false,
     "stats": {

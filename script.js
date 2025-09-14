@@ -224,3 +224,52 @@ filterButtons.forEach(button => {
 });
 
 document.addEventListener('DOMContentLoaded', showMenu);
+
+const statsSection = document.getElementById('stats-section');
+const showStatsBtn = document.getElementById('show-stats');
+
+showStatsBtn.addEventListener('click', () => {
+  mainMenu.classList.add('hidden');
+  cardsSection.classList.add('hidden');
+  statsSection.classList.remove('hidden');
+  renderCharts();
+});
+
+function renderCharts() {
+  // 1. Kart tipləri
+  new Chart(document.getElementById('chart-types'), {
+    type: 'pie',
+    data: {
+      labels: ['Heyvan', 'Robot', 'İnsan'],
+      datasets: [{
+        data: [5, 3, 7],
+        backgroundColor: ['#ff9999','#66b3ff','#99ff99']
+      }]
+    }
+  });
+
+  // 2. Endərliklər
+  new Chart(document.getElementById('chart-rarities'), {
+    type: 'bar',
+    data: {
+      labels: ['Mundane', 'Familiar', 'Arcane', 'Mythic', 'Legendary', 'Ethereal'],
+      datasets: [{
+        label: 'Kart Sayı',
+        data: [10, 8, 12, 6, 4, 2],
+        backgroundColor: '#8a92b2'
+      }]
+    }
+  });
+
+  // 3. Vəzifələr
+  new Chart(document.getElementById('chart-roles'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Hücum', 'Müdafiə', 'Dəstək'],
+      datasets: [{
+        data: [7, 5, 6],
+        backgroundColor: ['#ffcc99','#c2c2f0','#ffb3e6']
+      }]
+    }
+  });
+}

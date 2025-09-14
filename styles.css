@@ -1,0 +1,229 @@
+/* Bu fayl yalnız CSS stillərini ehtiva edir. */
+
+:root {
+  --bg: #0f1220;
+  --card: #151934;
+  --muted: #8a92b2;
+  --text: #eaf0ff;
+  --ring: #ffffff20;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+
+  /* Nadirlik rəngləri */
+  --mundane: #CCCCCC;
+  --familiar: #4CAF50;
+  --arcane: #7E57C2;
+  --mythic: #E53935;
+  --legendary: #FBC02D;
+  --ethereal: #ff007f;
+}
+
+* { box-sizing: border-box }
+html, body { height: 100% }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 700px at 20% 0%, #1a1f3f, #0f1220 60%);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, Segoe UI, Roboto;
+}
+
+.wrap { max-width: 1200px; margin: 32px auto; padding: 16px }
+header { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 18px }
+h1 { font-size: 28px; margin: 0; letter-spacing: .2px }
+.hint { font-size: 14px; color: var(--muted) }
+
+/* Düymələr */
+button {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--ring);
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all .2s;
+}
+button:hover { background: #1a1e3b }
+button.active { background: #3c4059; border-color: var(--text); }
+
+/* Kontroller */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+.controls button { padding: 8px 16px; font-size: 14px }
+.search-sort-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.search-sort-controls input, .search-sort-controls select {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--ring);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+/* Kartlar */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+.card-container {
+  position: relative;
+  cursor: pointer;
+  perspective: 1000px;
+}
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.card-container.is-flipped .card-inner { transform: rotateY(180deg) }
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--ring);
+}
+.card-back { transform: rotateY(180deg); }
+.card-single {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--ring);
+}
+
+/* Nadirlik fonları */
+.r-mundane { border: 1px solid var(--mundane) }
+.r-familiar { border: 1px solid var(--familiar) }
+.r-arcane { border: 1px solid var(--arcane) }
+.r-mythic { border: 1px solid var(--mythic) }
+.r-legendary { border: 1px solid var(--legendary) }
+.r-ethereal {
+  border: 1px solid var(--ethereal);
+  background: linear-gradient(-45deg, var(--ethereal) 0%, transparent 20%);
+}
+
+.r-ethereal::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  background: conic-gradient(from 180deg at 50% 50%, #ff007f 0deg, #ff007f 30deg, transparent 50deg, transparent 310deg, #ff007f 330deg, #ff007f 360deg);
+  animation: ethereal-animate 10s linear infinite;
+}
+
+@keyframes ethereal-animate {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Halo və halqa effektləri */
+.card-front::after, .card-single::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  pointer-events: none;
+  border: 2px solid var(--ring);
+  filter: blur(4px);
+  opacity: .5;
+  z-index: -1;
+}
+
+/* Əsas menyu və geri düyməsi */
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+.main-menu h1 { font-size: 48px; margin-bottom: 24px; text-shadow: 0 0 15px rgba(255,255,255,.2) }
+.menu-buttons { display: flex; flex-direction: column; gap: 16px; width: 80%; max-width: 300px }
+
+.hidden { display: none !important }
+
+.card-title-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.back-button {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: 8px 16px;
+}
+.back-button:hover { background: var(--muted); color: var(--card) }
+.back-button:active { transform: scale(0.95) }
+
+.card-body h2 { font-size: 24px; margin: 0; line-height: 1.2 }
+.card-body p { margin: 4px 0; color: var(--muted) }
+.card-stats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 16px;
+  gap: 16px;
+}
+.stat-item { flex-grow: 1 }
+.stat-item h3 { margin: 0; font-size: 20px }
+.stat-item p { margin: 0; font-size: 12px; color: var(--muted) }
+
+.card-details { margin-top: 16px; font-size: 14px }
+.card-details p { margin: 4px 0 }
+
+.card-trait { margin-top: 16px; padding: 12px; background: #202444; border-radius: 8px; font-size: 14px }
+.card-trait p { margin: 0 }
+
+.card-levels {
+  margin-top: 16px;
+  padding: 12px;
+  background: #202444;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.card-levels ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card-levels li::before { content: "• "; color: var(--legendary) }
+
+.flip-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+}

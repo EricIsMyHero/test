@@ -1,10 +1,10 @@
 {
-  "types": {
+  "chart-types": {
     "Warrior": 5,
     "Mage": 3,
     "Archer": 2
   },
-  "rarities": {
+  "chart-rarities": {
     "Mundane": 10,
     "Familiar": 4,
     "Arcane": 3,
@@ -12,7 +12,7 @@
     "Legendary": 1,
     "Ethereal": 1
   },
-  "roles": {
+  "chart-roles": {
     "Tank": 3,
     "Support": 2,
     "Damage": 6

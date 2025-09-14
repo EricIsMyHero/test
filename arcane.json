@@ -3,7 +3,7 @@
     "name": "Hamm",
     "type": ["Heyvan"],
     "rarity": "Arcane",
-    "flavorText": "Kəndin ən cəsur döyüşçüsü.",
+    "note": "Tank",
     "isHybrid": false,
     "isMulti": false,
     "stats": {
@@ -37,7 +37,7 @@
     "name": "M-M",
     "type": ["Robot"],
     "rarity": "Arcane",
-    "flavorText": "Kəndin ən cəsur döyüşçüsü.",
+    "note": "Savaşcı",
     "isHybrid": false,
     "isMulti": false,
     "stats": {

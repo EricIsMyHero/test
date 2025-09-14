@@ -1,0 +1,20 @@
+{
+  "types": {
+    "Warrior": 5,
+    "Mage": 3,
+    "Archer": 2
+  },
+  "rarities": {
+    "Mundane": 10,
+    "Familiar": 4,
+    "Arcane": 3,
+    "Mythic": 2,
+    "Legendary": 1,
+    "Ethereal": 1
+  },
+  "roles": {
+    "Tank": 3,
+    "Support": 2,
+    "Damage": 6
+  }
+}

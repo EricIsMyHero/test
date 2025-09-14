@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="az">
-<head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Clash-A-Mana</title> 
-  <link rel="stylesheet" href="styles.css"> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clash-A-Mana</title>
+  <!-- Xarici stil cədvəli əlavə edin -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome ikonasını əlavə edin -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
   <div class="wrap" id="main-content">
@@ -31,7 +33,7 @@
         </div>
         <button id="back-to-menu-btn" class="back-button">Geri</button>
       </header>
-
+      
       <div class="controls">
         <button id="filter-all" class="active">Bütün Kartlar</button>
         <button id="filter-mundane">Mundane</button>
@@ -41,10 +43,25 @@
         <button id="filter-legendary">Legendary</button>
         <button id="filter-ethereal">Ethereal</button>
       </div>
-
-      <section class="grid" id="cards"></section>
+      
+      <div class="search-sort-controls">
+        <input type="text" id="search-input" placeholder="Kart axtar...">
+        <label for="sort-select">Sırala:</label>
+        <select id="sort-select">
+          <option value="name">Adına görə (A-Z)</option>
+          <option value="health">Cana görə</option>
+          <option value="damage">Hasara görə</option>
+          <option value="mana">Manaya görə</option>
+          <option value="speed">Sürətə görə</option>
+          <option value="rarity">Nadirlikə görə</option>
+        </select>
+      </div>
+      
+      <div id="cards" class="cards-container"></div>
     </section>
   </div>
+
+  <!-- Xarici JavaScript faylı əlavə edin -->
   <script src="script.js"></script>
 </body>
 </html>

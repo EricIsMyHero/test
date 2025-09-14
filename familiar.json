@@ -3,7 +3,7 @@
     "name": "Albert",
     "type": ["İnsan"],
     "rarity": "Familiar",
-    "flavorText": "Tank",
+    "note": "Tank",
     "isHybrid": false,
     "isMulti": false,
     "stats": {
@@ -37,7 +37,7 @@
     "name": "Venomspike",
     "type": ["Heyvan"],
     "rarity": "Familiar",
-    "flavorText": "Kəndin ən cəsur döyüşçüsü.",
+    "note": "Kəndin ən cəsur döyüşçüsü.",
     "isHybrid": false,
     "isMulti": false,
     "stats": {
@@ -71,7 +71,7 @@
     "name": "Starcaller",
     "type": ["Varlıq"],
     "rarity": "Familiar",
-    "flavorText": "Kəndin ən cəsur döyüşçüsü.",
+    "note": "Tank",
     "isHybrid": false,
     "isMulti": false,
     "stats": {

@@ -18,12 +18,12 @@ let currentSort = 'name';
 
 // Faylların adları nadirlikə görə
 const rarityFiles = {
-  'mundane': 'https://s.g-c.io/shared/artifacts/uploaded/oyun-main.zip/oyun-main/mundane.json',
-  'familiar': 'https://s.g-c.io/shared/artifacts/uploaded/oyun-main.zip/oyun-main/familiar.json',
-  'arcane': 'https://s.g-c.io/shared/artifacts/uploaded/oyun-main.zip/oyun-main/arcane.json',
-  'mythic': 'https://s.g-c.io/shared/artifacts/uploaded/oyun-main.zip/oyun-main/mythic.json',
-  'legendary': 'https://s.g-c.io/shared/artifacts/uploaded/oyun-main.zip/oyun-main/legendary.json',
-  'ethereal': 'https://s.g-c.io/shared/artifacts/uploaded/oyun-main.zip/oyun-main/ethereal.json'
+  'mundane': 'mundane.json',
+  'familiar': 'familiar.json',
+  'arcane': 'arcane.json',
+  'mythic': 'mythic.json',
+  'legendary': 'legendary.json',
+  'ethereal': 'ethereal.json'
 };
 
 // Menyu və kart bölmələri arasında keçid
@@ -54,7 +54,7 @@ async function loadAllCards() {
       console.error(`Fayl yüklənərkən xəta: ${url}`, error);
       return [];
     }));
-    
+
     const results = await Promise.all(fetchPromises);
     allCardsData = results.flat();
     console.log("Bütün kartlar uğurla yükləndi.");
@@ -69,14 +69,14 @@ async function loadAllCards() {
 function createCardElement(data) {
   const cardContainer = document.createElement('article');
   cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
-  
-  if (data.isHybrid || data.isMulti) {
+
+  if (data.isMulti) {
     const cardInner = document.createElement('div');
     cardInner.className = 'card-inner';
 
     const cardFront = createCardContent(data);
     cardFront.classList.add('card-front');
-    
+
     const cardBack = createCardContent(data.secondForm);
     cardBack.classList.add('card-back');
 
@@ -85,56 +85,96 @@ function createCardElement(data) {
     cardContainer.appendChild(cardInner);
 
     cardContainer.addEventListener('click', (e) => {
+      // Flip button'a basanda kartın çevrilməsini təmin edir
       cardContainer.classList.toggle('is-flipped');
     });
   } else {
-    const cardSingle = createCardContent(data);
-    cardSingle.classList.add('card-single');
-    cardContainer.appendChild(cardSingle);
+    const singleCard = createCardContent(data);
+    singleCard.classList.add('card-single');
+    cardContainer.appendChild(singleCard);
   }
+
+  if (data.rarity.toLowerCase() === 'ethereal') {
+    const glowDiv = document.createElement('div');
+    glowDiv.className = 'card-glow';
+    glowDiv.setAttribute('aria-hidden', 'true');
+    cardContainer.appendChild(glowDiv);
+  }
+
   return cardContainer;
 }
 
-// Kartın daxili məzmununu yaratmaq üçün funksiya
+// Kartın iç məzmununu yaradan köməkçi funksiya
 function createCardContent(data) {
-  const cardDiv = document.createElement('div');
-  cardDiv.className = 'card-content';
-  
-  const cardBody = document.createElement('div');
-  cardBody.className = 'card-body';
-  cardBody.innerHTML = `
-    <h2>${data.name}</h2>
-    <p>${data.type.join(' / ')}</p>
-    <p>Nadirlik: ${data.rarity}</p>
-    <p>Qeyd: ${data.note}</p>
+  const content = document.createElement('div');
+  const badgeText = data.isHybrid ? `${data.type[0]}/${data.type[1]}` : data.type[0];
+  content.innerHTML = `
+    <div class="stripe"></div>
+    <div class="head">
+      <div class="name">
+        ${data.name}
+        ${data.note ? `<span class="note">${data.note}</span>` : ""}
+      </div>
+      <span class="badge">${badgeText}</span>
+    </div>
+
+    <div class="card-tabs">
+      <button class="active" data-section="main-stats">Əsas</button>
+      <button data-section="additional-stats">Əlavə</button>
+      <button data-section="trait">Özəllik</button>
+      <button data-section="showlevels">Səviyyələr</button>
+    </div>
+
+    <div class="stats-section visible" data-section-id="main-stats">
+      <div class="stat-item"><b>Can <i class="fa-solid fa-heart"></i></b><span>${data.stats.health}</span></div>
+      <div class="stat-item"><b>Qalxan <i class="fa-solid fa-shield-halved"></i></b><span>${data.stats.shield}</span></div>
+      <div class="stat-item"><b>Hasar <i class="fa-solid fa-hand-fist"></i></b><span>${data.stats.damage}</span></div>
+      <div class="stat-item"><b>S.B.H <i class="fa-solid fa-bolt"></i></b><span>${data.stats.sps}</span></div>
+      <div class="stat-item"><b>Saldırı Hızı <i class="fa-solid fa-tachometer-alt"></i></b><span>${data.stats.attackSpeed}</span></div>
+      <div class="stat-item"><b>Gecikmə <i class="fa-solid fa-clock"></i></b><span>${data.stats.delay}</span></div>
+      <div class="stat-item"><b>Mana <i class="fa-solid fa-certificate"></i></b><span>${data.stats.mana}</span></div>
+      <div class="stat-item"><b>Say <i class="fa-solid fa-user"></i></b><span>${data.stats.number}</span></div>
+    </div>
+
+    <div class="stats-section" data-section-id="additional-stats">
+      <div class="stat-item"><b>Menzil <i class="fa-solid fa-road"></i></b><span>${data.additionalStats.range}</span></div>
+      <div class="stat-item"><b>Hız <i class="fa-solid fa-person-running"></i></b><span>${data.additionalStats.speed}</span></div>
+      <div class="stat-item"><b>Kritik Şansı <i class="fa-solid fa-percent"></i></b><span>${data.additionalStats.criticalChance}</span></div>
+      <div class="stat-item"><b>Kritik Hasar <i class="fa-solid fa-crosshairs"></i></b><span>${data.additionalStats.criticDamage}</span></div>
+      <div class="stat-item"><b>C.Çalma Şansı <i class="fa-solid fa-percent "></i></b><span>${data.additionalStats.lifestealChance}</span></div>
+      <div class="stat-item"><b>Can Çalma <i class="fa-solid fa-skull-crossbones "></i></b><span>${data.additionalStats.lifesteal}</span></div>
+      <div class="stat-item"><b>Hasar Azaltma <i class="fa-solid fa-helmet-un "></i></b><span>${data.additionalStats.damageminimiser}</span></div>
+      <div class="stat-item"><b>Sıyrılma Şansı <i class="fa-solid fa-wind "></i></b><span>${data.additionalStats.dodge}</span></div>
+    </div>
+
+    <div class="stats-section" data-section-id="trait">
+      <div class="trait trait-center">${data.trait}</div>
+    </div>
+
+    <div class="stats-section" data-section-id="showlevels">
+      <div class="stat-item"><b>Səviyyə 1</b><span>${data.showlevels.level1}</span></div>
+      <div class="stat-item"><b>Səviyyə 2</b><span>${data.showlevels.level2}</span></div>
+      <div class="stat-item"><b>Səviyyə 3</b><span>${data.showlevels.level3}</span></div>
+    </div>
   `;
 
-  const cardStats = document.createElement('div');
-  cardStats.className = 'card-stats';
-  cardStats.innerHTML = `
-    <div class="stat-item"><h3>${data.stats.health}</h3><p>Can</p></div>
-    <div class="stat-item"><h3>${data.stats.damage}</h3><p>Hasar</p></div>
-    <div class="stat-item"><h3>${data.stats.mana}</h3><p>Mana</p></div>
-  `;
-  
-  const cardTrait = document.createElement('div');
-  cardTrait.className = 'card-trait';
-  cardTrait.innerHTML = `<p>${data.trait}</p>`;
-  
-  const cardLevels = document.createElement('div');
-  cardLevels.className = 'card-levels';
-  const levelList = data.showlevels ? `<ul>${Object.values(data.showlevels).map(level => `<li>${level}</li>`).join('')}</ul>` : '';
-  cardLevels.innerHTML = `
-    <h4>Səviyyə artırımı</h4>
-    ${levelList}
-  `;
+  const cardButtons = content.querySelectorAll('.card-tabs button');
+  cardButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const sectionId = button.dataset.section;
 
-  cardDiv.appendChild(cardBody);
-  cardDiv.appendChild(cardStats);
-  cardDiv.appendChild(cardTrait);
-  cardDiv.appendChild(cardLevels);
-  
-  return cardDiv;
+      cardButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      content.querySelectorAll('.stats-section').forEach(section => {
+        section.classList.remove('visible');
+      });
+      content.querySelector(`[data-section-id="${sectionId}"]`).classList.add('visible');
+    });
+  });
+
+  return content;
 }
 
 // Kartları süzgəcdən keçirib render etmək
@@ -148,8 +188,8 @@ function updateCardDisplay() {
 
   // Axtarış süzgəci
   if (currentSearch) {
-    filteredCards = filteredCards.filter(card => 
-      card.name.toLowerCase().includes(currentSearch.toLowerCase()) || 
+    filteredCards = filteredCards.filter(card =>
+      card.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
       (card.note && card.note.toLowerCase().includes(currentSearch.toLowerCase()))
     );
   }
@@ -222,6 +262,10 @@ sortSelect.addEventListener('change', (e) => {
     modal.style.zIndex = '1000';
     modal.textContent = "Bu bölmə hələ hazır deyil.";
     document.body.appendChild(modal);
-    setTimeout(() => { document.body.removeChild(modal); }, 3000);
+    setTimeout(() => {
+      document.body.removeChild(modal);
+    }, 3000);
   });
 });
+
+document.addEventListener('DOMContentLoaded', showMenu);

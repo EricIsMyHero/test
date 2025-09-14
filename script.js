@@ -69,12 +69,13 @@ function createCardContent(data) {
     content.innerHTML = `
         <div class="stripe"></div>
         <div class="head">
-            <div class="name">
-                <h2>${data.name}</h2>
-                ${data.flavorText ? `<span class="flavor-text">${data.flavorText}</span>` : ''}
-            </div>
-            <span class="badge">${badgeText}</span>
-        </div>
+    <div class="name">
+        ${data.name}
+        ${data.note ? `<span class="note">${data.note}</span>` : ""}
+    </div>
+    <span class="badge">${badgeText}</span>
+</div>
+
         <div class="card-tabs">
             <button class="active" data-section="main-stats">Əsas</button>
             <button data-section="additional-stats">Əlavə</button>

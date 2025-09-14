@@ -3,7 +3,7 @@
     "name": "Hammies",
     "type": ["Heyvan"],
     "rarity": "Mundane",
-    "flavorText": "Kəndin ən cəsur döyüşçüsü.",
+    "note": "Kəndin ən cəsur döyüşçüsü.",
     "isHybrid": false,
     "isMulti": false,
     "stats": {
@@ -37,7 +37,7 @@
     "name": "Aegis Guard",
     "type": ["Varlıq"],
     "rarity": "Mundane",
-    "flavorText": "Kəndin ən cəsur döyüşçüsü.",
+    "note": "Kəndin ən cəsur döyüşçüsü.",
     "isHybrid": false,
     "isMulti": false,
     "stats": {

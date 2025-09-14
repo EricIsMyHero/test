@@ -187,6 +187,8 @@ async function fetchAndRender(rarity) {
     renderCards(cardsData);
   } catch (error) {
     console.error('Məlumatları yükləmə zamanı xəta:', error);
+    // You were passing the 'error' object, which is not an array, to renderCards.
+    // Instead, display an error message directly.
     cardsContainer.innerHTML = '<p style="color:red;">Kart məlumatları yüklənərkən xəta baş verdi.</p>';
   }
 }

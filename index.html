@@ -22,7 +22,7 @@
 
     <!-- Kartlar Bölməsi -->
     <section id="cards-section" class="hidden">
-            <header class="card-title-header">
+      <header class="card-title-header">
         <div>
           <h1>Kartlar – Vizual demo</h1>
           <div class="hint">
@@ -31,13 +31,14 @@
         </div>
         <button id="back-to-menu-btn" class="back-button">Geri</button>
       </header>
-      
-      <section id="stats-section" class="hidden">
-  <canvas id="chart-types"></canvas>
-  <canvas id="chart-rarities"></canvas>
-  <canvas id="chart-roles"></canvas>
-</section>
 
+      <!-- Statistik Bölmə -->
+      <section id="stats-section" class="hidden">
+        <h2>Statistik</h2>
+        <canvas id="chart-types"></canvas>
+        <canvas id="chart-rarities"></canvas>
+        <canvas id="chart-roles"></canvas>
+      </section>
 
       <div class="controls">
         <button id="filter-all" class="active">Bütün Kartlar</button>
@@ -47,14 +48,15 @@
         <button id="filter-mythic">Mythic</button>
         <button id="filter-legendary">Legendary</button>
         <button id="filter-ethereal">Ethereal</button>
-        <button id="filter-show-stats">Statistik</button>
+        <button id="show-stats">Statistik</button>
       </div>
 
       <section class="grid" id="cards"></section>
     </section>
   </div>
-  <script src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

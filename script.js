@@ -7,14 +7,14 @@ const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 
 function showMenu() {
-  mainMenu.classList.remove('hidden');
-  cardsSection.classList.add('hidden');
+    mainMenu.classList.remove('hidden');
+    cardsSection.classList.add('hidden');
 }
 
 function showCards() {
-  mainMenu.classList.add('hidden');
-  cardsSection.classList.remove('hidden');
-  fetchAndRender('all');
+    mainMenu.classList.add('hidden');
+    cardsSection.classList.remove('hidden');
+    fetchAndRender('all');
 }
 
 // Kart yaratmaq üçün əsas funksiya
@@ -139,7 +139,8 @@ function createCardContent(data) {
 // Kartları render edən funksiya
 function renderCards(cardsToRender) {
     cardsContainer.innerHTML = '';
-    if (cardsToRender.length === 0) {
+    // Use Array.isArray() check for safety
+    if (!Array.isArray(cardsToRender) || cardsToRender.length === 0) {
         cardsContainer.innerHTML = '<p>Bu endərlikdə kart tapılmadı.</p>';
         return;
     }
@@ -150,79 +151,77 @@ function renderCards(cardsToRender) {
 
 // Məlumatları endərliyə görə çəkən və göstərən funksiya
 async function fetchAndRender(rarity) {
-  cardsContainer.innerHTML = '<p>Yüklənir...</p>';
-  try {
-    let cardsData = [];
-    if (rarity === 'all') {
-      const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
-      const fetchPromises = rarities.map(r =>
-        fetch(`${r}.json`).then(async res => {
-          if (!res.ok) {
-            if (res.status === 404) {
-              console.warn(`${r}.json tapılmadı, bu endərlik ötürülür.`);
-              return [];
-            }
-            throw new Error(`${r}.json yüklənmədi`);
-          }
-          const text = await res.text();
-          return text ? JSON.parse(text) : [];
-        })
-      );
-      const results = await Promise.all(fetchPromises);
-      cardsData = results.flat();
-    } else {
-      const response = await fetch(`${rarity}.json`);
-      if (!response.ok) {
-        if (response.status === 404) {
-          console.warn(`${rarity}.json tapılmadı.`);
-          cardsData = [];
+    cardsContainer.innerHTML = '<p>Yüklənir...</p>';
+    try {
+        let cardsData = [];
+        if (rarity === 'all') {
+            const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
+            const fetchPromises = rarities.map(r =>
+                fetch(`${r}.json`).then(async res => {
+                    if (!res.ok) {
+                        if (res.status === 404) {
+                            console.warn(`${r}.json tapılmadı, bu endərlik ötürülür.`);
+                            return [];
+                        }
+                        throw new Error(`${r}.json yüklənmədi`);
+                    }
+                    const text = await res.text();
+                    return text ? JSON.parse(text) : [];
+                })
+            );
+            const results = await Promise.all(fetchPromises);
+            cardsData = results.flat();
         } else {
-          throw new Error(`HTTP xətası! Status: ${response.status}`);
+            const response = await fetch(`${rarity}.json`);
+            if (!response.ok) {
+                if (response.status === 404) {
+                    console.warn(`${rarity}.json tapılmadı.`);
+                    cardsData = [];
+                } else {
+                    throw new Error(`HTTP xətası! Status: ${response.status}`);
+                }
+            } else {
+                const text = await response.text();
+                cardsData = text ? JSON.parse(text) : [];
+            }
         }
-      } else {
-        const text = await response.text();
-        cardsData = text ? JSON.parse(text) : [];
-      }
+        renderCards(cardsData);
+    } catch (error) {
+        console.error('Məlumatları yükləmə zamanı xəta:', error);
+        cardsContainer.innerHTML = '<p style="color:red;">Kart məlumatları yüklənərkən xəta baş verdi.</p>';
     }
-    renderCards(cardsData);
-  } catch (error) {
-    console.error('Məlumatları yükləmə zamanı xəta:', error);
-    // You were passing the 'error' object, which is not an array, to renderCards.
-    // Instead, display an error message directly.
-    cardsContainer.innerHTML = '<p style="color:red;">Kart məlumatları yüklənərkən xəta baş verdi.</p>';
-  }
 }
 
 
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 
-['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',()=>{
-    const modal=document.createElement('div');
-    modal.style.position='fixed';
-    modal.style.top='50%';
-    modal.style.left='50%';
-    modal.style.transform='translate(-50%, -50%)';
-    modal.style.padding='20px';
-    modal.style.backgroundColor='var(--card)';
-    modal.style.color='var(--text)';
-    modal.style.borderRadius='12px';
-    modal.style.boxShadow='var(--shadow)';
-    modal.style.zIndex='1000';
-    modal.textContent="Bu bölmə hələ hazır deyil.";
-    document.body.appendChild(modal);
-    setTimeout(()=>{document.body.removeChild(modal);},3000);
-  });
+['show-spells-btn', 'show-boosters-btn', 'show-towers-btn'].forEach(id => {
+    document.getElementById(id).addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = '50%';
+        modal.style.left = '50%';
+        modal.style.transform = 'translate(-50%, -50%)';
+        modal.style.padding = '20px';
+        modal.style.backgroundColor = 'var(--card)';
+        modal.style.color = 'var(--text)';
+        modal.style.borderRadius = '12px';
+        modal.style.boxShadow = 'var(--shadow)';
+        modal.style.zIndex = '1000';
+        modal.textContent = "Bu bölmə hələ hazır deyil.";
+        document.body.appendChild(modal);
+        setTimeout(() => { document.body.removeChild(modal); }, 3000);
+    });
 });
 
 filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const rarity = button.id.split('-')[1];
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    fetchAndRender(rarity);
-  });
+    button.addEventListener('click', () => {
+        const rarity = button.id.split('-')[1];
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        fetchAndRender(rarity);
+    });
 });
 
 document.addEventListener('DOMContentLoaded', showMenu);
@@ -231,47 +230,47 @@ const statsSection = document.getElementById('stats-section');
 const showStatsBtn = document.getElementById('show-stats');
 
 showStatsBtn.addEventListener('click', () => {
-  mainMenu.classList.add('hidden');
-  cardsSection.classList.add('hidden');
-  statsSection.classList.remove('hidden');
-  renderCharts();
+    mainMenu.classList.add('hidden');
+    cardsSection.classList.add('hidden');
+    statsSection.classList.remove('hidden');
+    renderCharts();
 });
 
 function renderCharts() {
-  // 1. Kart tipləri
-  new Chart(document.getElementById('chart-types'), {
-    type: 'pie',
-    data: {
-      labels: ['Heyvan', 'Robot', 'İnsan'],
-      datasets: [{
-        data: [5, 3, 7],
-        backgroundColor: ['#ff9999','#66b3ff','#99ff99']
-      }]
-    }
-  });
+    // 1. Kart tipləri
+    new Chart(document.getElementById('chart-types'), {
+        type: 'pie',
+        data: {
+            labels: ['Heyvan', 'Robot', 'İnsan'],
+            datasets: [{
+                data: [5, 3, 7],
+                backgroundColor: ['#ff9999', '#66b3ff', '#99ff99']
+            }]
+        }
+    });
 
-  // 2. Endərliklər
-  new Chart(document.getElementById('chart-rarities'), {
-    type: 'bar',
-    data: {
-      labels: ['Mundane', 'Familiar', 'Arcane', 'Mythic', 'Legendary', 'Ethereal'],
-      datasets: [{
-        label: 'Kart Sayı',
-        data: [10, 8, 12, 6, 4, 2],
-        backgroundColor: '#8a92b2'
-      }]
-    }
-  });
+    // 2. Endərliklər
+    new Chart(document.getElementById('chart-rarities'), {
+        type: 'bar',
+        data: {
+            labels: ['Mundane', 'Familiar', 'Arcane', 'Mythic', 'Legendary', 'Ethereal'],
+            datasets: [{
+                label: 'Kart Sayı',
+                data: [10, 8, 12, 6, 4, 2],
+                backgroundColor: '#8a92b2'
+            }]
+        }
+    });
 
-  // 3. Vəzifələr
-  new Chart(document.getElementById('chart-roles'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Hücum', 'Müdafiə', 'Dəstək'],
-      datasets: [{
-        data: [7, 5, 6],
-        backgroundColor: ['#ffcc99','#c2c2f0','#ffb3e6']
-      }]
-    }
-  });
+    // 3. Vəzifələr
+    new Chart(document.getElementById('chart-roles'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Hücum', 'Müdafiə', 'Dəstək'],
+            datasets: [{
+                data: [7, 5, 6],
+                backgroundColor: ['#ffcc99', '#c2c2f0', '#ffb3e6']
+            }]
+        }
+    });
 }

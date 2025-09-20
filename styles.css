@@ -4,19 +4,24 @@
   --muted: #8a92b2;
   --text: #eaf0ff;
   --ring: #ffffff20;
-  --shadow: 0 10px 30px rgba(0,0,0,.35);
-
-  /* Nadirlik rəngləri */
-  --mundane: #CCCCCC;
-  --familiar: #4CAF50;
-  --arcane: #7E57C2;
-  --mythic: #E53935;
-  --legendary: #FBC02D;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --mundane: #cccccc;
+  --familiar: #4caf50;
+  --arcane: #7e57c2;
+  --mythic: #e53935;
+  --legendary: #fbc02d;
   --ethereal: #ff007f;
 }
 
-* { box-sizing: border-box }
-html, body { height: 100% }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   background: radial-gradient(1200px 700px at 20% 0%, #1a1f3f, #0f1220 60%);
@@ -24,39 +29,77 @@ body {
   font-family: ui-sans-serif, system-ui, Segoe UI, Roboto;
 }
 
-.wrap { max-width: 1200px; margin: 32px auto; padding: 16px }
-header { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 18px }
-h1 { font-size: 28px; margin: 0; letter-spacing: .2px }
-.hint { color: var(--muted); font-size: 14px }
-
-.controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px }
-button {
-  background: #22284f; color: var(--text);
-  border: 1px solid #2f3769; border-radius: 12px;
-  padding: 10px 14px; cursor: pointer;
-  box-shadow: var(--shadow); transition: .25s ease;
+.wrap {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 16px;
 }
-button:hover { transform: translateY(-1px); box-shadow: 0 14px 40px rgba(0,0,0,.45) }
+
+header {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: 28px;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+button {
+  background: #22284f;
+  color: var(--text);
+  border: 1px solid #2f3769;
+  border-radius: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+
 button.active {
   background: #394073;
   border-color: #5d66a2;
 }
 
 .grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
 }
 
-/* Əsas kart konteyneri */
 .card-container {
   position: relative;
   width: 100%;
-  height: 340px; /* Bütün kartlar üçün sabit hündürlük */
+  height: 340px;
   perspective: 1000px;
 }
-.card-container:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(0,0,0,.5) }
 
-/* Fırlanma effekti üçün daxili konteyner */
+.card-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);
+}
+
 .card-inner {
   position: relative;
   width: 100%;
@@ -65,12 +108,13 @@ button.active {
   transition: transform 0.8s;
   transform-style: preserve-3d;
 }
+
 .card-container.is-flipped .card-inner {
   transform: rotateY(180deg);
 }
 
-/* Kartın iki tərəfi */
-.card-front, .card-back {
+.card-front,
+.card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -81,11 +125,11 @@ button.active {
   padding: 14px;
   box-shadow: var(--shadow);
 }
+
 .card-back {
   transform: rotateY(180deg);
 }
 
-/* Tək tərəfli kartın əsas stilləri */
 .card-single {
   position: relative;
   width: 100%;
@@ -95,11 +139,14 @@ button.active {
   border: 1px solid #2a2f57;
   padding: 14px;
   box-shadow: var(--shadow);
-  transition: transform .25s ease, box-shadow .25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.card-single:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(0,0,0,.5) }
 
-/* Fırlatma düyməsi */
+.card-single:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);
+}
+
 .flip-button {
   position: absolute;
   bottom: 14px;
@@ -116,103 +163,212 @@ button.active {
   justify-content: center;
   transition: transform 0.2s ease-in-out;
 }
+
 .flip-button:hover {
   transform: scale(1.1);
 }
+
 .flip-button::before {
-  content: '⇌';
+  content: "⇌";
   font-size: 20px;
   color: white;
   display: block;
   transform: scaleX(-1);
 }
+
 .card-container.is-flipped .flip-button::before {
   transform: scaleX(1);
 }
 
-/* Digər köhnə stillər */
-.card-front::after, .card-single::after {
-  content: ""; position: absolute; inset: -2px; border-radius: 20px;
-  pointer-events: none; border: 2px solid var(--ring); filter: blur(4px);
-  opacity: .5; z-index: -1;
+.card-front::after,
+.card-single::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  pointer-events: none;
+  border: 2px solid var(--ring);
+  filter: blur(4px);
+  opacity: 0.5;
+  z-index: -1;
 }
 
-.head { display: flex; justify-content: space-between; margin-bottom: 10px }
-.name { font-weight: 700; letter-spacing: .3px }
-.badge { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px solid #ffffff2b }
-.card-tabs { display: flex; justify-content: center; margin-bottom: 8px; gap: 8px }
+.head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.name {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid #ffffff2b;
+}
+
+.card-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
 .card-tabs button {
-  background: #1e244a; color: #c9d3ff; border: 1px solid #2b3264;
-  font-size: 11px; padding: 6px 12px; border-radius: 12px;
-  cursor: pointer; transition: background .2s ease;
+  background: #1e244a;
+  color: #c9d3ff;
+  border: 1px solid #2b3264;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
-.card-tabs button.active { background: #2b3264; color: #fff }
 
-/* Bütün statistikalar bölmələri üçün ümumi stil */
+.card-tabs button.active {
+  background: #2b3264;
+  color: #fff;
+}
+
 .stats-section {
-    display: none;
-    border-radius: 12px;
-    padding: 8px;
-    background: #111636;
-    border: 1px solid #252c59;
+  display: none;
+  border-radius: 12px;
+  padding: 8px;
+  background: #111636;
+  border: 1px solid #252c59;
 }
 
-/* Əsas və Əlavə statistikalar üçün grid düzülüşü */
 .stats-section[data-section-id="main-stats"].visible,
 .stats-section[data-section-id="additional-stats"].visible {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
-/* Özəllik və Səviyyələr üçün blok düzülüşü (alt-alta) */
 .stats-section[data-section-id="trait"].visible,
 .stats-section[data-section-id="showlevels"].visible {
-    display: block;
+  display: block;
 }
 
-.stat-item { padding: 4px }
-.stat-item b { display: block; font-size: 12px; color: #c6ceff; margin-bottom: 4px }
-.stat-item span { font-size: 13px }
-.trait-center { text-align: center }
+.stat-item {
+  padding: 4px;
+}
 
-/* color-mix istifadə edilən yerlərdə əvəzləmələr: */
-.r-mundane { box-shadow: 0 6px 28px rgba(204,204,204,0.35); }
-.r-familiar { box-shadow: 0 6px 28px rgba(76,175,80,0.35); }
-.r-arcane { box-shadow: 0 6px 28px rgba(126,87,194,0.35); }
-.r-mythic { box-shadow: 0 6px 28px rgba(229,57,53,0.35); }
-.r-legendary { box-shadow: 0 6px 28px rgba(251,192,45,0.35); }
-.r-ethereal { box-shadow: 0 6px 28px rgba(255,0,127,0.35); }
+.stat-item b {
+  display: block;
+  font-size: 12px;
+  color: #c6ceff;
+  margin-bottom: 4px;
+}
 
-/* Stripe (yuxarı rəng xətti) */
+.stat-item span {
+  font-size: 13px;
+}
+
+.trait-center {
+  text-align: center;
+}
+
+.r-mundane {
+  box-shadow: 0 6px 28px rgba(204, 204, 204, 0.35);
+}
+
+.r-familiar {
+  box-shadow: 0 6px 28px rgba(76, 175, 80, 0.35);
+}
+
+.r-arcane {
+  box-shadow: 0 6px 28px rgba(126, 87, 194, 0.35);
+}
+
+.r-mythic {
+  box-shadow: 0 6px 28px rgba(229, 57, 53, 0.35);
+}
+
+.r-legendary {
+  box-shadow: 0 6px 28px rgba(251, 192, 45, 0.35);
+}
+
+.r-ethereal {
+  box-shadow: 0 6px 28px rgba(255, 0, 127, 0.35);
+}
+
 .stripe {
   height: 6px;
   border-radius: 12px;
   margin: -14px -14px 10px;
-  opacity: .9;
+  opacity: 0.9;
 }
-.r-mundane .stripe { background: var(--mundane) }
-.r-familiar .stripe { background: var(--familiar) }
-.r-arcane .stripe { background: var(--arcane) }
-.r-mythic .stripe { background: var(--mythic) }
-.r-legendary .stripe { background: var(--legendary) }
+
+.r-mundane .stripe {
+  background: var(--mundane);
+}
+
+.r-familiar .stripe {
+  background: var(--familiar);
+}
+
+.r-arcane .stripe {
+  background: var(--arcane);
+}
+
+.r-mythic .stripe {
+  background: var(--mythic);
+}
+
+.r-legendary .stripe {
+  background: var(--legendary);
+}
+
 .r-ethereal .stripe {
-  background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #ffd1ff, #ffecb3, #c3f5d5);
+  background: linear-gradient(
+    90deg,
+    #ff9a9e,
+    #fad0c4,
+    #fad0c4,
+    #ffd1ff,
+    #ffecb3,
+    #c3f5d5
+  );
   background-size: 600% 100%;
   animation: ethereal-animate 10s linear infinite;
 }
 
-/* Kart adını rəngləndirən yeni stil */
-.r-mundane .name { color: var(--mundane) }
-.r-familiar .name { color: var(--familiar) }
-.r-arcane .name { color: var(--arcane) }
-.r-mythic .name { color: var(--mythic) }
-.r-legendary .name { color: var(--legendary) }
+.r-mundane .name {
+  color: var(--mundane);
+}
 
-/* Gradient teext effekti alınmayan brauzerlər üçün ehtiyat rəng */
+.r-familiar .name {
+  color: var(--familiar);
+}
+
+.r-arcane .name {
+  color: var(--arcane);
+}
+
+.r-mythic .name {
+  color: var(--mythic);
+}
+
+.r-legendary .name {
+  color: var(--legendary);
+}
+
 .r-ethereal .name {
   color: var(--ethereal);
-  background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #ffd1ff, #ffecb3, #c3f5d5);
+  background: linear-gradient(
+    90deg,
+    #ff9a9e,
+    #fad0c4,
+    #fad0c4,
+    #ffd1ff,
+    #ffecb3,
+    #c3f5d5
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -221,68 +377,181 @@ button.active {
 }
 
 @keyframes ethereal-animate {
-  0% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* Halo və halqa effektləri */
-.card-front::after, .card-single::after {
-content: "";
-position: absolute;
-inset: -2px;
-border-radius: 20px;
-pointer-events: none;
-border: 2px solid var(--ring);
-filter: blur(4px);
-opacity: .5;
-z-index: -1;
+.card-front::after,
+.card-single::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  pointer-events: none;
+  border: 2px solid var(--ring);
+  filter: blur(4px);
+  opacity: 0.5;
+  z-index: -1;
 }
 
-/* Əsas menyu və geri düyməsi */
 .main-menu {
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-height: 100vh;
-text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
 }
-.main-menu h1 { font-size: 48px; margin-bottom: 24px; text-shadow: 0 0 15px rgba(255,255,255,.2) }
-.menu-buttons { display: flex; flex-direction: column; gap: 16px; width: 80%; max-width: 300px }
 
-.hidden { display: none !important }
+.main-menu h1 {
+  font-size: 48px;
+  margin-bottom: 24px;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 80%;
+  max-width: 300px;
+}
+
+.hidden {
+  display: none !important;
+}
 
 .card-title-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 18px;
-}
-.back-button {
-background: transparent;
-border: 1px solid var(--muted);
-color: var(--muted);
-font-size: 14px;
-padding: 8px 16px;
-border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
-/* Ethereal parıltısı üçün əlavə glow */
+.back-button {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
 .card-glow {
-position: absolute;
-inset: -8px;
-border-radius: 16px;
-pointer-events: none;
-background: radial-gradient(120px 80px at 80% 0%, rgba(255,0,127,.35), transparent 70%),
-radial-gradient(120px 80px at 0% 100%, rgba(255,220,120,.25), transparent 70%);
-filter: blur(8px);
-opacity: .9;
-z-index: -1;
+  position: absolute;
+  inset: -8px;
+  border-radius: 16px;
+  pointer-events: none;
+  background: radial-gradient(
+      120px 80px at 80% 0%,
+      rgba(255, 0, 127, 0.35),
+      transparent 70%
+    ),
+    radial-gradient(
+      120px 80px at 0% 100%,
+      rgba(255, 220, 120, 0.25),
+      transparent 70%
+    );
+  filter: blur(8px);
+  opacity: 0.9;
+  z-index: -1;
 }
 
 .name .note {
   font-size: 0.75em;
-  color: #CCCCCC;
+  color: #cccccc;
   opacity: 0.7;
   margin-left: 3px;
+}
+
+.card-tabs,
+.controls {
+  display: none !important;
+}
+
+#cards-section {
+  display: flex;
+  gap: 16px;
+}
+
+.grid {
+  flex-grow: 1;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  background: #111636;
+  border: 1px solid #2a2f57;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  height: fit-content;
+}
+
+.card-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  background-color: #0f1220;
+  border-radius: 8px 8px 0 0;
+  padding: 12px;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
+}
+
+.card-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-type {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-buttons button {
+  position: relative;
+  background: #2b3264;
+  color: var(--text);
+  border: none;
+  border-radius: 0;
+  padding: 12px 24px 12px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
+}
+
+.sidebar-buttons button:hover {
+  background: #394073;
+}
+
+.sidebar-buttons button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 15px solid #2b3264;
+}
+
+.sidebar-buttons button.active::after {
+  border-right: 15px solid #394073;
 }

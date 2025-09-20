@@ -72,20 +72,10 @@ function createCardElement(data) {
   const cardButtons = document.createElement('div');
   cardButtons.className = 'card-buttons';
   
-  // Düymələri yaradın
-  const mainBtn = createButton('Əsas', 'main');
-  const additionalBtn = createButton('Əlavə', 'additional');
-  const traitBtn = createButton('Özəllik', 'trait');
-  const levelBtn = createButton('Səviyyələr', 'level');
-  
   // Yeni düymələr
   const roleBtn = createButton('Rol', 'role');
   const storyBtn = createButton('Hekayə', 'story');
   
-  cardButtons.appendChild(mainBtn);
-  cardButtons.appendChild(additionalBtn);
-  cardButtons.appendChild(traitBtn);
-  cardButtons.appendChild(levelBtn);
   cardButtons.appendChild(roleBtn);
   cardButtons.appendChild(storyBtn);
   

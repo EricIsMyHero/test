@@ -93,12 +93,7 @@ function createCardContent(data) {
       <span class="badge">${badgeText}</span>
     </div>
 
-    <div class="card-tabs">
-      <button class="active" data-section="main-stats">Əsas</button>
-      <button data-section="additional-stats">Əlavə</button>
-      <button data-section="trait">Özəllik</button>
-      <button data-section="showlevels">Səviyyələr</button>
-    </div>
+    
 
     <div class="stats-section visible" data-section-id="main-stats">
       <div class="stat-item"><b>Can <i class="fa-solid fa-heart"></i></b><span>${data.stats.health}</span></div>

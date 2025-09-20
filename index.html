@@ -1,65 +1,53 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clash-A-Mana</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clash-A-Mana</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-  <div class="wrap" id="main-content">
-    <!-- Əsas Menyu -->
-    <section class="main-menu" id="main-menu">
-      <h1>Clash-A-Mana: Real-Time Test Arena</h1>
-      <div class="menu-buttons">
-        <button id="show-cards-btn">Kartlar</button>
-        <button id="show-spells-btn">Büyülər</button>
-        <button id="show-boosters-btn">Güçləndiricilər</button>
-        <button id="show-towers-btn">Qala silahları</button>
-      </div>
-    </section>
+    <div class="wrap" id="main-content">
+        <section class="main-menu" id="main-menu">
+            <h1>Clash-A-Mana: Real-Time Test Arena</h1>
+            <div class="menu-buttons">
+                <button id="show-cards-btn">Kartlar</button>
+                <button id="show-spells-btn">Büyülər</button>
+                <button id="show-boosters-btn">Gücləndiricilər</button>
+                <button id="show-towers-btn">Qala silahları</button>
+            </div>
+        </section>
 
-    <!-- Kartlar Bölməsi -->
-    <section id="cards-section" class="hidden">
-      <header class="card-title-header">
-        <div>
-          <h1>Kartlar – Vizual demo</h1>
-          <div class="hint">
-            Burada oyunda olacaq bütün kartların ilkin demosu vardır. Unutmayın sadəcə bir DEMO-dur.
-          </div>
-        </div>
-        <button id="back-to-menu-btn" class="back-button">Geri</button>
-      </header>
-      
-      <div class="controls">
-        <button id="filter-all" class="active">Bütün Kartlar</button>
-        <button id="filter-mundane">Mundane</button>
-        <button id="filter-familiar">Familiar</button>
-        <button id="filter-arcane">Arcane</button>
-        <button id="filter-mythic">Mythic</button>
-        <button id="filter-legendary">Legendary</button>
-        <button id="filter-ethereal">Ethereal</button>
-      </div>
-      
-      <div class="search-sort-controls">
-        <input type="text" id="search-input" placeholder="Kart axtar...">
-        <label for="sort-select">Sırala:</label>
-        <select id="sort-select">
-          <option value="name">Adına görə (A-Z)</option>
-          <option value="health">Cana görə</option>
-          <option value="damage">Hasara görə</option>
-          <option value="mana">Manaya görə</option>
-          <option value="speed">Sürətə görə</option>
-          <option value="rarity">Nadirlikə görə</option>
-        </select>
-      </div>
-      
-      <div id="cards" class="cards-container"></div>
-    </section>
-  </div>
+        <section id="cards-section" class="hidden">
+            <header class="card-title-header">
+                <div>
+                    <h1>Kartlar – Vizual demo</h1>
+                    <div class="hint">
+                        Burada oyunda olacaq bütün kartların ilkin demosu vardır. Unutmayın sadəcə bir DEMO-dur.
+                    </div>
+                </div>
+                <button id="back-to-menu-btn" class="back-button">Geri</button>
+            </header>
 
-  <!-- Xarici JavaScript faylı əlavə edin -->
-  <script src="script.js"></script>
+            <aside class="sidebar-container">
+                <div class="card-title-container">
+                    <span class="card-name">Henry</span>
+                    <span class="card-type">Fighter</span>
+                </div>
+                <div class="sidebar-buttons">
+                    <button class="active" data-section="main-stats">Əsas</button>
+                    <button data-section="additional-stats">Əlavə</button>
+                    <button data-section="trait">Özəllik</button>
+                    <button data-section="showlevels">Səviyyə</button>
+                    <button id="role-button">Rol</button>
+                    <button id="story-button">Hekayə</button>
+                </div>
+            </aside>
+
+            <section class="grid" id="cards"></section>
+        </section>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

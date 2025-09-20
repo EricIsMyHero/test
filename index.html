@@ -9,16 +9,15 @@
 </head>
 <body>
     <div class="wrap" id="main-content">
+        <!-- Əsas Menyu -->
         <section class="main-menu" id="main-menu">
-            <h1>Clash-A-Mana: Real-Time Test Arena</h1>
-            <div class="menu-buttons">
+            <h1>Clash-A-Mana: Real-Time Card Arena</h1>
+            <div class="menu-buttons flex flex-col gap-4 w-4/5 max-w-sm mx-auto">
                 <button id="show-cards-btn">Kartlar</button>
-                <button id="show-spells-btn">Büyülər</button>
-                <button id="show-boosters-btn">Gücləndiricilər</button>
-                <button id="show-towers-btn">Qala silahları</button>
             </div>
         </section>
 
+        <!-- Kartlar Bölməsi -->
         <section id="cards-section" class="hidden">
             <header class="card-title-header">
                 <div>
@@ -30,22 +29,26 @@
                 <button id="back-to-menu-btn" class="back-button">Geri</button>
             </header>
 
-            <aside class="sidebar-container">
-                <div class="card-title-container">
-                    <span class="card-name">Henry</span>
-                    <span class="card-type">Fighter</span>
-                </div>
-                <div class="sidebar-buttons">
-                    <button class="active" data-section="main-stats">Əsas</button>
-                    <button data-section="additional-stats">Əlavə</button>
-                    <button data-section="trait">Özəllik</button>
-                    <button data-section="showlevels">Səviyyə</button>
-                    <button id="role-button">Rol</button>
-                    <button id="story-button">Hekayə</button>
-                </div>
-            </aside>
-
-            <section class="grid" id="cards"></section>
+            <div class="cards-layout">
+                <aside class="sidebar-container">
+                    <div class="card-title-container">
+                        <span class="card-name" id="sidebar-card-name"></span>
+                        <span class="card-type" id="sidebar-card-type"></span>
+                    </div>
+                    <div class="sidebar-buttons">
+                        <button class="active" data-section="main-stats">Əsas</button>
+                        <button data-section="additional-stats">Əlavə</button>
+                        <button data-section="trait">Özəllik</button>
+                        <button data-section="showlevels">Səviyyə</button>
+                        <button data-section="role">Rol</button>
+                        <button data-section="story">Hekayə</button>
+                    </div>
+                    <div class="stats-content" id="sidebar-stats-content">
+                        <!-- Kart statistikaları bura yüklənəcək -->
+                    </div>
+                </aside>
+                <section class="grid" id="cards"></section>
+            </div>
         </section>
     </div>
     <script src="script.js"></script>

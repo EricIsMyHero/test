@@ -1,4 +1,4 @@
-// DOM Elementləris
+// DOM Elementləri
 const mainMenu = document.getElementById('main-menu');
 const cardsSection = document.getElementById('cards-section');
 const showCardsBtn = document.getElementById('show-cards-btn');
@@ -76,8 +76,7 @@ function selectCard(data) {
 // Yan menyunun statistikalarını yeniləyən funksiya
 function updateSidebarStats(data) {
     sidebarStatsContent.innerHTML = '';
-    
-    // Bütün statistikalar hissələrini bir massivdə saxlayırıq
+
     const statsSections = [
         { id: 'main-stats', data: data.stats, isGrid: true },
         { id: 'additional-stats', data: data.additionalStats, isGrid: true },
@@ -87,20 +86,16 @@ function updateSidebarStats(data) {
         { id: 'story', data: data.story, isGrid: false }
     ];
 
-    // Hər hissə üçün element yaradıb DOM-a əlavə edirik
     statsSections.forEach(section => {
         const newSection = createStatsSection(section.id, section.data, section.isGrid);
         sidebarStatsContent.appendChild(newSection);
     });
 
-    // Əsas statistikalar hissəsini avtomatik görünən edirik
     sidebarStatsContent.querySelector(`[data-section-id="main-stats"]`).classList.add('visible');
 
-    // Bütün yan menyu düymələrinin aktivliyini sıfırlayırıq
     sidebarButtons.forEach(btn => btn.classList.remove('active'));
     document.querySelector('.sidebar-buttons button[data-section="main-stats"]').classList.add('active');
 
-    // Yan menyu düymələrinə klik hadisəsi əlavə edirik
     sidebarButtons.forEach(button => {
         button.addEventListener('click', () => {
             const sectionId = button.dataset.section;
@@ -122,14 +117,12 @@ function createStatsSection(sectionId, data, isGrid) {
     section.className = 'stats-section';
     section.setAttribute('data-section-id', sectionId);
 
-    // Məlumat stringdirsə, sadəcə mətn kimi əlavə edirik
     if (typeof data === 'string') {
         const p = document.createElement('p');
         p.className = 'text-content';
         p.textContent = data;
         section.appendChild(p);
     } else if (isGrid) {
-        // Məlumat grid şəklindədirsə
         for (const key in data) {
             const item = document.createElement('div');
             item.className = 'stat-item';
@@ -137,7 +130,6 @@ function createStatsSection(sectionId, data, isGrid) {
             section.appendChild(item);
         }
     } else {
-        // Məlumat adi siyahı şəklindədirsə
         for (const key in data) {
             const item = document.createElement('div');
             item.className = 'stat-item';
@@ -152,11 +144,6 @@ function createStatsSection(sectionId, data, isGrid) {
 function createCardElement(data) {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card-single r-${data.rarity.toLowerCase()}`;
-    
-    // Kart üzərinə kliklədikdə yan menyunu yenilə
-    cardContainer.addEventListener('click', () => {
-        selectCard(data);
-    });
 
     const content = document.createElement('div');
     const badgeText = data.isHybrid ? `${data.type[0]}/${data.type[1]}` : data.type[0];
@@ -168,6 +155,22 @@ function createCardElement(data) {
         </div>
     `;
     cardContainer.appendChild(content);
+
+    const sidebar = document.createElement('div');
+    sidebar.className = 'card-sidebar hidden';
+    sidebar.innerHTML = `
+        <h4>${data.name}</h4>
+        <p>${data.isHybrid ? `${data.type[0]}/${data.type[1]}` : data.type[0]}</p>
+    `;
+    cardContainer.appendChild(sidebar);
+
+    cardContainer.addEventListener('click', () => {
+        const allSidebars = document.querySelectorAll('.card-sidebar');
+        allSidebars.forEach(sb => sb.classList.add('hidden'));
+        sidebar.classList.toggle('hidden');
+        selectCard(data);
+    });
+
     return cardContainer;
 }
 
@@ -187,9 +190,7 @@ function renderCards(cardsToRender) {
     }
 }
 
-// Səhifə yükləndikdə menyunu göstər
 document.addEventListener('DOMContentLoaded', showMenu);
-// Düymələrə hadisə dinləyiciləri əlavə et
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 

@@ -6,6 +6,20 @@ const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 
+// Nadirlik adlarını JSON fayl adlarına uyğunlaşdırır
+const rarityFiles = {
+  all: ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'],
+  mundane: ['mundane'],
+  familiar: ['familiar'],
+  arcane: ['arcane'],
+  mythic: ['mythic'],
+  legendary: ['legendary'],
+  ethereal: ['ethereal']
+};
+
+let allCardsData = [];
+
+// Menyu və kartlar bölməsini göstər/gizlə
 function showMenu() {
   mainMenu.classList.remove('hidden');
   cardsSection.classList.add('hidden');
@@ -17,166 +31,72 @@ function showCards() {
   fetchAndRender('all');
 }
 
+// Kart məzmunu yaratmaq üçün funksiya
+function createCardContent(data) {
+  const content = document.createElement('div');
+  content.className = 'card-content stats-view';
+
+  // Başlıq və nadirlik
+  const header = document.createElement('header');
+  header.innerHTML = `<span class="name">${data.name}</span> <span class="rarity"><span>${data.rarity}</span></span>`;
+  content.appendChild(header);
+
+  // Statistika cədvəli
+  const statsTable = document.createElement('div');
+  statsTable.className = 'stats-table';
+  
+  // Əsas statistika
+  for (const stat in data.stats) {
+    const row = document.createElement('div');
+    row.className = 'stat-row';
+    row.innerHTML = `<span class="stat-name">${stat.charAt(0).toUpperCase() + stat.slice(1)}</span> <span class="stat-value">${data.stats[stat]}</span>`;
+    statsTable.appendChild(row);
+  }
+  
+  content.appendChild(statsTable);
+  
+  // Xüsusiyyət (trait)
+  const trait = document.createElement('p');
+  trait.className = 'trait';
+  trait.innerHTML = `Xüsusiyyət: ${data.trait}`;
+  content.appendChild(trait);
+
+  // Əlavə statistika
+  const additionalStatsHeader = document.createElement('h3');
+  additionalStatsHeader.textContent = "Əlavə Statistika";
+  content.appendChild(additionalStatsHeader);
+  const additionalStatsTable = document.createElement('div');
+  additionalStatsTable.className = 'stats-table';
+  for (const stat in data.additionalStats) {
+    const row = document.createElement('div');
+    row.className = 'stat-row';
+    row.innerHTML = `<span class="stat-name">${stat.charAt(0).toUpperCase() + stat.slice(1).replace(/([A-Z])/g, ' $1')}</span> <span class="stat-value">${data.additionalStats[stat]}</span>`;
+    additionalStatsTable.appendChild(row);
+  }
+  content.appendChild(additionalStatsTable);
+  
+  // Səviyyələr
+  const levelsHeader = document.createElement('h3');
+  levelsHeader.textContent = "Səviyyələr";
+  content.appendChild(levelsHeader);
+  const levelsList = document.createElement('ul');
+  levelsList.className = 'levels-list';
+  for (const level in data.showlevels) {
+    const li = document.createElement('li');
+    li.innerHTML = `<b>${level.replace('level', 'Səviyyə ')}:</b> ${data.showlevels[level]}`;
+    levelsList.appendChild(li);
+  }
+  content.appendChild(levelsList);
+
+  return content;
+}
+
 // Kart yaratmaq üçün əsas funksiya
 function createCardElement(data) {
-    const cardContainer = document.createElement('article');
-    cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
-    
-    // Kartın əsas məzmunu
-    const cardContent = createCardContent(data);
-
-    // Düymələr üçün yeni konteyner
-    const cardButtons = document.createElement('div');
-    cardButtons.className = 'card-buttons';
-
-    // Düymələri yaratmaq
-    const mainStatsBtn = document.createElement('button');
-    mainStatsBtn.className = 'card-button active';
-    mainStatsBtn.textContent = 'Əsas';
-    mainStatsBtn.setAttribute('data-target', 'main-stats');
-
-    const additionalStatsBtn = document.createElement('button');
-    additionalStatsBtn.className = 'card-button';
-    additionalStatsBtn.textContent = 'Əlavə';
-    additionalStatsBtn.setAttribute('data-target', 'additional-stats');
-
-    const showLevelsBtn = document.createElement('button');
-    showLevelsBtn.className = 'card-button';
-    showLevelsBtn.textContent = 'Səviyyələr';
-    showLevelsBtn.setAttribute('data-target', 'showlevels');
-
-    // Düymələri konteynerə əlavə etmək
-    cardButtons.appendChild(mainStatsBtn);
-    cardButtons.appendChild(additionalStatsBtn);
-    cardButtons.appendChild(showLevelsBtn);
-
-    // Kartın məzmununu və düymələri əsas konteynerə əlavə etmək
-    cardContainer.appendChild(cardContent);
-    cardContainer.appendChild(cardButtons);
-
-    // Düymələrə hadisə dinləyiciləri əlavə etmək
-    const statViews = cardContent.querySelectorAll('.stats-view');
-    cardButtons.querySelectorAll('.card-button').forEach(button => {
-        button.addEventListener('click', () => {
-            // Bütün düymələrdən aktiv sinifi silmək
-            cardButtons.querySelectorAll('.card-button').forEach(btn => btn.classList.remove('active'));
-            // Kliklənən düyməyə aktiv sinifini əlavə etmək
-            button.classList.add('active');
-
-            // Bütün statistika görünüşlərini gizlətmək
-            statViews.forEach(view => view.classList.remove('active'));
-            // Hədəf statistika görünüşünü göstərmək
-            const target = button.getAttribute('data-target');
-            cardContent.querySelector(`[data-view="${target}"]`).classList.add('active');
-        });
-    });
-
-    return cardContainer;
-}
-
-// Kartın içindəki məlumatları yaratmaq üçün köməkçi funksiya
-function createCardContent(data) {
-    const cardContent = document.createElement('div');
-    cardContent.className = 'card-content';
-
-    // Kartın üst hissəsi
-    const cardHeader = document.createElement('header');
-    cardHeader.innerHTML = `<span class="name">${data.name}</span> <span class="rarity">${data.rarity}</span>`;
-
-    // Əsas statistikalar görünüşü
-    const mainStatsView = document.createElement('div');
-    mainStatsView.className = 'stats-view active';
-    mainStatsView.setAttribute('data-view', 'main-stats');
-    let mainStatsHtml = ``;
-    for (const stat in data.stats) {
-        mainStatsHtml += `
-            <div class="stat-row">
-                <span class="stat-name">${stat}</span>
-                <span class="stat-value">${data.stats[stat]}</span>
-            </div>
-        `;
-    }
-    mainStatsView.innerHTML = mainStatsHtml;
-
-    // Əlavə statistikalar görünüşü
-    const additionalStatsView = document.createElement('div');
-    additionalStatsView.className = 'stats-view';
-    additionalStatsView.setAttribute('data-view', 'additional-stats');
-    let additionalStatsHtml = ``;
-    for (const stat in data.additionalStats) {
-        additionalStatsHtml += `
-            <div class="stat-row">
-                <span class="stat-name">${stat}</span>
-                <span class="stat-value">${data.additionalStats[stat]}</span>
-            </div>
-        `;
-    }
-    additionalStatsView.innerHTML = additionalStatsHtml;
-
-    // Səviyyələr görünüşü
-    const showLevelsView = document.createElement('div');
-    showLevelsView.className = 'stats-view';
-    showLevelsView.setAttribute('data-view', 'showlevels');
-    let levelsHtml = ``;
-    for (const level in data.showlevels) {
-        levelsHtml += `
-            <div class="level-row">
-                <span class="level-name">${level}</span>
-                <span class="level-value">${data.showlevels[level]}</span>
-            </div>
-        `;
-    }
-    showLevelsView.innerHTML = levelsHtml;
-
-    cardContent.appendChild(cardHeader);
-    cardContent.appendChild(mainStatsView);
-    cardContent.appendChild(additionalStatsView);
-    cardContent.appendChild(showLevelsView);
-
-    return cardContent;
-}
-
-
-// Kartları render edən funksiya
-function renderCards(data) {
-    cardsContainer.innerHTML = '';
-    data.forEach(card => {
-        cardsContainer.appendChild(createCardElement(card));
-    });
-}
-
-function createMultiCardElement(data) {
-    const cardContainer = document.createElement('article');
-    cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
-    
-    // Düymələr üçün yeni konteyner
-    const cardButtons = document.createElement('div');
-    cardButtons.className = 'card-buttons';
-
-    const flipButton = document.createElement('button');
-    flipButton.className = 'card-button flip-button';
-    flipButton.textContent = 'Arxa Üz';
-
-    const mainStatsBtn = document.createElement('button');
-    mainStatsBtn.className = 'card-button active';
-    mainStatsBtn.textContent = 'Əsas';
-    mainStatsBtn.setAttribute('data-target', 'main-stats');
-
-    const additionalStatsBtn = document.createElement('button');
-    additionalStatsBtn.className = 'card-button';
-    additionalStatsBtn.textContent = 'Əlavə';
-    additionalStatsBtn.setAttribute('data-target', 'additional-stats');
-
-    const showLevelsBtn = document.createElement('button');
-    showLevelsBtn.className = 'card-button';
-    showLevelsBtn.textContent = 'Səviyyələr';
-    showLevelsBtn.setAttribute('data-target', 'showlevels');
-
-    cardButtons.appendChild(mainStatsBtn);
-    cardButtons.appendChild(additionalStatsBtn);
-    cardButtons.appendChild(showLevelsBtn);
-    cardButtons.appendChild(flipButton);
-
+  const cardContainer = document.createElement('article');
+  cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
+  
+  if (data.isMulti) {
     const cardInner = document.createElement('div');
     cardInner.className = 'card-inner';
 
@@ -189,97 +109,50 @@ function createMultiCardElement(data) {
     cardInner.appendChild(cardFront);
     cardInner.appendChild(cardBack);
     cardContainer.appendChild(cardInner);
-    cardContainer.appendChild(cardButtons);
 
     cardContainer.addEventListener('click', (e) => {
-        // Klik düymə deyil, kartın özüdürsə
-        if (e.target.tagName.toLowerCase() !== 'button') {
-            cardContainer.classList.toggle('is-flipped');
-        }
+      // Düyməyə basıldıqda çevrilməni ləğv edin
+      if (e.target.tagName === 'BUTTON') {
+        return;
+      }
+      cardContainer.classList.toggle('is-flipped');
     });
 
-    flipButton.addEventListener('click', () => {
-        cardContainer.classList.toggle('is-flipped');
-    });
-
-    // Add event listeners for new buttons
-    const statViews = cardFront.querySelectorAll('.stats-view');
-    const backStatViews = cardBack.querySelectorAll('.stats-view');
-
-    cardButtons.querySelectorAll('.card-button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            // Flip buttona klikləyəndə heç bir şey etmə
-            if (e.target.classList.contains('flip-button')) {
-                return;
-            }
-            // Remove active class from all buttons
-            cardButtons.querySelectorAll('.card-button').forEach(btn => btn.classList.remove('active'));
-            // Add active class to the clicked button
-            button.classList.add('active');
-
-            // Hide all stat views on both sides
-            statViews.forEach(view => view.classList.remove('active'));
-            backStatViews.forEach(view => view.classList.remove('active'));
-
-            // Show the target stat view
-            const target = button.getAttribute('data-target');
-            cardFront.querySelector(`[data-view="${target}"]`).classList.add('active');
-            cardBack.querySelector(`[data-view="${target}"]`).classList.add('active');
-        });
-    });
-
-    return cardContainer;
+  } else {
+    const cardSingle = createCardContent(data);
+    cardSingle.classList.add('card-single');
+    cardContainer.appendChild(cardSingle);
+  }
+  
+  return cardContainer;
 }
 
-// Kartları render edən funksiya
-function renderCards(data) {
+// Kartları göstərən funksiya
+function renderCards(cards) {
   cardsContainer.innerHTML = '';
-  data.forEach(card => {
-      if (card.isMulti) {
-        cardsContainer.appendChild(createMultiCardElement(card));
-      } else {
-        cardsContainer.appendChild(createCardElement(card));
-      }
+  cards.forEach(cardData => {
+    const cardElement = createCardElement(cardData);
+    cardsContainer.appendChild(cardElement);
   });
 }
 
-function fetchAndRender(rarity) {
-  let endpoint = '';
-  switch (rarity) {
-    case 'all':
-      endpoint = 'all';
-      break;
-    default:
-      endpoint = `${rarity}.json`;
-      break;
-  }
-  
-  loadCards(endpoint);
-}
-
-// Düymələrə hadisə dinləyiciləri
-async function loadCards(endpoint) {
+// Məlumatları gətirmək və göstərmək üçün funksiya
+async function fetchAndRender(rarity) {
   try {
+    const filesToFetch = rarityFiles[rarity];
     let cardsData = [];
-    if (endpoint === 'all') {
-      const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
-      for (const rarity of rarities) {
-        const response = await fetch(`${rarity}.json`);
-        if (response.ok) {
-          const data = await response.json();
-          cardsData = cardsData.concat(data);
-        } else {
-          console.error(`Error loading ${rarity}.json: ${response.status}`);
-        }
-      }
-    } else {
-      const response = await fetch(endpoint);
+
+    for (const file of filesToFetch) {
+      const response = await fetch(`${file}.json`);
       if (response.ok) {
-        cardsData = await response.json();
+        const data = await response.json();
+        cardsData = cardsData.concat(data);
       } else {
-        console.error(`Error loading ${endpoint}: ${response.status}`);
+        console.error(`Error loading data for ${file}.json: ${response.status}`);
       }
     }
+    
+    allCardsData = cardsData;
     renderCards(cardsData);
   } catch (error) {
     console.error('Məlumatları yükləmə zamanı xəta:', error);
@@ -287,19 +160,46 @@ async function loadCards(endpoint) {
   }
 }
 
-
+// Düymə hadisələri
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 
-['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',()=>{\n    const modal=document.createElement('div');\n    modal.style.position='fixed';\n    modal.style.top='50%';\n    modal.style.left='50%';\n    modal.style.transform='translate(-50%, -50%)';\n    modal.style.padding='20px';\n    modal.style.backgroundColor='var(--card)';\n    modal.style.color='var(--text)';\n    modal.style.borderRadius='12px';\n    modal.style.boxShadow='var(--shadow)';\n    modal.style.zIndex='1000';\n    modal.textContent="Bu bölmə hələ hazır deyil.";\n    document.body.appendChild(modal);\n    setTimeout(()=>{document.body.removeChild(modal);},3000);\n  });
-});
-
+// Filter düymələri
 filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', (e) => {
+    // Aktiv düyməni dəyişdir
     filterButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    const rarity = button.id.replace('filter-', '');
-    fetchAndRender(rarity);
+    e.target.classList.add('active');
+
+    const filterType = e.target.id.replace('filter-', '');
+    if (filterType === 'all') {
+        renderCards(allCardsData);
+    } else {
+        const filteredCards = allCardsData.filter(card => card.rarity.toLowerCase() === filterType);
+        renderCards(filteredCards);
+    }
   });
 });
+
+// Hazır olmayan bölmələr üçün pop-up
+['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',()=> {
+    const modal=document.createElement('div');
+    modal.style.position='fixed';
+    modal.style.top='50%';
+    modal.style.left='50%';
+    modal.style.transform='translate(-50%, -50%)';
+    modal.style.padding='20px';
+    modal.style.backgroundColor='var(--card)';
+    modal.style.color='var(--text)';
+    modal.style.borderRadius='12px';
+    modal.style.boxShadow='var(--shadow)';
+    modal.style.zIndex='1000';
+    modal.textContent="Bu bölmə hələ hazır deyil.";
+    document.body.appendChild(modal);
+    setTimeout(()=>{document.body.removeChild(modal);},3000);
+  });
+});
+
+// Səhifə yüklənəndə menyunu göstər
+window.onload = showMenu;

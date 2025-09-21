@@ -27,201 +27,209 @@ body {
 .wrap { max-width: 1200px; margin: 32px auto; padding: 16px }
 header { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 18px }
 h1 { font-size: 28px; margin: 0; letter-spacing: .2px }
-
-/* İdarəetmə düymələri */
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-.controls button {
-  background: var(--card);
+.card-title-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px }
+.back-button {
+  background: transparent;
   border: 1px solid var(--muted);
   color: var(--muted);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
+}
+.back-button:hover { background: var(--muted); color: var(--card) }
+.controls { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap }
+.controls button {
+  background: var(--card);
+  border: 1px solid transparent;
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
+}
+.controls button:hover { border-color: var(--muted) }
+.controls button.active { border-color: var(--text) }
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Kart stilləri */
+.card-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    border-radius: 20px;
+    padding: 20px;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    max-width: 400px;
+    flex-wrap: wrap;
+}
+
+.card-content {
+    flex: 1;
+}
+
+/* Yeni düymə konteyneri stilləri */
+.card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Yeni düymə stilləri */
+.card-button {
+    background: var(--ring);
+    color: var(--text);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.card-button.active {
+    background: var(--familiar);
+}
+
+.card-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0,0,0,.45);
+}
+
+.card-container.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card {
+  width: 300px;
+  min-height: 480px;
+  perspective: 1000px;
+  transition: transform .6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  padding: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.card-back {
+  transform: rotateY(180deg);
+}
+.flip-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+  background: rgba(0,0,0,0.5);
+  color: white;
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all .2s ease;
-}
-.controls button:hover {
-  border-color: var(--text);
-  color: var(--text);
-}
-.controls button.active {
-  border-color: var(--text);
-  color: var(--text);
-  box-shadow: 0 0 10px rgba(255,255,255,.15);
 }
 
-/* Kartlar Bölməsi */
-#cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 40px;
+.card-container .stats-view {
+  transition: .3s;
 }
 
-/* Kart Konteyneri */
-.card-container {
-  display: flex;
-  background-color: var(--card);
-  padding: 12px;
-  border-radius: 20px;
-  box-shadow: var(--shadow);
-  transition: transform .3s ease;
-  min-height: 400px;
-  position: relative;
-}
-.card-container:hover {
-  transform: translateY(-8px);
-}
-
-/* Kartın iç hissəsi */
-.card-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  color: var(--muted);
-}
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-.card-image {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-bottom: 8px;
-}
-.card-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--text);
-  margin: 0;
-}
-.card-subtitle {
-  font-size: 14px;
-  margin: 0;
-  text-transform: capitalize;
-}
-.card-trait {
-  font-size: 14px;
-  margin-bottom: 8px;
-  border-top: 1px dashed var(--muted);
-  border-bottom: 1px dashed var(--muted);
-  padding: 8px 0;
-}
-.card-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  font-size: 14px;
-  margin-top: auto;
-}
-.card-stat {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.card-stat svg {
-  width: 18px;
-  height: 18px;
-  stroke: var(--muted);
-  fill: var(--muted);
-}
-.card-stat .stat-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--muted);
-}
-.card-stat .stat-value {
-  color: var(--text);
-}
-
-/* Kart düymələri - YENİ STİL */
-.card-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-left: 12px;
-}
-
-.card-buttons button {
-  background: var(--card);
-  border: 1px solid var(--ring);
-  color: var(--muted);
-  padding: 8px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all .2s ease;
-  font-size: 12px;
-  text-align: left;
-}
-.card-buttons button:hover {
-  border-color: var(--text);
-  color: var(--text);
-}
-
-/* Nadirlik stilləri */
-.r-mundane { border: 1px solid var(--mundane); }
-.r-familiar { border: 1px solid var(--familiar); }
-.r-arcane { border: 1px solid var(--arcane); }
-.r-mythic { border: 1px solid var(--mythic); }
-.r-legendary { border: 1px solid var(--legendary); }
-.r-ethereal { border: 1px solid var(--ethereal); }
-
-/* Arxa plan animasiyaları */
-.r-mythic.card-container, .r-legendary.card-container, .r-ethereal.card-container {
-  overflow: hidden;
-}
-.r-mythic.card-container::before {
-  content: "";
-  position: absolute;
-  inset: -150%;
-  background: conic-gradient(from 180deg at 50% 50%, var(--mythic), #0000 30%);
-  z-index: -1;
-  animation: mythic-animate 3s linear infinite;
-}
-@keyframes mythic-animate {
-  from { transform: rotate(0deg) }
-  to { transform: rotate(360deg) }
-}
-.r-legendary.card-container::before {
-  content: "";
-  position: absolute;
-  inset: -150%;
-  background: conic-gradient(from 180deg at 50% 50%, var(--legendary), #0000 30%);
-  z-index: -1;
-  animation: legendary-animate 3s linear infinite;
-}
-@keyframes legendary-animate {
-  from { transform: rotate(0deg) }
-  to { transform: rotate(-360deg) }
-}
-.r-ethereal.card-container::before {
-  content: "";
-  position: absolute;
-  inset: -150%;
-  background: conic-gradient(from 180deg at 50% 50%, var(--ethereal), #0000 30%);
-  z-index: -1;
-  animation: ethereal-animate 3s linear infinite;
-}
-@keyframes ethereal-animate {
-  from { transform: rotate(0deg) }
-  to { transform: rotate(360deg) }
-}
-
-
-/* Halo və halqa effektləri */
-.card-container::after {
-content: "";
+.card-front::after, .card-single::after {
+content: \"\";
 position: absolute;
 inset: -2px;
 border-radius: 20px;
 pointer-events: none;
 border: 2px solid var(--ring);
+filter: blur(4px);
+opacity: .5;
+z-index: -1;
+}
+
+/* Nadirlik əlavə stillər */
+.card.r-mundane { border: 2px solid var(--mundane) }
+.card.r-familiar { border: 2px solid var(--familiar) }
+.card.r-arcane { border: 2px solid var(--arcane) }
+.card.r-mythic { border: 2px solid var(--mythic) }
+.card.r-legendary { border: 2px solid var(--legendary) }
+.card.r-ethereal { border: 2px solid var(--ethereal) }
+.card-front, .card-back {
+  border: none;
+}
+.card.r-mundane .card-inner, .card.r-familiar .card-inner, .card.r-arcane .card-inner, .card.r-mythic .card-inner, .card.r-legendary .card-inner, .card.r-ethereal .card-inner {
+  border: 2px solid transparent;
+}
+.card.r-mundane::before { content: \"\"; position: absolute; inset: -2px; border-radius: 20px; pointer-events: none; border: 2px solid var(--mundane); z-index: -1; }
+.card.r-familiar::before { content: \"\"; position: absolute; inset: -2px; border-radius: 20px; pointer-events: none; border: 2px solid var(--familiar); z-index: -1; }
+.card.r-arcane::before { content: \"\"; position: absolute; inset: -2px; border-radius: 20px; pointer-events: none; border: 2px solid var(--arcane); z-index: -1; }
+.card.r-mythic::before { content: \"\"; position: absolute; inset: -2px; border-radius: 20px; pointer-events: none; border: 2px solid var(--mythic); z-index: -1; }
+.card.r-legendary::before { content: \"\"; position: absolute; inset: -2px; border-radius: 20px; pointer-events: none; border: 2px solid var(--legendary); z-index: -1; }
+.card.r-ethereal::before { content: \"\"; position: absolute; inset: -2px; border-radius: 20px; pointer-events: none; border: 2px solid var(--ethereal); z-index: -1; }
+.card.r-mundane.is-flipped .card-front, .card.r-familiar.is-flipped .card-front, .card.r-arcane.is-flipped .card-front, .card.r-mythic.is-flipped .card-front, .card.r-legendary.is-flipped .card-front, .card.r-ethereal.is-flipped .card-front {
+  border: 2px solid transparent;
+}
+.card.r-mundane.is-flipped .card-back, .card.r-familiar.is-flipped .card-back, .card.r-arcane.is-flipped .card-back, .card.r-mythic.is-flipped .card-back, .card.r-legendary.is-flipped .card-back, .card.r-ethereal.is-flipped .card-back {
+  border: 2px solid transparent;
+}
+/* Səs effektləri */
+.card-front::before {
+  content: \"\";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  pointer-events: none;
+  background-size: 200% auto;
+  opacity: .5;
+  z-index: -1;
+  animation: none;
+  background-image: none;
+}
+.card.r-familiar .card-front::before { background-image: linear-gradient(90deg, #4CAF50, #9C27B0) }
+.card.r-arcane .card-front::before { background-image: linear-gradient(90deg, #7E57C2, #4CAF50) }
+.card.r-mythic .card-front::before { background-image: linear-gradient(90deg, #E53935, #7E57C2) }
+.card.r-legendary .card-front::before { background-image: linear-gradient(90deg, #FBC02D, #E53935) }
+.card.r-ethereal .card-front::before { background-image: linear-gradient(90deg, #ff007f, #FBC02D) }
+.card.r-familiar:hover .card-front::before { animation: familiar-animate 1s linear infinite; }
+.card.r-arcane:hover .card-front::before { animation: arcane-animate 1s linear infinite; }
+.card.r-mythic:hover .card-front::before { animation: mythic-animate 1s linear infinite; }
+.card.r-legendary:hover .card-front::before { animation: legendary-animate 1s linear infinite; }
+.card.r-ethereal:hover .card-front::before { animation: ethereal-animate 1s linear infinite; }
+@keyframes familiar-animate { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes arcane-animate { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes mythic-animate { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes legendary-animate { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes ethereal-animate { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+/* Halo və halqa effektləri */
+.card-front::after, .card-single::after {
+content: \"\";
+position: absolute;
+inset: -2px;
+border-radius: 20px;
+pointer-events: none;
+border: 2px solid var(--ring);
+filter: blur(4px);
 opacity: .5;
 z-index: -1;
 }
@@ -250,56 +258,80 @@ margin-bottom: 18px;
 background: transparent;
 border: 1px solid var(--muted);
 color: var(--muted);
-padding: 8px 16px;
+padding: 10px 20px;
 border-radius: 8px;
 cursor: pointer;
-transition: all .2s ease;
+transition: .3s;
 }
 .back-button:hover {
-border-color: var(--text);
+background: var(--muted);
+color: var(--card);
+}
+.controls {
+display: flex;
+gap: 12px;
+margin-bottom: 24px;
+flex-wrap: wrap;
+}
+.controls button {
+background: var(--card);
+border: 1px solid transparent;
 color: var(--text);
+padding: 12px 20px;
+border-radius: 8px;
+cursor: pointer;
+transition: .3s;
 }
-.hint {
-font-size: 14px;
-color: var(--muted);
+.controls button:hover {
+border-color: var(--muted);
 }
-.flip-button {
-  background: var(--card);
-  border: 1px solid var(--ring);
-  color: var(--muted);
-  padding: 8px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all .2s ease;
-  font-size: 12px;
-  text-align: left;
+.controls button.active {
+border-color: var(--text);
 }
-.flip-button:hover {
-  border-color: var(--text);
-  color: var(--text);
+.cards-container {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 24px;
 }
-.card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-.card-container.flipped .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+/* stats */
+.card-content header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
 }
-
-.card-back {
-  transform: rotateY(180deg);
+.card-content header .name {
+  font-size: 24px;
+  font-weight: bold;
+}
+.card-content header .rarity {
+  background: var(--ring);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.stat-row:last-child {
+  border-bottom: none;
+}
+.stat-name {
+  font-weight: bold;
+}
+.stat-value {
+  color: var(--muted);
+}
+/* hide the stat views that are not active */
+.stats-view {
+  display: none;
+}
+.stats-view.active {
+  display: block;
 }

@@ -6,20 +6,6 @@ const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 
-// Nadirlik adlarını JSON fayl adlarına uyğunlaşdırır
-const rarityFiles = {
-  all: ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'],
-  mundane: ['mundane'],
-  familiar: ['familiar'],
-  arcane: ['arcane'],
-  mythic: ['mythic'],
-  legendary: ['legendary'],
-  ethereal: ['ethereal']
-};
-
-let allCardsData = [];
-
-// Menyu və kartlar bölməsini göstər/gizlə
 function showMenu() {
   mainMenu.classList.remove('hidden');
   cardsSection.classList.add('hidden');
@@ -31,128 +17,200 @@ function showCards() {
   fetchAndRender('all');
 }
 
-// Kart məzmunu yaratmaq üçün funksiya
-function createCardContent(data) {
-  const content = document.createElement('div');
-  content.className = 'card-content stats-view';
+// Kartın məzmununu (stat, trait, levels) yaratmaq üçün köməkçi funksiya
+function createCardContent(data, type) {
+    const content = document.createElement('div');
+    content.className = 'card-content';
 
-  // Başlıq və nadirlik
-  const header = document.createElement('header');
-  header.innerHTML = `<span class="name">${data.name}</span> <span class="rarity"><span>${data.rarity}</span></span>`;
-  content.appendChild(header);
+    const statHtml = `
+        <!-- Kartın əsas statları (hər zaman görünən) -->
+        <div class="stat-group main-stats">
+            <div class="stat-item"><i class="fas fa-heart"></i> Can: <span>${data.stats.health}</span></div>
+            <div class="stat-item"><i class="fas fa-shield-alt"></i> Qalxan: <span>${data.stats.shield}</span></div>
+            <div class="stat-item"><i class="fas fa-fist-raised"></i> Hasar: <span>${data.stats.damage}</span></div>
+            <div class="stat-item"><i class="fas fa-bolt"></i> Mana: <span>${data.stats.mana}</span></div>
+        </div>
+    `;
 
-  // Statistika cədvəli
-  const statsTable = document.createElement('div');
-  statsTable.className = 'stats-table';
-  
-  // Əsas statistika
-  for (const stat in data.stats) {
-    const row = document.createElement('div');
-    row.className = 'stat-row';
-    row.innerHTML = `<span class="stat-name">${stat.charAt(0).toUpperCase() + stat.slice(1)}</span> <span class="stat-value">${data.stats[stat]}</span>`;
-    statsTable.appendChild(row);
-  }
-  
-  content.appendChild(statsTable);
-  
-  // Xüsusiyyət (trait)
-  const trait = document.createElement('p');
-  trait.className = 'trait';
-  trait.innerHTML = `Xüsusiyyət: ${data.trait}`;
-  content.appendChild(trait);
+    const additionalHtml = `
+        <!-- Əlavə Statlar (Gizli) -->
+        <div class="stat-group hidden" data-tab="additional">
+            <div class="stat-item"><i class="fas fa-arrows-alt-h"></i> Menzil: <span>${data.additionalStats.range}</span></div>
+            <div class="stat-item"><i class="fas fa-running"></i> Hız: <span>${data.additionalStats.speed}</span></div>
+            <div class="stat-item"><i class="fas fa-crosshairs"></i> Kritik Şansı: <span>${data.additionalStats.criticalChance}</span></div>
+            <div class="stat-item"><i class="fas fa-percentage"></i> Kritik Hasar: <span>${data.additionalStats.criticDamage}</span></div>
+            <div class="stat-item"><i class="fas fa-syringe"></i> Can Çalma Şansı: <span>${data.additionalStats.lifestealChance}</span></div>
+            <div class="stat-item"><i class="fas fa-hand-holding-heart"></i> Can Çalma: <span>${data.additionalStats.lifesteal}</span></div>
+            <div class="stat-item"><i class="fas fa-compress-alt"></i> Hasar Kiçiltmə: <span>${data.additionalStats.damageminimiser}</span></div>
+            <div class="stat-item"><i class="fas fa-angle-double-right"></i> Sıyrılma: <span>${data.additionalStats.dodge}</span></div>
+        </div>
+    `;
 
-  // Əlavə statistika
-  const additionalStatsHeader = document.createElement('h3');
-  additionalStatsHeader.textContent = "Əlavə Statistika";
-  content.appendChild(additionalStatsHeader);
-  const additionalStatsTable = document.createElement('div');
-  additionalStatsTable.className = 'stats-table';
-  for (const stat in data.additionalStats) {
-    const row = document.createElement('div');
-    row.className = 'stat-row';
-    row.innerHTML = `<span class="stat-name">${stat.charAt(0).toUpperCase() + stat.slice(1).replace(/([A-Z])/g, ' $1')}</span> <span class="stat-value">${data.additionalStats[stat]}</span>`;
-    additionalStatsTable.appendChild(row);
-  }
-  content.appendChild(additionalStatsTable);
-  
-  // Səviyyələr
-  const levelsHeader = document.createElement('h3');
-  levelsHeader.textContent = "Səviyyələr";
-  content.appendChild(levelsHeader);
-  const levelsList = document.createElement('ul');
-  levelsList.className = 'levels-list';
-  for (const level in data.showlevels) {
-    const li = document.createElement('li');
-    li.innerHTML = `<b>${level.replace('level', 'Səviyyə ')}:</b> ${data.showlevels[level]}`;
-    levelsList.appendChild(li);
-  }
-  content.appendChild(levelsList);
+    const traitHtml = `
+        <!-- Özəllik (Gizli) -->
+        <div class="stat-group hidden" data-tab="trait">
+            <p>${data.trait}</p>
+        </div>
+    `;
 
-  return content;
+    const levelsHtml = `
+        <!-- Səviyyələr (Gizli) -->
+        <div class="stat-group hidden" data-tab="levels">
+            <div class="stat-item"><i class="fas fa-arrow-up"></i> Səviyyə 1: <span>${data.showlevels.level1}</span></div>
+            <div class="stat-item"><i class="fas fa-arrow-up"></i> Səviyyə 2: <span>${data.showlevels.level2}</span></div>
+            <div class="stat-item"><i class="fas fa-arrow-up"></i> Səviyyə 3: <span>${data.showlevels.level3}</span></div>
+        </div>
+    `;
+
+    // Kartın üst hissəsi: Ad, Rarity, Tip
+    content.innerHTML = `
+        <header class="card-header">
+            <h3>${data.name}</h3>
+            <span class="card-rarity">${data.rarity}</span>
+            <span class="card-type">${data.type.join(' | ')}</span>
+        </header>
+
+        <!-- Kartın daxilindəki əsas məzmun (Statlar/Özəlliklər/Səviyyələr) -->
+        <div class="card-body">
+            <div class="card-stats">
+                ${statHtml}
+                ${additionalHtml}
+                ${traitHtml}
+                ${levelsHtml}
+            </div>
+
+            <!-- Yeni: Düymələr sağ tərəfdə olacaq -->
+            <div class="card-buttons">
+                <button class="tab-button active" data-tab-name="main">Əsas</button>
+                <button class="tab-button" data-tab-name="additional">Əlavə</button>
+                <button class="tab-button" data-tab-name="trait">Özəllik</button>
+                <button class="tab-button" data-tab-name="levels">Səviyyələr</button>
+            </div>
+        </div>
+
+    `;
+
+    // Tablar üçün məntiq (createCardElement-də işlənəcək)
+    return content;
 }
 
 // Kart yaratmaq üçün əsas funksiya
 function createCardElement(data) {
-  const cardContainer = document.createElement('article');
-  cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
-  
-  if (data.isMulti) {
-    const cardInner = document.createElement('div');
-    cardInner.className = 'card-inner';
-
-    const cardFront = createCardContent(data);
-    cardFront.classList.add('card-front');
+    const cardContainer = document.createElement('article');
+    cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
     
-    const cardBack = createCardContent(data.secondForm);
-    cardBack.classList.add('card-back');
+    if (data.isMulti) {
+        // Multi Kartlar üçün (Flip funksiyası)
+        const cardInner = document.createElement('div');
+        cardInner.className = 'card-inner';
 
-    cardInner.appendChild(cardFront);
-    cardInner.appendChild(cardBack);
-    cardContainer.appendChild(cardInner);
+        const cardFront = createCardContent(data, 'front');
+        cardFront.classList.add('card-front');
+        
+        const cardBack = createCardContent(data.secondForm, 'back');
+        cardBack.classList.add('card-back');
 
-    cardContainer.addEventListener('click', (e) => {
-      // Düyməyə basıldıqda çevrilməni ləğv edin
-      if (e.target.tagName === 'BUTTON') {
-        return;
-      }
-      cardContainer.classList.toggle('is-flipped');
+        cardInner.appendChild(cardFront);
+        cardInner.appendChild(cardBack);
+        cardContainer.appendChild(cardInner);
+
+        const flipButton = document.createElement('button');
+        flipButton.className = 'flip-button';
+
+        cardContainer.addEventListener('click', (e) => {
+            if (e.target.closest('.flip-button')) {
+                cardContainer.classList.toggle('flipped');
+            } else if (!e.target.closest('.tab-button')) {
+                // Flip düyməsinə basmayanda və tab düyməsinə basmayanda flip et
+                cardContainer.classList.toggle('flipped');
+            }
+        });
+
+    } else {
+        // Normal (Single) Kartlar üçün
+        const cardSingle = createCardContent(data, 'single');
+        cardSingle.classList.add('card-single');
+        cardContainer.appendChild(cardSingle);
+    }
+    
+    // TAB funksionalı
+    const tabButtons = cardContainer.querySelectorAll('.tab-button');
+    const tabContents = cardContainer.querySelectorAll('.stat-group:not(.main-stats)');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabName = button.getAttribute('data-tab-name');
+
+            // Bütün düymələrdən 'active' klassını sil
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            // Cari düyməyə 'active' klassını əlavə et
+            button.classList.add('active');
+
+            // Bütün gizli məzmunu gizlət
+            tabContents.forEach(content => content.classList.add('hidden'));
+
+            // Əsas statları göstər və ya gizlət
+            const mainStats = cardContainer.querySelector('.main-stats');
+            if (tabName === 'main') {
+                mainStats.classList.remove('hidden');
+            } else {
+                mainStats.classList.add('hidden');
+                // Seçilmiş tab məzmununu göstər
+                const selectedContent = cardContainer.querySelector(`.stat-group[data-tab="${tabName}"]`);
+                if (selectedContent) {
+                    selectedContent.classList.remove('hidden');
+                }
+            }
+        });
     });
 
-  } else {
-    const cardSingle = createCardContent(data);
-    cardSingle.classList.add('card-single');
-    cardContainer.appendChild(cardSingle);
-  }
-  
-  return cardContainer;
+    return cardContainer;
 }
 
-// Kartları göstərən funksiya
+// Kartları render edən əsas funksiya
 function renderCards(cards) {
   cardsContainer.innerHTML = '';
-  cards.forEach(cardData => {
-    const cardElement = createCardElement(cardData);
-    cardsContainer.appendChild(cardElement);
+  if (cards.length === 0) {
+    cardsContainer.innerHTML = '<p class="no-cards">Seçilmiş nadirlik səviyyəsində kart tapılmadı.</p>';
+    return;
+  }
+  cards.forEach(card => {
+    cardsContainer.appendChild(createCardElement(card));
   });
 }
 
-// Məlumatları gətirmək və göstərmək üçün funksiya
+// Məlumatları gətirib render edən funksiya
 async function fetchAndRender(rarity) {
-  try {
-    const filesToFetch = rarityFiles[rarity];
-    let cardsData = [];
+  let cardsData = [];
+  const rarityFiles = {
+    'all': ['mundane.json', 'familiar.json', 'arcane.json', 'mythic.json', 'legendary.json', 'ethereal.json'],
+    'mundane': ['mundane.json'],
+    'familiar': ['familiar.json'],
+    'arcane': ['arcane.json'],
+    'mythic': ['mythic.json'],
+    'legendary': ['legendary.json'],
+    'ethereal': ['ethereal.json']
+  };
 
-    for (const file of filesToFetch) {
-      const response = await fetch(`${file}.json`);
+  try {
+    const files = rarityFiles[rarity];
+    for (const file of files) {
+      const response = await fetch(file);
       if (response.ok) {
-        const data = await response.json();
-        cardsData = cardsData.concat(data);
+        // Kontrol et, əgər fayl boşdursa, JSON.parse xəta verə bilər
+        const contentLength = response.headers.get('content-length');
+        if (contentLength && parseInt(contentLength) === 0) {
+            cardsData = [];
+        } else {
+            const data = await response.json();
+            cardsData.push(...data);
+        }
       } else {
-        console.error(`Error loading data for ${file}.json: ${response.status}`);
+        const text = await response.text();
+        // Boş response halını idarə et
+        cardsData = text ? JSON.parse(text) : [];
       }
     }
-    
-    allCardsData = cardsData;
     renderCards(cardsData);
   } catch (error) {
     console.error('Məlumatları yükləmə zamanı xəta:', error);
@@ -160,30 +218,13 @@ async function fetchAndRender(rarity) {
   }
 }
 
-// Düymə hadisələri
+
 showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 
-// Filter düymələri
-filterButtons.forEach(button => {
-  button.addEventListener('click', (e) => {
-    // Aktiv düyməni dəyişdir
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    e.target.classList.add('active');
-
-    const filterType = e.target.id.replace('filter-', '');
-    if (filterType === 'all') {
-        renderCards(allCardsData);
-    } else {
-        const filteredCards = allCardsData.filter(card => card.rarity.toLowerCase() === filterType);
-        renderCards(filteredCards);
-    }
-  });
-});
-
-// Hazır olmayan bölmələr üçün pop-up
+// Hələ hazır olmayan bölmələr üçün modal
 ['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',()=> {
+  document.getElementById(id).addEventListener('click',()=>{
     const modal=document.createElement('div');
     modal.style.position='fixed';
     modal.style.top='50%';
@@ -201,5 +242,11 @@ filterButtons.forEach(button => {
   });
 });
 
-// Səhifə yüklənəndə menyunu göstər
-window.onload = showMenu;
+filterButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+    const rarity = this.id.replace('filter-', '');
+    fetchAndRender(rarity);
+  });
+});

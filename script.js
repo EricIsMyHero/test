@@ -25,24 +25,28 @@ function createCardContent(data, type) {
     const statHtml = `
         <!-- Kartın əsas statları (hər zaman görünən) -->
         <div class="stat-group main-stats">
-            <div class="stat-item"><i class="fas fa-heart"></i> Can: <span>${data.stats.health}</span></div>
-            <div class="stat-item"><i class="fas fa-shield-alt"></i> Qalxan: <span>${data.stats.shield}</span></div>
-            <div class="stat-item"><i class="fas fa-fist-raised"></i> Hasar: <span>${data.stats.damage}</span></div>
-            <div class="stat-item"><i class="fas fa-bolt"></i> Mana: <span>${data.stats.mana}</span></div>
+      <div class="stat-item"><b>Can <i class="fa-solid fa-heart"></i></b><span>${data.stats.health}</span></div>
+      <div class="stat-item"><b>Qalxan <i class="fa-solid fa-shield-halved"></i></b><span>${data.stats.shield}</span></div>
+      <div class="stat-item"><b>Hasar <i class="fa-solid fa-hand-fist"></i></b><span>${data.stats.damage}</span></div>
+      <div class="stat-item"><b>S.B.H <i class="fa-solid fa-bolt"></i></b><span>${data.stats.sps}</span></div>
+      <div class="stat-item"><b>Saldırı Hızı <i class="fa-solid fa-tachometer-alt"></i></b><span>${data.stats.attackSpeed}</span></div>
+      <div class="stat-item"><b>Gecikmə <i class="fa-solid fa-clock"></i></b><span>${data.stats.delay}</span></div>
+      <div class="stat-item"><b>Mana <i class="fa-solid fa-certificate"></i></b><span>${data.stats.mana}</span></div>
+      <div class="stat-item"><b>Say <i class="fa-solid fa-user"></i></b><span>${data.stats.number}</span></div>
         </div>
     `;
 
     const additionalHtml = `
         <!-- Əlavə Statlar (Gizli) -->
         <div class="stat-group hidden" data-tab="additional">
-            <div class="stat-item"><i class="fas fa-arrows-alt-h"></i> Menzil: <span>${data.additionalStats.range}</span></div>
-            <div class="stat-item"><i class="fas fa-running"></i> Hız: <span>${data.additionalStats.speed}</span></div>
-            <div class="stat-item"><i class="fas fa-crosshairs"></i> Kritik Şansı: <span>${data.additionalStats.criticalChance}</span></div>
-            <div class="stat-item"><i class="fas fa-percentage"></i> Kritik Hasar: <span>${data.additionalStats.criticDamage}</span></div>
-            <div class="stat-item"><i class="fas fa-syringe"></i> Can Çalma Şansı: <span>${data.additionalStats.lifestealChance}</span></div>
-            <div class="stat-item"><i class="fas fa-hand-holding-heart"></i> Can Çalma: <span>${data.additionalStats.lifesteal}</span></div>
-            <div class="stat-item"><i class="fas fa-compress-alt"></i> Hasar Kiçiltmə: <span>${data.additionalStats.damageminimiser}</span></div>
-            <div class="stat-item"><i class="fas fa-angle-double-right"></i> Sıyrılma: <span>${data.additionalStats.dodge}</span></div>
+            <div class="stat-item"><b>Menzil <i class="fa-solid fa-road"></i></b><span>${data.additionalStats.range}</span></div>
+            <div class="stat-item"><b>Hız <i class="fa-solid fa-person-running"></i></b><span>${data.additionalStats.speed}</span></div>
+            <div class="stat-item"><b>Kritik Şansı <i class="fa-solid fa-percent"></i></b><span>${data.additionalStats.criticalChance}</span></div>
+            <div class="stat-item"><b>Kritik Hasar <i class="fa-solid fa-crosshairs"></i></b><span>${data.additionalStats.criticDamage}</span></div>
+            <div class="stat-item"><b>C.Çalma Şansı <i class="fa-solid fa-percent "></i></b><span>${data.additionalStats.lifestealChance}</span></div>
+            <div class="stat-item"><b>Can Çalma <i class="fa-solid fa-skull-crossbones "></i></b><span>${data.additionalStats.lifesteal}</span></div>
+            <div class="stat-item"><b>Hasar Azaltma <i class="fa-solid fa-helmet-un "></i></b><span>${data.additionalStats.damageminimiser}</span></div>
+            <div class="stat-item"><b>Sıyrılma Şansı <i class="fa-solid fa-wind "></i></b><span>${data.additionalStats.dodge}</span></div>
         </div>
     `;
 
@@ -56,9 +60,9 @@ function createCardContent(data, type) {
     const levelsHtml = `
         <!-- Səviyyələr (Gizli) -->
         <div class="stat-group hidden" data-tab="levels">
-            <div class="stat-item"><i class="fas fa-arrow-up"></i> Səviyyə 1: <span>${data.showlevels.level1}</span></div>
-            <div class="stat-item"><i class="fas fa-arrow-up"></i> Səviyyə 2: <span>${data.showlevels.level2}</span></div>
-            <div class="stat-item"><i class="fas fa-arrow-up"></i> Səviyyə 3: <span>${data.showlevels.level3}</span></div>
+            <div class="stat-item"><b>Səviyyə 1</b><span>${data.showlevels.level1}</span></div>
+            <div class="stat-item"><b>Səviyyə 2</b><span>${data.showlevels.level2}</span></div>
+            <div class="stat-item"><b>Səviyyə 3</b><span>${data.showlevels.level3}</span></div>
         </div>
     `;
 

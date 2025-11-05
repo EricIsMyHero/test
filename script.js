@@ -216,7 +216,7 @@ showCardsBtn.addEventListener('click', showCards);
 backToMenuBtn.addEventListener('click', showMenu);
 
 ['show-spells-btn','show-boosters-btn','show-towers-btn'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',()=>{\
+  document.getElementById(id).addEventListener('click', ()=>{
     const modal=document.createElement('div');
     modal.style.position='fixed';
     modal.style.top='50%';

@@ -1,4 +1,4 @@
-/ DOM Elementləri
+// DOM Elementləri
 const mainMenu = document.getElementById('main-menu');
 const cardsSection = document.getElementById('cards-section');
 const showCardsBtn = document.getElementById('show-cards-btn');

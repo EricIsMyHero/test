@@ -5,13 +5,22 @@ const showCardsBtn = document.getElementById('show-cards-btn');
 const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
-
-// YENİ ELEMENT: HTML-də yaratdığınız axtarış sahəsini götürün
 const searchInput = document.getElementById('search-input'); 
 
-// YENİ GLOBAL DƏYİŞƏNLƏR
+// YENİ TEAM BUILDER ELEMENTLƏRİ
+const teamBuilderPanel = document.getElementById('team-builder-panel');
+const selectedTeamCards = document.getElementById('selected-team-cards');
+const totalHealth = document.getElementById('total-health');
+const totalShield = document.getElementById('total-shield');
+const totalDPS = document.getElementById('total-dps');
+const totalMana = document.getElementById('total-mana');
+const clearTeamBtn = document.getElementById('clear-team-btn');
+const placeholderText = document.getElementById('placeholder-text');
+
+// GLOBAL DƏYİŞƏNLƏR
 let allCardsData = []; // Bütün yüklənmiş kartları saxlayır
 let activeRarity = 'all'; // Aktiv endərliyi yadda saxlayır
+let currentTeam = []; // Seçilmiş kartları (statistikalarla) saxlayır
 
 function showMenu() {
   mainMenu.classList.remove('hidden');
@@ -30,7 +39,21 @@ function createCardElement(data) {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
     
-    // YENİ KÖMƏKÇİ FUNKSİYA: Təkrar kodu azaltmaq və listenerləri düzgün tətbiq etmək üçün
+    // TEAM BUILDER DÜYMƏSİ ƏLAVƏSİ
+    const addButton = document.createElement('button');
+    addButton.className = 'add-to-team-btn';
+    addButton.textContent = '+ Team';
+    addButton.title = 'Komandaya Əlavə Et';
+    addButton.dataset.cardName = data.name;
+
+    addButton.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        addToTeam(data); 
+    });
+    
+    cardContainer.appendChild(addButton); 
+    // END TEAM BUILDER DÜYMƏSİ
+    
     const setupCardListeners = (contentElement) => {
         const cardButtons = contentElement.querySelectorAll('.card-tabs button');
         cardButtons.forEach(button => {
@@ -38,16 +61,13 @@ function createCardElement(data) {
                 e.stopPropagation();
                 const sectionId = button.dataset.section;
                 
-                // 1. Düymələri təmizlə və seçiləni aktiv et
                 cardButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
 
-                // 2. Bütün bölmələri gizlət (YALNIZ BU ÜZDƏ)
                 contentElement.querySelectorAll('.stats-section').forEach(section => {
                     section.classList.remove('visible');
                 });
                 
-                // 3. Seçiləni göstər
                 contentElement.querySelector(`[data-section-id="${sectionId}"]`).classList.add('visible');
             });
         });
@@ -67,7 +87,6 @@ function createCardElement(data) {
         cardInner.appendChild(cardBack);
         cardContainer.appendChild(cardInner);
 
-        // Listenerləri qoşa üz üçün tətbiq et
         setupCardListeners(cardFront);
         setupCardListeners(cardBack);
         
@@ -86,7 +105,6 @@ function createCardElement(data) {
         singleCard.classList.add('card-single');
         cardContainer.appendChild(singleCard);
         
-        // Listenerləri tək üz üçün tətbiq et
         setupCardListeners(singleCard);
     }
 
@@ -177,7 +195,102 @@ function renderCards(cardsToRender) {
     });
 }
 
-// YENİ ƏSAS FİLTR VƏ AXTAARİŞ FUNKSİYASI
+function getNumericStat(statValue) {
+    // String qiymətləri rəqəmə çevirir və 'x' kimi simvolları təmizləyir.
+    // Dəyərlər JSON fayllarınızda string kimi saxlanıldığı üçün vacibdir.
+    if (typeof statValue === 'string') {
+        const cleanedValue = statValue.replace(/[^\d.]/g, ''); // Rəqəm və nöqtədən başqa hər şeyi təmizlə
+        return parseInt(cleanedValue) || 0;
+    }
+    return statValue || 0;
+}
+
+function addToTeam(cardData) {
+    if (currentTeam.length >= 6) {
+        alert('Komandada maksimum 6 kart ola bilər.');
+        return;
+    }
+    
+    // Kartdan lazım olan əsas statistikaları çıxarın və rəqəmə çevirin
+    const cardToAdd = {
+        name: cardData.name,
+        health: getNumericStat(cardData.stats.health),
+        shield: getNumericStat(cardData.stats.shield),
+        sps: getNumericStat(cardData.stats.sps),
+        // Mana üçün xüsusi yoxlama: JSON faylınızda mana stringdir.
+        mana: getNumericStat(cardData.stats.mana), 
+        originalCardData: cardData 
+    };
+
+    currentTeam.push(cardToAdd);
+    
+    updateTeamPanel();
+    updateTeamStats();
+}
+
+function removeFromTeam(cardName) {
+    // Sadece adı ilə yoxlayın və birinci tapdığınız kartı silin (ehtimal ki, təkrar ad yoxdur)
+    const index = currentTeam.findIndex(card => card.name === cardName);
+    if (index > -1) {
+        currentTeam.splice(index, 1);
+    }
+    
+    updateTeamPanel();
+    updateTeamStats();
+}
+
+function updateTeamPanel() {
+    selectedTeamCards.innerHTML = '';
+    
+    if (currentTeam.length === 0) {
+        placeholderText.style.display = 'block';
+        selectedTeamCards.appendChild(placeholderText);
+        return;
+    }
+    placeholderText.style.display = 'none';
+
+    currentTeam.forEach(card => {
+        const teamItem = document.createElement('div');
+        teamItem.className = 'team-card-item';
+        teamItem.innerHTML = `
+            <span>${card.name}</span>
+            <button class="remove-from-team-btn" data-card-name="${card.name}">X</button>
+        `;
+        selectedTeamCards.appendChild(teamItem);
+    });
+
+    // Silmə düymələrinə listenerlər əlavə edin
+    selectedTeamCards.querySelectorAll('.remove-from-team-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const cardName = button.dataset.cardName;
+            removeFromTeam(cardName);
+        });
+    });
+}
+
+function updateTeamStats() {
+    const stats = currentTeam.reduce((acc, card) => {
+        acc.health += card.health;
+        acc.shield += card.shield;
+        acc.dps += card.sps;
+        acc.mana += card.mana; 
+        return acc;
+    }, { health: 0, shield: 0, dps: 0, mana: 0 });
+
+    totalHealth.textContent = stats.health;
+    totalShield.textContent = stats.shield;
+    totalDPS.textContent = stats.dps;
+    totalMana.textContent = stats.mana;
+}
+
+// Komandanı Təmizlə funksiyası üçün listener
+clearTeamBtn.addEventListener('click', () => {
+    currentTeam = [];
+    updateTeamPanel();
+    updateTeamStats();
+});
+
+// YENİ ƏSAS FİLTR VƏ AXTARIŞ FUNKSİYASI
 function filterAndRender() {
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
     

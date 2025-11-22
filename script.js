@@ -68,10 +68,14 @@ function createCardElement(data) {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
     
-    // TEAM BUILDER DÜYMƏSİ ƏLAVƏSİ (hidden-team-btn sinifi ilə gizlənir)
+    // YENİ DÜYMƏLƏRİN KONTEYNERİ
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'card-buttons-container'; 
+    
+    // TEAM BUILDER DÜYMƏSİ
     const addButton = document.createElement('button');
-    addButton.className = 'add-to-team-btn hidden-team-btn'; // Gizlədilmiş
-    addButton.textContent = '+ Team';
+    addButton.className = 'add-to-team-btn hidden-team-btn action-button'; // 'action-button' əlavə edildi
+    addButton.textContent = '+ Team'; // Mətn dəyişmədi, amma stil dəyişdi
     addButton.title = 'Komandaya Əlavə Et';
     addButton.dataset.cardName = data.name;
 
@@ -80,23 +84,24 @@ function createCardElement(data) {
         addToTeam(data); 
     });
     
-    cardContainer.appendChild(addButton); 
-    
-    // MÜQAYİSƏ DÜYMƏSİ ƏLAVƏSİ (hidden-team-btn sinifi ilə gizlənir)
+    // MÜQAYİSƏ DÜYMƏSİ
     const compareButton = document.createElement('button');
-    // Qeyd: add-to-compare-btn sinfi yuxarıda toggleCardButtons-da gizlədilir/göstərilir
-    compareButton.className = 'add-to-compare-btn hidden-team-btn'; 
-    compareButton.textContent = '+ Compare';
+    compareButton.className = 'add-to-compare-btn hidden-team-btn action-button'; // 'action-button' əlavə edildi
+    compareButton.textContent = '+ Comp'; // Mətn '+ Comp' olaraq dəyişdirildi
     compareButton.title = 'Müqayisəyə Əlavə Et';
     compareButton.dataset.cardName = data.name;
 
     compareButton.addEventListener('click', (e) => {
         e.stopPropagation(); 
         addToComparison(data);
-        if (comparisonModal) comparisonModal.classList.remove('hidden'); 
+        // comparisonModal artıq yoxlanıldığı üçün yoxlamaya ehtiyac yoxdur.
+        // if (comparisonModal) comparisonModal.classList.remove('hidden'); 
     });
     
-    cardContainer.appendChild(compareButton); 
+    buttonsContainer.appendChild(compareButton);
+    buttonsContainer.appendChild(addButton); // Sıralama dəyişdi: Comp, Team
+    
+    cardContainer.appendChild(buttonsContainer); 
     
     const setupCardListeners = (contentElement) => {
         const cardButtons = contentElement.querySelectorAll('.card-tabs button');

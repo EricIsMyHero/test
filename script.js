@@ -396,6 +396,28 @@ filterButtons.forEach(button => {
   });
 });
 
+// TEAM BUILDER MODAL EVENT LİSTENERLƏRİ
+if (openTeamBuilderBtn) {
+    openTeamBuilderBtn.addEventListener('click', () => {
+        teamBuilderModal.classList.remove('hidden');
+        updateTeamPanel(); // Kartları yenidən çəkin (təzə məlumatlar üçün)
+    });
+}
+
+if (closeTeamBuilderBtn) {
+    closeTeamBuilderBtn.addEventListener('click', () => {
+        teamBuilderModal.classList.add('hidden');
+    });
+}
+
+// ... (Mövcud DOMContentLoaded listenerini yeniləyin) ...
+document.addEventListener('DOMContentLoaded', () => {
+    showMenu();
+    updateTeamStats(); // Başlanğıcda sıfır göstərsin və düyməni yeniləsin
+    updateTeamPanel(); // Placeholder-i göstərsin
+    // updateComparisonView(); // Bu funksiya hələlik yoxdur
+});
+
 // AXTARIŞ GİRİŞİNƏ EVENT LİSTENER ƏLAVƏ EDİN
 if (searchInput) {
     searchInput.addEventListener('input', filterAndRender);

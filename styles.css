@@ -427,6 +427,11 @@ button.active { background: #394073; border-color: #5d66a2 }
   background: #388e3c;
 }
 
+/* Komanda qurucusu aktiv olmayanda düymələri gizlədin */
+.hidden-team-btn {
+    display: none !important;
+}
+
 /* ÜMUMİ XƏTA QARŞISININ ALINMASI */
 body, .wrap { overflow-x: hidden }
 

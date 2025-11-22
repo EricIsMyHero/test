@@ -8,6 +8,9 @@ const cardsContainer = document.getElementById('cards');
 const searchInput = document.getElementById('search-input'); 
 
 // YENİ TEAM BUILDER ELEMENTLƏRİ
+const openTeamBuilderBtn = document.getElementById('open-team-builder-btn');
+const teamBuilderModal = document.getElementById('team-builder-modal');
+const closeTeamBuilderBtn = document.getElementById('close-team-builder-btn');
 const teamBuilderPanel = document.getElementById('team-builder-panel');
 const selectedTeamCards = document.getElementById('selected-team-cards');
 const totalHealth = document.getElementById('total-health');
@@ -272,15 +275,22 @@ function updateTeamStats() {
     const stats = currentTeam.reduce((acc, card) => {
         acc.health += card.health;
         acc.shield += card.shield;
+        acc.damage += card.damage;
         acc.dps += card.sps;
         acc.mana += card.mana; 
         return acc;
-    }, { health: 0, shield: 0, dps: 0, mana: 0 });
+    }, { health: 0, shield: 0, damage: 0, dps: 0, mana: 0 });
 
     totalHealth.textContent = stats.health;
     totalShield.textContent = stats.shield;
+    totalDamage.textContent = stats.damage;
     totalDPS.textContent = stats.dps;
     totalMana.textContent = stats.mana;
+
+    // YENİ: Düymənin üzərindəki mətni yeniləyin
+    if (openTeamBuilderBtn) {
+        openTeamBuilderBtn.textContent = `Komandanı Göstər (${currentTeam.length}/6)`;
+    }
 }
 
 // Komandanı Təmizlə funksiyası üçün listener

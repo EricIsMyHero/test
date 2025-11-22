@@ -53,27 +53,37 @@
       
     </section>
     
-    <div id="team-builder-modal" class="modal hidden">
-        <div class="modal-content team-builder-content">
-            <header>
-                <h2>Komanda Qurucusu</h2>
-                <button id="close-team-builder-btn" class="back-button">Bağla</button>
-            </header>
-            
-            <div id="team-builder-panel">
-                <div id="selected-team-cards" class="team-cards-list">
-                    <p id="placeholder-text">Komandaya ən çox 6 kart əlavə edin.</p>
-                </div>
-                <div id="team-stats-summary" class="stats-summary">
-                    <h3>Ümumi Statistika</h3>
-                    <p>Can: <span id="total-health">0</span></p>
-                    <p>Qalxan: <span id="total-shield">0</span></p>
-                    <p>Hasar (Attack Damage): <span id="total-damage">0</span></p> 
-                    <p>Hasar (DPS): <span id="total-dps">0</span></p>
-                    <p>Mana Xərci: <span id="total-mana">0</span></p>
-                    <button id="clear-team-btn" class="back-button">Komandanı Təmizlə</button>
-                </div>
+    <section id="cards-section" class="hidden">
+    <header class="card-title-header">
+        </header>
+
+    <div id="cards-layout-wrapper"> 
+
+        <div id="team-builder-panel" class="hidden">
+            <h2>Team Summary</h2>
+            <div id="selected-team-cards" class="team-cards-list">
+                <p id="placeholder-text">Komandaya heç bir kart əlavə edilməyib.</p>
             </div>
+
+            <div class="stats-summary">
+                <p>Total Health: <span id="total-health">0</span></p>
+                <p>Total Shield: <span id="total-shield">0</span></p>
+                <p>Total Damage: <span id="total-damage">0</span></p>
+                <p>Total DPS: <span id="total-dps">0</span></p>
+                <p>Total Mana: <span id="total-mana">0</span></p>
+            </div>
+
+            <button id="clear-team-btn">Komandanı Təmizlə</button>
+            <button id="close-team-builder-btn" style="margin-top: 10px;">Kartlara Qayıt</button>
+        </div>
+        
+        <div id="cards-wrapper"> 
+             <div class="controls">...</div>
+             <input type="text" id="search-input" ... >
+             <div id="cards" class="grid"></div>
+        </div>
+    </div>
+</section>
 
         </div>
     </div>

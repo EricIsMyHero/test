@@ -42,9 +42,9 @@ function createCardElement(data) {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
     
-    // TEAM BUILDER DÜYMƏSİ ƏLAVƏSİ
+    // TEAM BUILDER DÜYMƏSİ ƏLAVƏSİ (hidden by default)
     const addButton = document.createElement('button');
-    addButton.className = 'add-to-team-btn';
+    addButton.className = 'add-to-team-btn hidden-team-btn'; // Əlavə sinif
     addButton.textContent = '+ Team';
     addButton.title = 'Komandaya Əlavə Et';
     addButton.dataset.cardName = data.name;
@@ -55,7 +55,21 @@ function createCardElement(data) {
     });
     
     cardContainer.appendChild(addButton); 
-    // END TEAM BUILDER DÜYMƏSİ
+    
+    // MÜQAYİSƏ DÜYMƏSİ ƏLAVƏSİ (Müqayisə funksiyasını hələlik tətbiq etmədiyiniz üçün, bunu da gizlədək)
+    const compareButton = document.createElement('button');
+    compareButton.className = 'add-to-compare-btn hidden-team-btn'; // Əlavə sinif
+    compareButton.textContent = '+ Compare';
+    compareButton.title = 'Müqayisəyə Əlavə Et';
+    compareButton.dataset.cardName = data.name;
+
+    compareButton.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        addToComparison(data); 
+        comparisonModal.classList.remove('hidden'); // Modalı açır
+    });
+    
+    cardContainer.appendChild(compareButton); 
     
     const setupCardListeners = (contentElement) => {
         const cardButtons = contentElement.querySelectorAll('.card-tabs button');
@@ -77,6 +91,7 @@ function createCardElement(data) {
     }
 
     if (data.isMulti) {
+        // ... (Mövcud isMulti kodu) ...
         const cardInner = document.createElement('div');
         cardInner.className = 'card-inner';
 
@@ -103,6 +118,7 @@ function createCardElement(data) {
         });
 
         cardContainer.appendChild(flipButton);
+
     } else {
         const singleCard = createCardContent(data);
         singleCard.classList.add('card-single');
@@ -119,6 +135,18 @@ function createCardElement(data) {
     }
 
     return cardContainer;
+}
+
+// Bu funksiya bütün kartlardakı Team/Compare düymələrinin görünməsinə nəzarət edir.
+function toggleCardButtons(isVisible) {
+    const buttons = document.querySelectorAll('.hidden-team-btn');
+    buttons.forEach(button => {
+        if (isVisible) {
+            button.classList.remove('hidden-team-btn');
+        } else {
+            button.classList.add('hidden-team-btn');
+        }
+    });
 }
 
 // Kartın iç məzmununu yaradan köməkçi funksiya
@@ -400,13 +428,15 @@ filterButtons.forEach(button => {
 if (openTeamBuilderBtn) {
     openTeamBuilderBtn.addEventListener('click', () => {
         teamBuilderModal.classList.remove('hidden');
-        updateTeamPanel(); // Kartları yenidən çəkin (təzə məlumatlar üçün)
+        updateTeamPanel();
+        toggleCardButtons(true); // Modalı açanda düymələri göstər
     });
 }
 
 if (closeTeamBuilderBtn) {
     closeTeamBuilderBtn.addEventListener('click', () => {
         teamBuilderModal.classList.add('hidden');
+        toggleCardButtons(false); // Modalı bağlayanda düymələri gizlət
     });
 }
 

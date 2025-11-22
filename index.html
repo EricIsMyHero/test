@@ -52,25 +52,31 @@
         
         <section class="grid" id="cards"></section>
         
-        <aside id="team-builder-panel">
-          <h2>Komanda Qurucusu</h2>
-          <div id="selected-team-cards" class="team-cards-list">
-            <p id="placeholder-text">Komandaya ən çox 6 kart əlavə edin.</p>
-          </div>
-          <div id="team-stats-summary" class="stats-summary">
-            <h3>Ümumi Statistika</h3>
+       <div id="team-builder-modal" class="modal hidden">
+        <div class="modal-content team-builder-content">
+            <header>
+                <h2>Komanda Qurucusu</h2>
+                <button id="close-team-builder-btn" class="back-button">Bağla</button>
+            </header>
+            
+            <div id="team-builder-panel">
+                <div id="selected-team-cards" class="team-cards-list">
+                    <p id="placeholder-text">Komandaya ən çox 6 kart əlavə edin.</p>
+                </div>
+                <div id="team-stats-summary" class="stats-summary">
+                    <h3>Ümumi Statistika</h3>
             <p>Health: <span id="total-health">0</span></p>
             <p>Shield: <span id="total-shield">0</span></p>
             <p>Damage: <span id="total-damage">0</span></p>
             <p>DPS: <span id="total-dps">0</span></p>
             <p>Mana: <span id="total-mana">0</span></p>
             <button id="clear-team-btn" class="back-button">Komandanı Təmizlə</button>
-          </div>
-        </aside>
+                </div>
+            </div>
 
-      </div>
-      </section>
-  </div>
+        </div>
+    </div>
+    </div>
   <script src="script.js"></script>
 </body>
 </html>

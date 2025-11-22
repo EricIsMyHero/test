@@ -324,10 +324,10 @@ button.active { background: #394073; border-color: #5d66a2 }
   margin-left: 3px;
 }
 
-/* Komanda rejimi aktiv olduqda kartlar bölməsini böyük flex konteynerə çevir */
+/* TEAM BUILDER LAYOUT STİLLƏRİ */
 #cards-layout-wrapper {
     display: flex;
-    flex-direction: column; /* Default olaraq bir sütun */
+    flex-direction: column; /* Default */
     gap: 20px;
 }
 
@@ -339,27 +339,22 @@ button.active { background: #394073; border-color: #5d66a2 }
 
 /* KOMANDA PANELİ */
 #team-builder-panel {
+    /* ... stillər ... */
     width: 300px;
     min-width: 300px;
-    padding: 20px;
-    background: var(--card);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    position: sticky; /* Səhifəni sürüşdürərkən paneli yerində saxlayır */
+    position: sticky; 
     top: 20px;
-    height: fit-content; /* Məzmuna uyğun hündürlük */
-    /* JS vasitəsilə 'hidden' sinfi ilə idarə olunacaq */
+    height: fit-content; 
 }
 
 /* KARTLARIN OLDUĞU ƏSAS HİSSƏ */
 #cards-wrapper { 
-    flex-grow: 1; /* Qalan bütün boşluğu tutur */
-    min-width: 0; /* İçindəki elementlərin onu məcburi şəkildə böyütməsinin qarşısını alır */
+    flex-grow: 1; 
+    min-width: 0;
 }
 
-/* TEAM MODE AKTİV OLDUQDA KART QRİPİNİ DƏYİŞDİR */
+/* TEAM MODE AKTİV OLDUQDA KART QRİPİNİ DƏYİŞDİR (4 kartlıq sıra) */
 #cards-section.team-mode-active #cards.grid {
-    /* 4-kartlı sıranı təmin etmək üçün minmax-ı bir qədər artırın */
     grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); 
 }
 

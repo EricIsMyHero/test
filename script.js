@@ -15,6 +15,7 @@ const teamBuilderPanel = document.getElementById('team-builder-panel');
 const selectedTeamCards = document.getElementById('selected-team-cards');
 const totalHealth = document.getElementById('total-health');
 const totalShield = document.getElementById('total-shield');
+const totalDamage = document.getElementById('total-damage');
 const totalDPS = document.getElementById('total-dps');
 const totalMana = document.getElementById('total-mana');
 const clearTeamBtn = document.getElementById('clear-team-btn');

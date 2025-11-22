@@ -423,7 +423,7 @@ button.active { background: #394073; border-color: #5d66a2 }
 .card-buttons-container {
     position: absolute;
     bottom: 12px; /* Kartın altından yuxarı məsafə */
-    left: 12px; /* Kartın solundan sağa məsafə */
+    right: 12px; /* Kartın solundan sağa məsafə */
     display: flex;
     gap: 8px; /* Düymələr arasındakı məsafə */
     z-index: 10; 

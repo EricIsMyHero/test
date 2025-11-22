@@ -1,4 +1,4 @@
-// DOM Elementləri
+/ DOM Elementləri
 const mainMenu = document.getElementById('main-menu');
 const cardsSection = document.getElementById('cards-section');
 const showCardsBtn = document.getElementById('show-cards-btn');
@@ -7,45 +7,66 @@ const filterButtons = document.querySelectorAll('.controls button');
 const cardsContainer = document.getElementById('cards');
 const searchInput = document.getElementById('search-input'); 
 
-// YENİ TEAM BUILDER ELEMENTLƏRİ
+// YENİ TEAM BUILDER ELEMENTLƏRİ (Modalın içindəki elementlər)
 const openTeamBuilderBtn = document.getElementById('open-team-builder-btn');
 const teamBuilderModal = document.getElementById('team-builder-modal');
 const closeTeamBuilderBtn = document.getElementById('close-team-builder-btn');
+
 const teamBuilderPanel = document.getElementById('team-builder-panel');
 const selectedTeamCards = document.getElementById('selected-team-cards');
 const totalHealth = document.getElementById('total-health');
 const totalShield = document.getElementById('total-shield');
-const totalDamage = document.getElementById('total-damage');
+const totalDamage = document.getElementById('total-damage'); // YENİ: Damage Elementi
 const totalDPS = document.getElementById('total-dps');
 const totalMana = document.getElementById('total-mana');
 const clearTeamBtn = document.getElementById('clear-team-btn');
 const placeholderText = document.getElementById('placeholder-text');
 
+// YENİ MÜQAYİSƏ ELEMENTLƏRİ (Hələlik HTML-ə əlavə edilməyib, lakin JS-də olmalıdır)
+const comparisonModal = document.getElementById('comparison-modal'); // Əgər gələcəkdə əlavə etsəniz
+const comparisonResults = document.getElementById('comparison-results');
+const comparisonDropZone = document.getElementById('comparison-drop-zone');
+
+
 // GLOBAL DƏYİŞƏNLƏR
 let allCardsData = []; // Bütün yüklənmiş kartları saxlayır
 let activeRarity = 'all'; // Aktiv endərliyi yadda saxlayır
 let currentTeam = []; // Seçilmiş kartları (statistikalarla) saxlayır
+let comparisonCards = []; // Seçilmiş müqayisə kartları (Maks 2)
 
 function showMenu() {
-  mainMenu.classList.remove('hidden');
-  cardsSection.classList.add('hidden');
+    mainMenu.classList.remove('hidden');
+    cardsSection.classList.add('hidden');
 }
 
 function showCards() {
-  mainMenu.classList.add('hidden');
-  cardsSection.classList.remove('hidden');
-  fetchAndRender('all');
-  if (searchInput) searchInput.value = '';
+    mainMenu.classList.add('hidden');
+    cardsSection.classList.remove('hidden');
+    fetchAndRender('all');
+    if (searchInput) searchInput.value = '';
 }
+
+// Bu funksiya bütün kartlardakı Team/Compare düymələrinin görünməsinə nəzarət edir.
+function toggleCardButtons(isVisible) {
+    const buttons = document.querySelectorAll('.hidden-team-btn');
+    buttons.forEach(button => {
+        if (isVisible) {
+            button.classList.remove('hidden-team-btn');
+        } else {
+            button.classList.add('hidden-team-btn');
+        }
+    });
+}
+
 
 // Kart yaratmaq üçün əsas funksiya
 function createCardElement(data) {
     const cardContainer = document.createElement('article');
     cardContainer.className = `card-container card r-${data.rarity.toLowerCase()}`;
     
-    // TEAM BUILDER DÜYMƏSİ ƏLAVƏSİ (hidden by default)
+    // TEAM BUILDER DÜYMƏSİ ƏLAVƏSİ (hidden-team-btn sinifi ilə gizlənir)
     const addButton = document.createElement('button');
-    addButton.className = 'add-to-team-btn hidden-team-btn'; // Əlavə sinif
+    addButton.className = 'add-to-team-btn hidden-team-btn'; // Gizlədilmiş
     addButton.textContent = '+ Team';
     addButton.title = 'Komandaya Əlavə Et';
     addButton.dataset.cardName = data.name;
@@ -57,17 +78,17 @@ function createCardElement(data) {
     
     cardContainer.appendChild(addButton); 
     
-    // MÜQAYİSƏ DÜYMƏSİ ƏLAVƏSİ (Müqayisə funksiyasını hələlik tətbiq etmədiyiniz üçün, bunu da gizlədək)
+    // MÜQAYİSƏ DÜYMƏSİ ƏLAVƏSİ (hidden-team-btn sinifi ilə gizlənir)
     const compareButton = document.createElement('button');
-    compareButton.className = 'add-to-compare-btn hidden-team-btn'; // Əlavə sinif
+    compareButton.className = 'add-to-compare-btn hidden-team-btn'; // Gizlədilmiş
     compareButton.textContent = '+ Compare';
     compareButton.title = 'Müqayisəyə Əlavə Et';
     compareButton.dataset.cardName = data.name;
 
     compareButton.addEventListener('click', (e) => {
         e.stopPropagation(); 
-        addToComparison(data); 
-        comparisonModal.classList.remove('hidden'); // Modalı açır
+        addToComparison(data); // <-- İndi təyin olunub
+        if (comparisonModal) comparisonModal.classList.remove('hidden'); 
     });
     
     cardContainer.appendChild(compareButton); 
@@ -92,7 +113,6 @@ function createCardElement(data) {
     }
 
     if (data.isMulti) {
-        // ... (Mövcud isMulti kodu) ...
         const cardInner = document.createElement('div');
         cardInner.className = 'card-inner';
 
@@ -119,7 +139,6 @@ function createCardElement(data) {
         });
 
         cardContainer.appendChild(flipButton);
-
     } else {
         const singleCard = createCardContent(data);
         singleCard.classList.add('card-single');
@@ -217,21 +236,19 @@ function createCardContent(data) {
 
 // Kartları render edən funksiya
 function renderCards(cardsToRender) {
-    cardsContainer.innerHTML = '';
-    if (cardsToRender.length === 0) {
-        cardsContainer.innerHTML = '<p>Bu endərlikdə kart tapılmadı.</p>';
-        return;
-    }
-    cardsToRender.forEach(data => {
-        cardsContainer.appendChild(createCardElement(data));
-    });
+    cardsContainer.innerHTML = '';
+    if (cardsToRender.length === 0) {
+        cardsContainer.innerHTML = '<p>Bu endərlikdə kart tapılmadı.</p>';
+        return;
+    }
+    cardsToRender.forEach(data => {
+        cardsContainer.appendChild(createCardElement(data));
+    });
 }
 
 function getNumericStat(statValue) {
-    // String qiymətləri rəqəmə çevirir və 'x' kimi simvolları təmizləyir.
-    // Dəyərlər JSON fayllarınızda string kimi saxlanıldığı üçün vacibdir.
     if (typeof statValue === 'string') {
-        const cleanedValue = statValue.replace(/[^\d.]/g, ''); // Rəqəm və nöqtədən başqa hər şeyi təmizlə
+        const cleanedValue = statValue.replace(/[^\d.]/g, ''); 
         return parseInt(cleanedValue) || 0;
     }
     return statValue || 0;
@@ -243,15 +260,14 @@ function addToTeam(cardData) {
         return;
     }
     
-    // Kartdan lazım olan əsas statistikaları çıxarın və rəqəmə çevirin
     const cardToAdd = {
         name: cardData.name,
         health: getNumericStat(cardData.stats.health),
         shield: getNumericStat(cardData.stats.shield),
+        damage: getNumericStat(cardData.stats.damage), // Damage əlavə edildi
         sps: getNumericStat(cardData.stats.sps),
-        // Mana üçün xüsusi yoxlama: JSON faylınızda mana stringdir.
         mana: getNumericStat(cardData.stats.mana), 
-        originalCardData: cardData 
+        originalCardData: cardData
     };
 
     currentTeam.push(cardToAdd);
@@ -261,7 +277,6 @@ function addToTeam(cardData) {
 }
 
 function removeFromTeam(cardName) {
-    // Sadece adı ilə yoxlayın və birinci tapdığınız kartı silin (ehtimal ki, təkrar ad yoxdur)
     const index = currentTeam.findIndex(card => card.name === cardName);
     if (index > -1) {
         currentTeam.splice(index, 1);
@@ -291,7 +306,6 @@ function updateTeamPanel() {
         selectedTeamCards.appendChild(teamItem);
     });
 
-    // Silmə düymələrinə listenerlər əlavə edin
     selectedTeamCards.querySelectorAll('.remove-from-team-btn').forEach(button => {
         button.addEventListener('click', () => {
             const cardName = button.dataset.cardName;
@@ -304,44 +318,33 @@ function updateTeamStats() {
     const stats = currentTeam.reduce((acc, card) => {
         acc.health += card.health;
         acc.shield += card.shield;
-        acc.damage += card.damage;
+        acc.damage += card.damage; // Damage yığılır
         acc.dps += card.sps;
         acc.mana += card.mana; 
         return acc;
-    }, { health: 0, shield: 0, damage: 0, dps: 0, mana: 0 });
+    }, { health: 0, shield: 0, damage: 0, dps: 0, mana: 0 }); // Başlanğıc dəyərlər
 
-    totalHealth.textContent = stats.health;
-    totalShield.textContent = stats.shield;
-    totalDamage.textContent = stats.damage;
-    totalDPS.textContent = stats.dps;
-    totalMana.textContent = stats.mana;
+    if (totalHealth) totalHealth.textContent = stats.health;
+    if (totalShield) totalShield.textContent = stats.shield;
+    if (totalDamage) totalDamage.textContent = stats.damage; // Damage göstərilir
+    if (totalDPS) totalDPS.textContent = stats.dps;
+    if (totalMana) totalMana.textContent = stats.mana;
 
-    // YENİ: Düymənin üzərindəki mətni yeniləyin
     if (openTeamBuilderBtn) {
         openTeamBuilderBtn.textContent = `Komandanı Göstər (${currentTeam.length}/6)`;
     }
 }
 
-// Komandanı Təmizlə funksiyası üçün listener
-clearTeamBtn.addEventListener('click', () => {
-    currentTeam = [];
-    updateTeamPanel();
-    updateTeamStats();
-});
-
 // YENİ ƏSAS FİLTR VƏ AXTARIŞ FUNKSİYASI
 function filterAndRender() {
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
     
-    // Bütün kartlardan başlayın
     let filteredCards = allCardsData;
 
-    // 1. Endərliyə görə filtrləmə (Əgər 'all' deyilsə)
     if (activeRarity !== 'all') {
         filteredCards = filteredCards.filter(card => card.rarity.toLowerCase() === activeRarity);
     }
 
-    // 2. Axtarış termininə görə filtrləmə
     if (searchTerm.length > 0) {
         filteredCards = filteredCards.filter(card => 
             card.name.toLowerCase().includes(searchTerm)
@@ -349,8 +352,36 @@ function filterAndRender() {
     }
 
     renderCards(filteredCards);
+    // Düymələrin görünüşünü yeniləyin (Əgər komanda modali açıqdırsa)
+    if (!teamBuilderModal.classList.contains('hidden')) {
+        toggleCardButtons(true);
+    } else {
+         toggleCardButtons(false);
+    }
 }
 
+
+function addToComparison(cardData) {
+    // Təkrar kartın əlavə edilməsinin qarşısını alın
+    if (comparisonCards.some(card => card.name === cardData.name)) {
+        // alert(`${cardData.name} artıq müqayisədədir.`);
+        return;
+    }
+
+    if (comparisonCards.length >= 2) {
+        alert('Eyni anda yalnız 2 kartı müqayisə edə bilərsiniz.');
+        return;
+    }
+    
+    const cardToAdd = {
+        name: cardData.name,
+        originalCardData: cardData 
+    };
+
+    comparisonCards.push(cardToAdd);
+    
+    // updateComparisonView(); // HTML olmadığından hələlik deaktiv
+}
 
 // Məlumatları çəkən funksiya (Əhəmiyyətli dərəcədə DƏYİŞİR)
 async function fetchAndRender(rarity) {
@@ -425,36 +456,43 @@ filterButtons.forEach(button => {
   });
 });
 
+// AXTARIŞ GİRİŞİNƏ EVENT LİSTENER
+if (searchInput) {
+    searchInput.addEventListener('input', filterAndRender);
+} else {
+    console.warn("Axtarış inputu (id='search-input') tapılmadı. HTML-i yoxlayın.");
+}
+
 // TEAM BUILDER MODAL EVENT LİSTENERLƏRİ
 if (openTeamBuilderBtn) {
     openTeamBuilderBtn.addEventListener('click', () => {
-        teamBuilderModal.classList.remove('hidden');
+        if(teamBuilderModal) teamBuilderModal.classList.remove('hidden');
         updateTeamPanel();
-        toggleCardButtons(true); // Modalı açanda düymələri göstər
+        toggleCardButtons(true); // Modalı açanda Team düymələrini göstər
     });
 }
 
 if (closeTeamBuilderBtn) {
     closeTeamBuilderBtn.addEventListener('click', () => {
-        teamBuilderModal.classList.add('hidden');
-        toggleCardButtons(false); // Modalı bağlayanda düymələri gizlət
+        if(teamBuilderModal) teamBuilderModal.classList.add('hidden');
+        toggleCardButtons(false); // Modalı bağlayanda Team düymələrini gizlət
     });
 }
 
-// ... (Mövcud DOMContentLoaded listenerini yeniləyin) ...
+// Komandanı Təmizlə funksiyası üçün listener
+if(clearTeamBtn) {
+    clearTeamBtn.addEventListener('click', () => {
+        currentTeam = [];
+        updateTeamPanel();
+        updateTeamStats();
+    });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     showMenu();
-    updateTeamStats(); // Başlanğıcda sıfır göstərsin və düyməni yeniləsin
-    updateTeamPanel(); // Placeholder-i göstərsin
-    // updateComparisonView(); // Bu funksiya hələlik yoxdur
+    updateTeamStats(); 
+    updateTeamPanel();
 });
-
-// AXTARIŞ GİRİŞİNƏ EVENT LİSTENER ƏLAVƏ EDİN
-if (searchInput) {
-    searchInput.addEventListener('input', filterAndRender);
-} else {
-    // Əgər axtarış inputu tapılmayıbsa, xəbərdarlıq verin
-    console.warn("Axtarış inputu (id='search-input') tapılmadı. HTML-i yoxlayın.");
-}
 
 document.addEventListener('DOMContentLoaded', showMenu);

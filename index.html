@@ -30,34 +30,8 @@
         <button id="back-to-menu-btn" class="back-button">Back</button>
         <button id="open-team-builder-btn" class="back-button" style="background: #e53935; color: var(--text);">Komandanı Göstər (0/6)</button>
       </header>
-
-      <div class="controls">
-        <button id="filter-all" class="active">All Cards</button>
-        <button id="filter-mundane">Mundane</button>
-        <button id="filter-familiar">Familiar</button>
-        <button id="filter-arcane">Arcane</button>
-        <button id="filter-mythic">Mythic</button>
-        <button id="filter-legendary">Legendary</button>
-        <button id="filter-ethereal">Ethereal</button>
-        <input type="text" id="search-input" placeholder="Kart adını axtar..." 
-        style=" background: #22284f; color: var(--text);
-                border: 1px solid #2f3769; border-radius: 12px;
-                padding: 10px 14px;
-                box-shadow: var(--shadow);
-                flex-grow: 1; 
-                max-width: 300px;
-    ">
-      </div>
-
-      <section class="grid" id="cards"></section>
       
-    </section>
-    
-    <section id="cards-section" class="hidden">
-    <header class="card-title-header">
-        </header>
-
-    <div id="cards-layout-wrapper"> 
+      <div id="cards-layout-wrapper"> 
 
         <div id="team-builder-panel" class="hidden">
             <h2>Team Summary</h2>
@@ -78,16 +52,29 @@
         </div>
         
         <div id="cards-wrapper"> 
-             <div class="controls">...</div>
-             <input type="text" id="search-input" ... >
-             <div id="cards" class="grid"></div>
+          <div class="controls">
+            <button id="filter-all" class="active">All Cards</button>
+            <button id="filter-mundane">Mundane</button>
+            <button id="filter-familiar">Familiar</button>
+            <button id="filter-arcane">Arcane</button>
+            <button id="filter-mythic">Mythic</button>
+            <button id="filter-legendary">Legendary</button>
+            <button id="filter-ethereal">Ethereal</button>
+            <input type="text" id="search-input" placeholder="Kart adını axtar..." 
+            style=" background: #22284f; color: var(--text);
+                    border: 1px solid #2f3769; border-radius: 12px;
+                    padding: 10px 14px;
+                    box-shadow: var(--shadow);
+                    flex-grow: 1; 
+                    max-width: 300px;
+            ">
+          </div>
+          <section class="grid" id="cards"></section>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
-        </div>
-    </div>
-    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

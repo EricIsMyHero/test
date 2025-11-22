@@ -24,7 +24,7 @@ body {
   font-family: ui-sans-serif, system-ui, Segoe UI, Roboto;
 }
 
-.wrap { max-width: 1634px; margin: 32px auto; padding: 16px }
+.wrap { max-width: 1364px; margin: 32px auto; padding: 16px }
 header { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 30px; }
 h1 { font-size: 28px; margin: 0; letter-spacing: .2px }
 .hint { color: var(--muted); font-size: 14px }
@@ -59,9 +59,9 @@ button.active { background: #394073; border-color: #5d66a2 }
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   background: var(--card);
   border: 1px solid #2a2f57;
-  position: relative; /* Düymələri yerləşdirmək üçün */
-  padding-bottom: 50px; /* Düymələrə yer ayırmaq üçün */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* DÜZƏLİŞ: Düymələrə yer açmaq üçün */
+  padding-bottom: 50px; 
 }
 
 .card-container:hover,
@@ -116,8 +116,7 @@ button.active { background: #394073; border-color: #5d66a2 }
 
 /* TƏKÜZLÜ KART */
 .card-single {
-  position: relative; /* Düymələri yerləşdirmək üçün */
-  padding-bottom: 50px; /* Düymələrə yer ayırmaq üçün */
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -420,6 +419,17 @@ button.active { background: #394073; border-color: #5d66a2 }
   margin-top: 15px;
 }
 
+/* DÜZƏLİŞ: DÜYMƏLƏRİN YERLƏŞMƏSİ ÜÇÜN YENİ STİL */
+.card-buttons-container {
+    position: absolute;
+    bottom: 12px; /* Kartın altından yuxarı məsafə */
+    left: 12px; /* Kartın solundan sağa məsafə */
+    display: flex;
+    gap: 8px; /* Düymələr arasındakı məsafə */
+    z-index: 10; 
+}
+
+
 /* Ümumi Düymə Stili (Comp və Team üçün) */
 .add-to-team-btn,
 .add-to-compare-btn {
@@ -461,4 +471,3 @@ button.active { background: #394073; border-color: #5d66a2 }
 
 /* ÜMUMİ XƏTA QARŞISININ ALINMASI */
 body, .wrap { overflow-x: hidden }
-

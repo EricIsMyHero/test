@@ -324,42 +324,58 @@ button.active { background: #394073; border-color: #5d66a2 }
   margin-left: 3px;
 }
 
-/* Team Builder üçün yeni stillər */
-.main-content-wrapper {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start; /* Paneli yuxarıya bağlayır */
+/* Komanda rejimi aktiv olduqda kartlar bölməsini böyük flex konteynerə çevir */
+#cards-layout-wrapper {
+    display: flex;
+    flex-direction: column; /* Default olaraq bir sütun */
+    gap: 20px;
 }
 
-#cards {
-  flex-grow: 1;
-  min-width: 70%; /* Kart gridi paneldən daha çox yer tutur */
+/* TEAM MODE AKTİV OLDUQDA LAYOUT */
+#cards-section.team-mode-active #cards-layout-wrapper {
+    flex-direction: row; /* Yan-yana düzülüş: Panel solda, kartlar sağda */
+    align-items: flex-start;
 }
 
+/* KOMANDA PANELİ */
 #team-builder-panel {
-  width: 300px;
-  min-width: 300px;
-  padding: 20px;
-  background: var(--card);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  position: sticky; /* Səhifəni sürüşdürərkən paneli yerində saxlayır */
-  top: 20px;
+    width: 300px;
+    min-width: 300px;
+    padding: 20px;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    position: sticky; /* Səhifəni sürüşdürərkən paneli yerində saxlayır */
+    top: 20px;
+    height: fit-content; /* Məzmuna uyğun hündürlük */
+    /* JS vasitəsilə 'hidden' sinfi ilə idarə olunacaq */
 }
 
+/* KARTLARIN OLDUĞU ƏSAS HİSSƏ */
+#cards-wrapper { 
+    flex-grow: 1; /* Qalan bütün boşluğu tutur */
+    min-width: 0; /* İçindəki elementlərin onu məcburi şəkildə böyütməsinin qarşısını alır */
+}
+
+/* TEAM MODE AKTİV OLDUQDA KART QRİPİNİ DƏYİŞDİR */
+#cards-section.team-mode-active #cards.grid {
+    /* 4-kartlı sıranı təmin etmək üçün minmax-ı bir qədər artırın */
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); 
+}
+
+/* MÖVCUD Team Builder element stilləri (saxlayın) */
 #team-builder-panel h2 {
-  font-size: 20px;
-  border-bottom: 2px solid var(--ring);
-  padding-bottom: 10px;
-  margin-top: 0;
+    font-size: 20px;
+    border-bottom: 2px solid var(--ring);
+    padding-bottom: 10px;
+    margin-top: 0;
 }
-
 .team-cards-list {
-  min-height: 150px;
-  max-height: 300px;
-  overflow-y: auto;
-  padding-right: 10px;
-  margin-bottom: 20px;
+    min-height: 150px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
 }
 
 .team-card-item {
@@ -408,9 +424,9 @@ button.active { background: #394073; border-color: #5d66a2 }
 
 /* Kart üzərindəki Əlavə et düyməsi */
 .add-to-team-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background: var(--familiar); /* Familiar rəngi ilə uyğun */
   color: #151934;
   border: none;
@@ -425,6 +441,27 @@ button.active { background: #394073; border-color: #5d66a2 }
 
 .add-to-team-btn:hover {
   background: #388e3c;
+}
+
+/* YENİ MÜQAYİSƏ DÜYMƏSİ (İkisi yan-yana dursun) */
+.add-to-compare-btn {
+    position: absolute;
+    top: 10px;
+    right: 75px; /* Komanda düyməsinin yanına yerləşdirmək üçün dəyişdirildi */
+    background: var(--arcane); 
+    color: #151934;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 10;
+    transition: background .2s;
+}
+
+.add-to-compare-btn:hover {
+    background: #673AB7;
 }
 
 /* Komanda qurucusu aktiv olmayanda düymələri gizlədin */

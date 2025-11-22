@@ -21,6 +21,7 @@ const totalDPS = document.getElementById('total-dps');
 const totalMana = document.getElementById('total-mana');
 const clearTeamBtn = document.getElementById('clear-team-btn');
 const placeholderText = document.getElementById('placeholder-text');
+const cardsLayoutWrapper = document.getElementById('cards-layout-wrapper'); // YENİ KONTEYNER
 
 // YENİ MÜQAYİSƏ ELEMENTLƏRİ (Hələlik HTML-ə əlavə edilməyib, lakin JS-də olmalıdır)
 const comparisonModal = document.getElementById('comparison-modal'); // Əgər gələcəkdə əlavə etsəniz
@@ -463,19 +464,29 @@ if (searchInput) {
     console.warn("Axtarış inputu (id='search-input') tapılmadı. HTML-i yoxlayın.");
 }
 
-// TEAM BUILDER MODAL EVENT LİSTENERLƏRİ
+// TEAM BUILDER MODAL EVENT LİSTENERLƏRİ (YENİLƏNMİŞ)
 if (openTeamBuilderBtn) {
     openTeamBuilderBtn.addEventListener('click', () => {
-        if(teamBuilderModal) teamBuilderModal.classList.remove('hidden');
+        // Layotu iki sütunlu rejimi aktivləşdir
+        cardsSection.classList.add('team-mode-active');
+        
+        // Paneli göstər
+        if (teamBuilderPanel) teamBuilderPanel.classList.remove('hidden');
+
         updateTeamPanel();
-        toggleCardButtons(true); // Modalı açanda Team düymələrini göstər
+        toggleCardButtons(true); // Team düymələrini göstər
     });
 }
 
 if (closeTeamBuilderBtn) {
     closeTeamBuilderBtn.addEventListener('click', () => {
-        if(teamBuilderModal) teamBuilderModal.classList.add('hidden');
-        toggleCardButtons(false); // Modalı bağlayanda Team düymələrini gizlət
+        // Layotu bir sütunlu rejimi bərpa et
+        cardsSection.classList.remove('team-mode-active');
+        
+        // Paneli gizlət
+        if (teamBuilderPanel) teamBuilderPanel.classList.add('hidden');
+
+        toggleCardButtons(false); // Team düymələrini gizlət
     });
 }
 
@@ -487,7 +498,6 @@ if(clearTeamBtn) {
         updateTeamStats();
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     showMenu();

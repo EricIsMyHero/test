@@ -1,0 +1,454 @@
+[
+  {
+    "name": "Arcanyx",
+    "type": ["Varlıq"],
+    "rarity": "Arcane",
+    "note": "Support/Healer",
+    "isHybrid": false,
+    "isMulti": false,
+    "stats": {
+      "health": "50",
+      "shield": "50",
+      "damage": "15",
+      "sps": "14",
+      "attackSpeed": "1,10s",
+      "delay": "-",
+      "mana": "6",
+      "number": "1"
+    },
+    "trait": "Atışları sonda partlayaraq +60% Hasar verər, yaxındakı kartlara hər 5 saniyədə +8 Can verər",
+    "additionalStats": {
+      "range": "2100",
+      "speed": "1000",
+      "criticalChance": "5%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "0%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+2% Öz. Şansı  |  5% » 7%",
+      "level2": "+100% Öz. Hasar Bonusu  |  100% » 200%",
+      "level3": "+12% Qalxan  |  50 » 56"
+      },
+    "story": "Arı sürüsünün hekayəsi buradadır. Kartın tarixi haqqında daha uzun bir mətn ola bilər."
+  },
+  {
+    "name": "Leafshade",
+    "type": ["Varlıq"],
+    "rarity": "Arcane",
+    "note": "Support/Healer",
+    "isHybrid": false,
+    "isMulti": false,
+    "stats": {
+      "health": "220",
+      "shield": "0",
+      "damage": "50",
+      "sps": "33",
+      "attackSpeed": "1,50s",
+      "delay": "-",
+      "mana": "15",
+      "number": "1"
+    },
+    "trait": "Vuruşları qalxandan keçər, hər 7 saniyədə +1% Can Çalma Şansı (Max:25%)",
+    "additionalStats": {
+      "range": "1000",
+      "speed": "1200",
+      "criticalChance": "5%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "10%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+2% Öz. Şansı  |  5% » 7%",
+      "level2": "+100% Öz. Hasar Bonusu  |  100% » 200%",
+      "level3": "+12% Qalxan  |  50 » 56"
+      },
+    "story": "Arı sürüsünün hekayəsi buradadır. Kartın tarixi haqqında daha uzun bir mətn ola bilər."
+  },
+  {
+    "name": "Clown",
+    "type": ["İnsan"],
+    "rarity": "Arcane",
+    "note": "Support/Healer",
+    "isHybrid": false,
+    "isMulti": true,
+    "stats": {
+      "health": "80",
+      "shield": "80",
+      "damage": "14",
+      "sps": "14",
+      "attackSpeed": "1,00s",
+      "delay": "-",
+      "mana": "8",
+      "number": "1"
+    },
+    "trait": "Öləndə *Box* buraxar",
+    "additionalStats": {
+      "range": "3000",
+      "speed": "1100",
+      "criticalChance": "5%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "0%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+22% Hasar  |  18 » 22",
+      "level2": "+10% Hız  |  850 » 935",
+      "level3": "+1 Öz. Parçalanma Sayı  |  2 » 3"
+  },
+    "story": "Snowballer-in hekayəsi buradadır. Bu kartın tarixi haqqında mətn yazın.",
+    "secondForm": {
+      "name": "Box",
+      "type": ["Robot"],
+      "rarity": "Arcane",
+      "note": "Suicide Assassin",
+      "isHybrid": false,
+      "stats": {
+        "health": "50",
+        "shield": "50",
+        "damage": "30",
+        "sps": "13",
+        "attackSpeed": "2,40s",
+        "delay": "-",
+        "mana": "-",
+        "number": "1"
+      },
+      "trait": "Rəqib kart yaxına gələrsə açılaraq hasar verər və 1,3 saniyə sərsəmlətər",
+      "additionalStats": {
+        "range": "1500",
+        "speed": "-",
+        "criticalChance": "-",
+        "criticDamage": "-",
+        "lifestealChance": "-",
+        "lifesteal": "-",
+        "damageminimiser": "-",
+        "dodge": "-"
+      },
+    "showlevels": {
+      "level1": "-",
+      "level2": "-",
+      "level3": "-" 
+      },
+    "story": "Snowballer-in hekayəsi buradadır. Bu kartın tarixi haqqında mətn yazın."
+      }
+  },
+  {
+    "name": "Tphoneix",
+    "type": ["İnsan"],
+    "rarity": "Arcane",
+    "note": "Fighter",
+    "isHybrid": false,
+    "isMulti": true,
+    "stats": {
+      "health": "400",
+      "shield": "0",
+      "damage": "15",
+      "sps": "19",
+      "attackSpeed": "0,80s",
+      "delay": "-",
+      "mana": "15",
+      "number": "1"
+    },
+    "trait": "Canı 25%-in altına düşdükdə *Fire Egg*-ə dönüşər. Fire Egg Can: 100 Özəllik: 4,3 saniyə ərzində qırılmazsa *Phoneix*-ə dönüşər, qırılarsa *Tphoneix*-ə",
+    "additionalStats": {
+      "range": "1000",
+      "speed": "1000",
+      "criticalChance": "0%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "0%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+22% Hasar  |  18 » 22",
+      "level2": "+10% Hız  |  850 » 935",
+      "level3": "+1 Öz. Parçalanma Sayı  |  2 » 3"
+  },
+    "story": "Snowballer-in hekayəsi buradadır. Bu kartın tarixi haqqında mətn yazın.",
+    "secondForm": {
+      "name": "Phoneix",
+      "type": ["Heyvan"],
+      "rarity": "Arcane",
+      "note": "Suicide Assassin",
+      "isHybrid": false,
+      "stats": {
+        "health": "200",
+        "shield": "0",
+        "damage": "20",
+        "sps": "25",
+        "attackSpeed": "0,80s",
+        "delay": "-",
+        "mana": "-",
+        "number": "1"
+      },
+      "trait": "Rəqib kart yaxına gələrsə açılaraq hasar verər və 1,3 saniyə sərsəmlətər",
+      "additionalStats": {
+        "range": "1000",
+        "speed": "1000",
+        "criticalChance": "-",
+        "criticDamage": "-",
+        "lifestealChance": "-",
+        "lifesteal": "-",
+        "damageminimiser": "-",
+        "dodge": "-"
+      },
+    "showlevels": {
+      "level1": "-",
+      "level2": "-",
+      "level3": "-" 
+      },
+    "story": "Snowballer-in hekayəsi buradadır. Bu kartın tarixi haqqında mətn yazın."
+      }
+  },
+  {
+    "name": "Pirate Boy",
+    "type": ["İnsan"],
+    "rarity": "Arcane",
+    "note": "Fighter",
+    "isHybrid": false,
+    "isMulti": true,
+    "stats": {
+      "health": "250",
+      "shield": "0",
+      "damage": "30",
+      "sps": "25",
+      "attackSpeed": "1,20s",
+      "delay": "-",
+      "mana": "12",
+      "number": "1"
+    },
+    "trait": "Hər 7 saniyədə +5 Can yeniləyər",
+    "additionalStats": {
+      "range": "1000",
+      "speed": "1000",
+      "criticalChance": "5%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "0%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+22% Hasar  |  18 » 22",
+      "level2": "+10% Hız  |  850 » 935",
+      "level3": "+1 Öz. Parçalanma Sayı  |  2 » 3"
+  },
+    "story": "Snowballer-in hekayəsi buradadır. Bu kartın tarixi haqqında mətn yazın.",
+    "secondForm": {
+      "name": "Pirate Girls",
+      "type": ["İnsan"],
+      "rarity": "Arcane",
+      "note": "Marksman",
+      "isHybrid": false,
+      "stats": {
+        "health": "120",
+        "shield": "0",
+        "damage": "16",
+        "sps": "11",
+        "attackSpeed": "1,50s",
+        "delay": "-",
+        "mana": "-",
+        "number": "2"
+      },
+      "trait": "Hər 6 saniyədə +0,01 Menzil bonusu qazanar",
+      "additionalStats": {
+        "range": "2500",
+        "speed": "1000",
+        "criticalChance": "-",
+        "criticDamage": "-",
+        "lifestealChance": "-",
+        "lifesteal": "-",
+        "damageminimiser": "-",
+        "dodge": "-"
+      },
+    "showlevels": {
+      "level1": "-",
+      "level2": "-",
+      "level3": "-" 
+      },
+    "story": "Snowballer-in hekayəsi buradadır. Bu kartın tarixi haqqında mətn yazın."
+      }
+  },
+  {
+    "name": "Canoballer",
+    "type": ["İnsan" , "Robot"],
+    "rarity": "Arcane",
+    "note": "Marksman/Burst",
+    "isHybrid": true,
+    "isMulti": false,
+    "stats": {
+      "health": "100",
+      "shield": "200",
+      "damage": "50",
+      "sps": "29",
+      "attackSpeed": "1,70s",
+      "delay": "-",
+      "mana": "6",
+      "number": "1"
+    },
+    "trait": "Sahib olduğu hər 20 qalxan üçün +0,5% Saldırı Hızı qazanar bonusu qazanar",
+    "additionalStats": {
+      "range": "3200",
+      "speed": "900",
+      "criticalChance": "15%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "0%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+2% Öz. Şansı  |  5% » 7%",
+      "level2": "+100% Öz. Hasar Bonusu  |  100% » 200%",
+      "level3": "+12% Qalxan  |  50 » 56"
+      },
+    "story": "Arı sürüsünün hekayəsi buradadır. Kartın tarixi haqqında daha uzun bir mətn ola bilər."
+  },
+  {
+    "name": "Toxic",
+    "type": ["Uzaylı"],
+    "rarity": "Arcane",
+    "note": "Support",
+    "isHybrid": false,
+    "isMulti": false,
+    "stats": {
+      "health": "50",
+      "shield": "30",
+      "damage": "70",
+      "sps": "42",
+      "attackSpeed": "1,65s",
+      "delay": "-",
+      "mana": "14",
+      "number": "1"
+    },
+    "trait": "Rəqib kartları zəhərləyərək ekstra 2x3 Hasar verər",
+    "additionalStats": {
+      "range": "1000",
+      "speed": "750",
+      "criticalChance": "25%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "25%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+2% Öz. Şansı  |  5% » 7%",
+      "level2": "+100% Öz. Hasar Bonusu  |  100% » 200%",
+      "level3": "+12% Qalxan  |  50 » 56"
+      },
+    "story": "Arı sürüsünün hekayəsi buradadır. Kartın tarixi haqqında daha uzun bir mətn ola bilər."
+  },
+  {
+    "name": "Aura girl",
+    "type": ["Uzaylı"],
+    "rarity": "Arcane",
+    "note": "Support",
+    "isHybrid": false,
+    "isMulti": false,
+    "stats": {
+      "health": "500",
+      "shield": "500",
+      "damage": "120",
+      "sps": "48",
+      "attackSpeed": "2,50s",
+      "delay": "-",
+      "mana": "18",
+      "number": "1"
+    },
+    "trait": "2x2 yaxındakı rəqib kartlara hər 0,2 saniyə ərzində 2 Hasar verər",
+    "additionalStats": {
+      "range": "1000",
+      "speed": "800",
+      "criticalChance": "5%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "0%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+2% Öz. Şansı  |  5% » 7%",
+      "level2": "+100% Öz. Hasar Bonusu  |  100% » 200%",
+      "level3": "+12% Qalxan  |  50 » 56"
+      },
+    "story": "k."
+  },
+  {
+    "name": "Hell boy",
+    "type": ["Varlıq"],
+    "rarity": "Arcane",
+    "note": "Support",
+    "isHybrid": false,
+    "isMulti": false,
+    "stats": {
+      "health": "170",
+      "shield": "50",
+      "damage": "50",
+      "sps": "25",
+      "attackSpeed": "2,00s",
+      "delay": "-",
+      "mana": "8",
+      "number": "1"
+    },
+    "trait": "Hər 5-ci atış ekstra +40% Hasar verər",
+    "additionalStats": {
+      "range": "3750",
+      "speed": "1000",
+      "criticalChance": "5%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "0%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+2% Öz. Şansı  |  5% » 7%",
+      "level2": "+100% Öz. Hasar Bonusu  |  100% » 200%",
+      "level3": "+12% Qalxan  |  50 » 56"
+      },
+    "story": "k."
+  },
+  {
+    "name": "Killer",
+    "type": ["İnsan"],
+    "rarity": "Arcane",
+    "note": "Assassin",
+    "isHybrid": false,
+    "isMulti": false,
+    "stats": {
+      "health": "110",
+      "shield": "20",
+      "damage": "25",
+      "sps": "29",
+      "attackSpeed": "0,85s",
+      "delay": "-",
+      "mana": "3",
+      "number": "1"
+    },
+    "trait": "1+(Qalxan miqdarı)% Şansla rəqibi anında öldürər",
+    "additionalStats": {
+      "range": "1000",
+      "speed": "1150",
+      "criticalChance": "25%",
+      "criticDamage": "1.5x",
+      "lifestealChance": "25%",
+      "lifesteal": "25%",
+      "damageminimiser": "0%",
+      "dodge": "0%"
+    },
+    "showlevels": {
+      "level1": "+2% Öz. Şansı  |  5% » 7%",
+      "level2": "+100% Öz. Hasar Bonusu  |  100% » 200%",
+      "level3": "+12% Qalxan  |  50 » 56"
+      },
+    "story": "k."
+  }
+]

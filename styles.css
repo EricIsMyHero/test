@@ -59,6 +59,8 @@ button.active { background: #394073; border-color: #5d66a2 }
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   background: var(--card);
   border: 1px solid #2a2f57;
+  position: relative; /* Düymələri yerləşdirmək üçün */
+  padding-bottom: 50px; /* Düymələrə yer ayırmaq üçün */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -114,7 +116,8 @@ button.active { background: #394073; border-color: #5d66a2 }
 
 /* TƏKÜZLÜ KART */
 .card-single {
-  position: relative;
+  position: relative; /* Düymələri yerləşdirmək üçün */
+  padding-bottom: 50px; /* Düymələrə yer ayırmaq üçün */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -417,51 +420,43 @@ button.active { background: #394073; border-color: #5d66a2 }
   margin-top: 15px;
 }
 
-/* Kart üzərindəki Əlavə et düyməsi */
+/* Ümumi Düymə Stili (Comp və Team üçün) */
+.add-to-team-btn,
+.add-to-compare-btn {
+    background: var(--card); 
+    color: var(--text);
+    border: 1px solid var(--muted);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.add-to-team-btn:hover,
+.add-to-compare-btn:hover {
+    background: #3a416e; 
+    border-color: var(--text);
+}
+
+/* Team düyməsinə xüsusi rəng (Team Builder rəngi) */
 .add-to-team-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: var(--familiar); /* Familiar rəngi ilə uyğun */
-  color: #151934;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  z-index: 10;
-  transition: background .2s;
+    background-color: #e53935; /* Qırmızı rəng (Team Builder rəngi) */
+    border-color: #e53935;
+    color: white;
 }
 
 .add-to-team-btn:hover {
-  background: #388e3c;
+    background-color: #c42c2c;
+    border-color: #c42c2c;
 }
 
-/* YENİ MÜQAYİSƏ DÜYMƏSİ (İkisi yan-yana dursun) */
-.add-to-compare-btn {
-    position: absolute;
-    top: 10px;
-    right: 75px; /* Komanda düyməsinin yanına yerləşdirmək üçün dəyişdirildi */
-    background: var(--arcane); 
-    color: #151934;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    z-index: 10;
-    transition: background .2s;
-}
-
-.add-to-compare-btn:hover {
-    background: #673AB7;
-}
-
-/* Komanda qurucusu aktiv olmayanda düymələri gizlədin */
+/* Gizlədilmiş düymələr sinfi (script.js-də istifadə olunur) */
 .hidden-team-btn {
-    display: none !important;
+    opacity: 0;
+    pointer-events: none; /* Klikləri ləğv et */
 }
 
 /* ÜMUMİ XƏTA QARŞISININ ALINMASI */

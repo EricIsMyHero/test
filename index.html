@@ -28,6 +28,7 @@
           </div>
         </div>
         <button id="back-to-menu-btn" class="back-button">Back</button>
+        <button id="open-team-builder-btn" class="back-button" style="background: #e53935; color: var(--text);">Komandanı Göstər (0/6)</button>
       </header>
 
       <div class="controls">
@@ -48,11 +49,11 @@
     ">
       </div>
 
-      <div class="main-content-wrapper">
-        
-        <section class="grid" id="cards"></section>
-        
-       <div id="team-builder-modal" class="modal hidden">
+      <section class="grid" id="cards"></section>
+      
+    </section>
+    
+    <div id="team-builder-modal" class="modal hidden">
         <div class="modal-content team-builder-content">
             <header>
                 <h2>Komanda Qurucusu</h2>
@@ -64,14 +65,14 @@
                     <p id="placeholder-text">Komandaya ən çox 6 kart əlavə edin.</p>
                 </div>
                 <div id="team-stats-summary" class="stats-summary">
-                <h3>Ümumi Statistika</h3>
-                <p>Can: <span id="total-health">0</span></p>
-                <p>Qalxan: <span id="total-shield">0</span></p>
-                <p>Hasar (Attack Damage): <span id="total-damage">0</span></p> 
-                <p>Hasar (DPS): <span id="total-dps">0</span></p>
-                <p>Mana Xərci: <span id="total-mana">0</span></p>
-                <button id="clear-team-btn" class="back-button">Komandanı Təmizlə</button>
-            </div>
+                    <h3>Ümumi Statistika</h3>
+                    <p>Can: <span id="total-health">0</span></p>
+                    <p>Qalxan: <span id="total-shield">0</span></p>
+                    <p>Hasar (Attack Damage): <span id="total-damage">0</span></p> 
+                    <p>Hasar (DPS): <span id="total-dps">0</span></p>
+                    <p>Mana Xərci: <span id="total-mana">0</span></p>
+                    <button id="clear-team-btn" class="back-button">Komandanı Təmizlə</button>
+                </div>
             </div>
 
         </div>

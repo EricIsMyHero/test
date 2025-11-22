@@ -494,5 +494,3 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTeamStats(); 
     updateTeamPanel();
 });
-
-document.addEventListener('DOMContentLoaded', showMenu);

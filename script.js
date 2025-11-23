@@ -17,6 +17,7 @@ const totalShield = document.getElementById('total-shield');
 const totalDamage = document.getElementById('total-damage');
 const totalDPS = document.getElementById('total-dps');
 const totalMana = document.getElementById('total-mana');
+const cheapestRecycleCostDisplay = document.getElementById('cheapest-recycle-cost');
 const clearTeamBtn = document.getElementById('clear-team-btn');
 const placeholderText = document.getElementById('placeholder-text');
 
@@ -255,11 +256,21 @@ function getNumericStat(statValue) {
 }
 
 function addToTeam(cardData) {
+    // 1. Unikal kart yoxlaması
+    const isAlreadyInTeam = currentTeam.some(card => card.name === cardData.name);
+
+    if (isAlreadyInTeam) {
+        alert(`❌ '${cardData.name}' kartı artıq komandada var. Hər kartdan yalnız bir dəfə istifadə edə bilərsiniz.`);
+        return;
+    }
+    
+    // 2. Maksimum kart sayının yoxlanılması
     if (currentTeam.length >= 6) {
         alert('Komandada maksimum 6 kart ola bilər.');
         return;
     }
     
+    // 3. Kartın düzgün formatlanaraq əlavə edilməsi
     const cardToAdd = {
         name: cardData.name,
         health: getNumericStat(cardData.stats.health),
@@ -272,6 +283,7 @@ function addToTeam(cardData) {
 
     currentTeam.push(cardToAdd);
     
+    // 4. Panellərin və statistikaların yenilənməsi
     updateTeamPanel();
     updateTeamStats();
 }
@@ -317,20 +329,43 @@ function updateTeamPanel() {
 }
 
 function updateTeamStats() {
+    // 1. Mana dəyərlərini toplayacağımız massivi yaradırıq
+    const manaCosts = []; 
+    
+    // 2. Reducer vasitəsilə ümumi statistikaları hesablayırıq
     const stats = currentTeam.reduce((acc, card) => {
+        // Mövcud statistikaların toplanması (original kodunuzu dəyişmədən saxlayırıq)
         acc.health += card.health;
         acc.shield += card.shield;
         acc.damage += card.damage; 
         acc.dps += card.sps;
-        acc.mana += card.mana; 
+        acc.mana += card.mana;
+
+        // YENİ: Ən ucuz çevirmə üçün mana dəyərini (ədəd olaraq) massivə əlavə edirik
+        manaCosts.push(parseInt(card.mana) || 0); 
+
         return acc;
     }, { health: 0, shield: 0, damage: 0, dps: 0, mana: 0 }); 
 
+    // 3. ƏN UCUZ ÇEVİRMƏ DƏYƏRİNİ HESABLA (Məntiq: ən kiçik 3 mana dəyərinin cəmi)
+    let cheapestRecycleCost = 0;
+    if (manaCosts.length > 0) {
+        // Mana dəyərlərini kiçikdən böyüyə sırala
+        manaCosts.sort((a, b) => a - b);
+        
+        // Ən ucuz 3 kartın mana dəyərini götür və topla
+        cheapestRecycleCost = manaCosts.slice(0, 3).reduce((sum, mana) => sum + mana, 0);
+    }
+    
+    // 4. Mövcud statistikaları yenilə
     if (totalHealth) totalHealth.textContent = stats.health;
     if (totalShield) totalShield.textContent = stats.shield;
     if (totalDamage) totalDamage.textContent = stats.damage; 
     if (totalDPS) totalDPS.textContent = stats.dps;
     if (totalMana) totalMana.textContent = stats.mana;
+
+    // 5. ƏN UCUZ ÇEVİRMƏ STATİSTİKASINI YENİLƏ (aşağıdakı təlimata uyğun olaraq bu elementi HTML-ə əlavə edin)
+    if (cheapestRecycleCostDisplay) cheapestRecycleCostDisplay.textContent = cheapestRecycleCost; 
 
     if (openTeamBuilderBtn) {
         openTeamBuilderBtn.textContent = `Komandanı Göstər (${currentTeam.length}/6)`;

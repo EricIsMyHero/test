@@ -24,7 +24,7 @@ body {
   font-family: ui-sans-serif, system-ui, Segoe UI, Roboto;
 }
 
-.wrap { max-width: 1400px; margin: 32px auto; padding: 16px }
+.wrap { max-width: 1364px; margin: 32px auto; padding: 16px }
 header { display: flex; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 30px; }
 h1 { font-size: 28px; margin: 0; letter-spacing: .2px }
 .hint { color: var(--muted); font-size: 14px }
@@ -155,8 +155,8 @@ button.active { background: #394073; border-color: #5d66a2 }
 /* FİRLATMA DÜYMƏSİ */
 .flip-button {
   position: absolute;
-  bottom: 14px;
-  right: 14px;
+  right: 14px; /* Sağdan mövqeyi saxlayır */
+  bottom: 10px; /* <--- DƏYİŞİKLİK: Yeni düymə qrupundan yuxarı qaldırıldı (təxmini sətir 172) */
   z-index: 10;
   background: rgba(43, 50, 100, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -291,9 +291,9 @@ button.active { background: #394073; border-color: #5d66a2 }
 .hidden { display: none !important }
 
 .back-button {
-  background: transparent;
+  background: #22284f; 
   border: 1px solid var(--muted);
-  color: var(--muted);
+  color: var(--text);
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 8px;
@@ -422,10 +422,11 @@ button.active { background: #394073; border-color: #5d66a2 }
 /* DÜZƏLİŞ: DÜYMƏLƏRİN YERLƏŞMƏSİ ÜÇÜN YENİ STİL */
 .card-buttons-container {
     position: absolute;
-    bottom: 12px; /* Kartın altından yuxarı məsafə */
-    right: 12px; /* Kartın solundan sağa məsafə */
+    bottom: 45px; /* Kartın altından yuxarı məsafə */
+    right: 12px; /* Kartın sağından sola məsafə */
     display: flex;
-    gap: 8px; /* Düymələr arasındakı məsafə */
+    flex-direction: column; /* <--- DƏYİŞİKLİK: Şaquli düzülüş */
+    gap: 4px; /* <--- DƏYİŞİKLİK: Kiçik aralıq */
     z-index: 10; 
 }
 

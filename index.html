@@ -9,8 +9,9 @@
 </head>
 <body>
   <div class="wrap" id="main-content">
+    
     <section class="main-menu" id="main-menu">
-      <h1>Clash-A-Mana: Real-Time Test Arena</h1>
+      <h1>Clash-A-Mana: Real-Time Card Arena</h1>
       <div class="menu-buttons">
         <button id="show-cards-btn">Cards</button>
         <button id="show-spells-btn">Spells</button>
@@ -27,14 +28,18 @@
             Burada oyunda olacaq bütün kartların ilkin demosu vardır. Unutmayın sadəcə bir DEMO-dur.
           </div>
         </div>
-        <button id="back-to-menu-btn" class="back-button">Back</button>
-        <button id="open-team-builder-btn" class="back-button" style="background: #22284f; color: var(--text);">Komandanı Göstər (0/6)</button>
+        <div style="display: flex; gap: 10px;">
+            <button id="back-to-menu-btn" class="back-button">Back</button>
+            <button id="open-team-builder-btn" class="back-button" style="background: #e53935; color: var(--text);">Komandanı Göstər (0/6)</button>
+        </div>
       </header>
       
       <div id="cards-layout-wrapper"> 
 
-        <div id="team-builder-panel" class="hidden">
-            <h2>Team Summary</h2>
+        <div class="sidebar-column">
+            
+            <div id="team-builder-panel" class="sidebar-panel hidden">
+                <h2>Team Summary</h2>
             <div id="selected-team-cards" class="team-cards-list">
                 <p id="placeholder-text">Komandaya heç bir kart əlavə edilməyib.</p>
             </div>
@@ -50,6 +55,18 @@
 
             <button id="clear-team-btn">Komandanı Təmizlə</button>
             <button id="close-team-builder-btn" style="margin-top: 10px;">Kartlara Qayıt</button>
+        </div>
+
+            <div id="comparison-panel" class="sidebar-panel hidden">
+                <h2>Müqayisə (<span id="comp-count">0</span>/2)</h2>
+                
+                <div id="comparison-content" class="comparison-content-area">
+                    <p class="hint" style="text-align:center;">Müqayisə üçün kartların üzərindəki <b>+ Comp</b> düyməsinə basın.</p>
+                </div>
+
+                <button id="clear-comparison-btn" class="back-button" style="width:100%; margin-top:10px;">Sıfırla</button>
+            </div>
+
         </div>
         
         <div id="cards-wrapper"> 
@@ -72,6 +89,7 @@
           </div>
           <section class="grid" id="cards"></section>
         </div>
+
       </div>
     </section>
 

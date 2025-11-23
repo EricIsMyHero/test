@@ -17,7 +17,7 @@ const totalShield = document.getElementById('total-shield');
 const totalDamage = document.getElementById('total-damage');
 const totalDPS = document.getElementById('total-dps');
 const totalMana = document.getElementById('total-mana');
-const cheapestRecycleCostDisplay = document.getElementById('cheapest-recycle-cost');
+const cheapestRecycleCostDisplay = document.getElementById('cheapest-recycle-cost'); // YENİ: Ən ucuz çevirmə elementi
 const clearTeamBtn = document.getElementById('clear-team-btn');
 const placeholderText = document.getElementById('placeholder-text');
 
@@ -76,7 +76,7 @@ function createCardElement(data) {
     // TEAM BUILDER DÜYMƏSİ
     const addButton = document.createElement('button');
     addButton.className = 'add-to-team-btn hidden-team-btn action-button'; // 'action-button' əlavə edildi
-    addButton.textContent = '+ Team'; // Mətn dəyişmədi, amma stil dəyişdi
+    addButton.textContent = '+ Team'; 
     addButton.title = 'Komandaya Əlavə Et';
     addButton.dataset.cardName = data.name;
 
@@ -88,19 +88,20 @@ function createCardElement(data) {
     // MÜQAYİSƏ DÜYMƏSİ
     const compareButton = document.createElement('button');
     compareButton.className = 'add-to-compare-btn hidden-team-btn action-button'; // 'action-button' əlavə edildi
-    compareButton.textContent = '+ Comp'; // Mətn '+ Comp' olaraq dəyişdirildi
+    compareButton.textContent = '+ Comp'; 
     compareButton.title = 'Müqayisəyə Əlavə Et';
     compareButton.dataset.cardName = data.name;
 
     compareButton.addEventListener('click', (e) => {
         e.stopPropagation(); 
         addToComparison(data);
-        // comparisonModal artıq yoxlanıldığı üçün yoxlamaya ehtiyac yoxdur.
         // if (comparisonModal) comparisonModal.classList.remove('hidden'); 
     });
     
+    // SIRALAMA: Comp düyməsi üstə (birinci əlavə olunur), Team düyməsi altdan (ikinci əlavə olunur)
+    // CSS-də flex-direction: column olduğu üçün birinci əlavə olunan yuxarıda görünür.
     buttonsContainer.appendChild(compareButton);
-    buttonsContainer.appendChild(addButton); // Sıralama dəyişdi: Comp, Team
+    buttonsContainer.appendChild(addButton); 
     
     cardContainer.appendChild(buttonsContainer); 
     
@@ -235,7 +236,7 @@ function createCardContent(data) {
 
 // Kartları render edən funksiya
 function renderCards(cardsToRender) {
-    if (!cardsContainer) return; // cardsContainer tapılmasa funksiyanı dayandır
+    if (!cardsContainer) return; 
     
     cardsContainer.innerHTML = '';
     if (cardsToRender.length === 0) {
@@ -334,7 +335,7 @@ function updateTeamStats() {
     
     // 2. Reducer vasitəsilə ümumi statistikaları hesablayırıq
     const stats = currentTeam.reduce((acc, card) => {
-        // Mövcud statistikaların toplanması (original kodunuzu dəyişmədən saxlayırıq)
+        // Mövcud statistikaların toplanması
         acc.health += card.health;
         acc.shield += card.shield;
         acc.damage += card.damage; 
@@ -364,7 +365,7 @@ function updateTeamStats() {
     if (totalDPS) totalDPS.textContent = stats.dps;
     if (totalMana) totalMana.textContent = stats.mana;
 
-    // 5. ƏN UCUZ ÇEVİRMƏ STATİSTİKASINI YENİLƏ (aşağıdakı təlimata uyğun olaraq bu elementi HTML-ə əlavə edin)
+    // 5. ƏN UCUZ ÇEVİRMƏ STATİSTİKASINI YENİLƏ 
     if (cheapestRecycleCostDisplay) cheapestRecycleCostDisplay.textContent = cheapestRecycleCost; 
 
     if (openTeamBuilderBtn) {
@@ -390,7 +391,7 @@ function filterAndRender() {
 
     renderCards(filteredCards);
     
-    // XƏTA DÜZƏLİŞİ: teamBuilderModal əvəzinə teamBuilderPanel-in mövcudluğunu və vəziyyətini yoxlayın
+    // Team builder panel açıqdırsa düymələri göstər
     if (teamBuilderPanel && !teamBuilderPanel.classList.contains('hidden')) { 
         toggleCardButtons(true);
     } else {
@@ -416,8 +417,6 @@ function addToComparison(cardData) {
     };
 
     comparisonCards.push(cardToAdd);
-    
-    // updateComparisonView(); // HTML olmadığından hələlik deaktiv
 }
 
 // Məlumatları çəkən funksiya

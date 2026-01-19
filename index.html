@@ -56,6 +56,7 @@
 
 <h2>Güllə Sürət Simulyasiyası (2D – Seriyalı Atış)</h2>
 
+<div id="fpsCounter" style="margin-bottom:10px;font-weight:bold;">FPS: --</div>
 <div class="controls">
   <label>Güllənin eni (sm): <input type="number" id="bulletWidth" value="1" min="1"></label>
   <label>Maksimum məsafə (sm): <input type="number" id="distance" value="100" min="1"></label>
@@ -79,9 +80,7 @@
   <ul>
     <li id="stat1s"></li>
     <li id="stat5s"></li>
-    <li id="stat10s"></li>
-  </ul>
-  <h4>📈 Qrafik (Zaman → Güllə sayı)</h4>
+    <h4>📈 Qrafik (Zaman → Güllə sayı)</h4>
   <canvas id="chart" width="340" height="200" style="border:1px solid #ccc"></canvas>
 </div>
 
@@ -96,11 +95,28 @@ let activeTimeouts = [];
 let firedTimestamps = [];
 let stopped = false;
 
+// FPS ölçümü üçün
+let lastFrameTime = performance.now();
+let frameCount = 0;
+
+function fpsLoop() {
+  if (stopped) return;
+  const now = performance.now();
+  frameCount++;
+  if (now - lastFrameTime >= 1000) {
+    document.getElementById("fpsCounter").innerText = `FPS: ${frameCount}`;
+    frameCount = 0;
+    lastFrameTime = now;
+  }
+  requestAnimationFrame(fpsLoop);
+}
+
 startBtn.addEventListener("click", () => {
   activeIntervals.forEach(i => clearInterval(i));
   activeTimeouts.forEach(t => clearTimeout(t));
   activeIntervals = [];
   activeTimeouts = [];
+  document.getElementById("fpsCounter").innerText = "FPS: --";
   firedTimestamps = [];
   stopped = false;
 
@@ -149,6 +165,9 @@ startBtn.addEventListener("click", () => {
   }
 
   startSeries();
+  lastFrameTime = performance.now();
+  frameCount = 0;
+  requestAnimationFrame(fpsLoop);
 });
 
 stopBtn.addEventListener("click", () => {
@@ -166,7 +185,7 @@ function createAndMoveBullet(width, distance, speed, onFinish) {
 
   // BÜTÜN GÜLLƏLƏR EYNİ TRAYEKTORİYA VƏ EYNİ SIRADA
   // Orta zolaq (məsələn 3-cü sıra)
-  const fixedLane = 2; // 0-dan başladığı üçün 3-cü sıra
+  const fixedLane = 2; // orta sıra (1sm grid üçün)
   bullet.style.top = `${fixedLane + 0.1}cm`;
   bullet.style.left = "0cm";
 
@@ -198,7 +217,7 @@ function showFirstSeriesStats(distance, speed, bulletCount, delay) {
   const countAt = (sec) => firedTimestamps.filter(t => t <= sec).length;
   document.getElementById("stat1s").innerText = `1 saniyədə: ${countAt(1)} güllə`;
   document.getElementById("stat5s").innerText = `5 saniyədə: ${countAt(5)} güllə`;
-  document.getElementById("stat10s").innerText = `10 saniyədə: ${countAt(10)} güllə`;
+  
 
   drawChart();
   stats.classList.remove("hidden");

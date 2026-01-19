@@ -1,99 +1,236 @@
 <!DOCTYPE html>
 <html lang="az">
-<head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Clash-A-Mana</title> 
-  <link rel="stylesheet" href="styles.css"> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> 
+<head>
+  <meta charset="UTF-8" />
+  <title>2D Güllə Sürət Simulyasiyası</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background:#fafafa; }
+    h2 { margin-bottom: 10px; }
+    .controls { margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap; }
+    .controls label { font-size: 14px; }
+    .controls button { padding: 6px 14px; cursor: pointer; }
+
+    #gridContainer {
+      position: relative;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1cm;
+      grid-template-rows: repeat(5, 1cm);
+      border: 2px solid #222;
+      height: 5cm;
+      margin-bottom: 20px;
+      overflow: hidden;
+      background: linear-gradient(#f9f9f9, #f1f1f1);
+    }
+
+    #gridContainer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, #ccc 1px, transparent 1px),
+        linear-gradient(to bottom, #ccc 1px, transparent 1px);
+      background-size: 1cm 1cm;
+      pointer-events: none;
+    }
+
+    .bullet {
+      position: absolute;
+      height: 0.8cm;
+      background: linear-gradient(90deg, #ff4d4d, #b30000);
+      border-radius: 4px;
+      box-shadow: 0 0 6px rgba(255,0,0,0.6);
+    }
+
+    .hidden { display: none; }
+
+    #stats {
+      border: 1px solid #444;
+      padding: 15px;
+      width: 360px;
+      background: #fff;
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap" id="main-content">
-    
-    <section class="main-menu" id="main-menu">
-      <h1>Clash-A-Mana: Real-Time Test Arena</h1>
-      <div class="menu-buttons">
-        <button id="show-cards-btn">Cards</button>
-        <button id="show-spells-btn">Spells</button>
-        <button id="show-boosters-btn">Powerups</button>
-        <button id="show-towers-btn">Tower defences</button>
-      </div>
-    </section>
 
-    <section id="cards-section" class="hidden">
-      <header class="card-title-header">
-        <div>
-          <h1>Cards – Visual demo</h1>
-          <div class="hint">
-            Burada oyunda olacaq bütün kartların ilkin demosu vardır. Unutmayın sadəcə bir DEMO-dur.
-          </div>
-        </div>
-        <div style="display: flex; gap: 10px;">
-            <button id="back-to-menu-btn" class="back-button">Back</button>
-            <button id="open-team-builder-btn" class="back-button" style="background: #e53935; color: var(--text);">Komandanı Göstər (0/6)</button>
-        </div>
-      </header>
-      
-      <div id="cards-layout-wrapper"> 
+<h2>Güllə Sürət Simulyasiyası (2D – Seriyalı Atış)</h2>
 
-        <div class="sidebar-column">
-            
-            <div id="team-builder-panel" class="sidebar-panel hidden">
-                <h2>Team Summary</h2>
-            <div id="selected-team-cards" class="team-cards-list">
-                <p id="placeholder-text">Komandaya heç bir kart əlavə edilməyib.</p>
-            </div>
+<div class="controls">
+  <label>Güllənin eni (sm): <input type="number" id="bulletWidth" value="1" min="1"></label>
+  <label>Maksimum məsafə (sm): <input type="number" id="distance" value="100" min="1"></label>
+  <label>Sürət (sm/s): <input type="number" id="speed" value="50" min="1"></label>
+  <label>Güllə sayı (seriya): <input type="number" id="bulletCount" value="4" min="1"></label>
+  <label>İki güllə arası vaxt (s): <input type="number" id="delay" value="0.5" min="0" step="0.1"></label>
+  <label>Seriyalar arası vaxt (s): <input type="number" id="seriesDelay" value="2" min="0" step="0.1"></label>
+  <button id="startBtn">Başlat</button>
+  <button id="stopBtn">Dayandır</button>
+</div>
 
-            <div class="stats-summary">
-                <p>Total Health: <span id="total-health">0</span></p>
-                <p>Total Shield: <span id="total-shield">0</span></p>
-                <p>Total Damage: <span id="total-damage">0</span></p>
-                <p>Total DPS: <span id="total-dps">0</span></p>
-                <p>Total Mana: <span id="total-mana">0</span></p>
-                <p>Recycle: <span id="cheapest-recycle-cost">0</span></p>
-            </div>
+<div id="gridContainer"></div>
 
-            <button id="clear-team-btn">Komandanı Təmizlə</button>
-            <button id="close-team-builder-btn" style="margin-top: 10px;">Kartlara Qayıt</button>
-        </div>
+<div id="stats" class="hidden">
+  <h3>📊 Statistika (ilk seriya üzrə)</h3>
+  <p id="statDistance"></p>
+  <p id="statSpeed"></p>
+  <p id="statBulletCount"></p>
+  <p id="statDelay"></p>
+  <p><strong>Vaxta görə atılan güllələr:</strong></p>
+  <ul>
+    <li id="stat1s"></li>
+    <li id="stat5s"></li>
+    <li id="stat10s"></li>
+  </ul>
+  <h4>📈 Qrafik (Zaman → Güllə sayı)</h4>
+  <canvas id="chart" width="340" height="200" style="border:1px solid #ccc"></canvas>
+</div>
 
-            <div id="comparison-panel" class="sidebar-panel hidden">
-                <h2>Müqayisə (<span id="comp-count">0</span>/2)</h2>
-                
-                <div id="comparison-content" class="comparison-content-area">
-                    <p class="hint" style="text-align:center;">Müqayisə üçün kartların üzərindəki <b>+ Comp</b> düyməsinə basın.</p>
-                </div>
+<script>
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+const grid = document.getElementById("gridContainer");
+const stats = document.getElementById("stats");
 
-                <button id="clear-comparison-btn" class="back-button" style="width:100%; margin-top:10px;">Sıfırla</button>
-            </div>
+let activeIntervals = [];
+let activeTimeouts = [];
+let firedTimestamps = [];
+let stopped = false;
 
-        </div>
-        
-        <div id="cards-wrapper"> 
-          <div class="controls">
-            <button id="filter-all" class="active">All Cards</button>
-            <button id="filter-mundane">Mundane</button>
-            <button id="filter-familiar">Familiar</button>
-            <button id="filter-arcane">Arcane</button>
-            <button id="filter-mythic">Mythic</button>
-            <button id="filter-legendary">Legendary</button>
-            <button id="filter-ethereal">Ethereal</button>
-            <input type="text" id="search-input" placeholder="Kart adını axtar..." 
-            style=" background: #22284f; color: var(--text);
-                    border: 1px solid #2f3769; border-radius: 12px;
-                    padding: 10px 14px;
-                    box-shadow: var(--shadow);
-                    flex-grow: 1; 
-                    max-width: 300px;
-            ">
-          </div>
-          <section class="grid" id="cards"></section>
-        </div>
+startBtn.addEventListener("click", () => {
+  activeIntervals.forEach(i => clearInterval(i));
+  activeTimeouts.forEach(t => clearTimeout(t));
+  activeIntervals = [];
+  activeTimeouts = [];
+  firedTimestamps = [];
+  stopped = false;
 
-      </div>
-    </section>
+  grid.innerHTML = "";
+  stats.classList.add("hidden");
 
-  </div>
-  <script src="script.js"></script>
+  const bulletWidth = Number(document.getElementById("bulletWidth").value);
+  const distance = Number(document.getElementById("distance").value);
+  const speed = Number(document.getElementById("speed").value);
+  const bulletCount = Number(document.getElementById("bulletCount").value);
+  const delay = Number(document.getElementById("delay").value);
+  const seriesDelay = Number(document.getElementById("seriesDelay").value);
+
+  grid.style.width = `${distance}cm`;
+
+  const seriesStartTime = performance.now();
+  let firstSeriesDone = false;
+
+  function startSeries() {
+    if (stopped) return;
+    let finished = 0;
+
+    for (let i = 0; i < bulletCount; i++) {
+      const timeout = setTimeout(() => {
+        if (stopped) return;
+
+        if (!firstSeriesDone) {
+          firedTimestamps.push((performance.now() - seriesStartTime) / 1000);
+        }
+
+        createAndMoveBullet(bulletWidth, distance, speed, () => {
+          finished++;
+          if (finished === bulletCount) {
+            if (!firstSeriesDone) {
+              firstSeriesDone = true;
+              showFirstSeriesStats(distance, speed, bulletCount, delay);
+            }
+            const next = setTimeout(startSeries, seriesDelay * 1000);
+            activeTimeouts.push(next);
+          }
+        });
+      }, i * delay * 1000);
+
+      activeTimeouts.push(timeout);
+    }
+  }
+
+  startSeries();
+});
+
+stopBtn.addEventListener("click", () => {
+  stopped = true;
+  activeIntervals.forEach(i => clearInterval(i));
+  activeTimeouts.forEach(t => clearTimeout(t));
+  activeIntervals = [];
+  activeTimeouts = [];
+});
+
+function createAndMoveBullet(width, distance, speed, onFinish) {
+  const bullet = document.createElement("div");
+  bullet.className = "bullet";
+  bullet.style.width = `${width}cm`;
+
+  // BÜTÜN GÜLLƏLƏR EYNİ TRAYEKTORİYA VƏ EYNİ SIRADA
+  // Orta zolaq (məsələn 3-cü sıra)
+  const fixedLane = 2; // 0-dan başladığı üçün 3-cü sıra
+  bullet.style.top = `${fixedLane + 0.1}cm`;
+  bullet.style.left = "0cm";
+
+  grid.appendChild(bullet);
+
+  let position = 0;
+  const stepTime = 20;
+  const stepDistance = speed * (stepTime / 1000);
+
+  const interval = setInterval(() => {
+    position += stepDistance;
+    if (position >= distance) {
+      position = distance;
+      clearInterval(interval);
+      onFinish();
+    }
+    bullet.style.left = `${position}cm`;
+  }, stepTime);
+
+  activeIntervals.push(interval);
+}
+
+function showFirstSeriesStats(distance, speed, bulletCount, delay) {
+  document.getElementById("statDistance").innerText = `Məsafə: ${distance} sm`;
+  document.getElementById("statSpeed").innerText = `Sürət: ${speed} sm/s`;
+  document.getElementById("statBulletCount").innerText = `İlk seriyada güllə sayı: ${bulletCount}`;
+  document.getElementById("statDelay").innerText = `İki güllə arası vaxt: ${delay} s`;
+
+  const countAt = (sec) => firedTimestamps.filter(t => t <= sec).length;
+  document.getElementById("stat1s").innerText = `1 saniyədə: ${countAt(1)} güllə`;
+  document.getElementById("stat5s").innerText = `5 saniyədə: ${countAt(5)} güllə`;
+  document.getElementById("stat10s").innerText = `10 saniyədə: ${countAt(10)} güllə`;
+
+  drawChart();
+  stats.classList.remove("hidden");
+}
+
+function drawChart() {
+  const canvas = document.getElementById("chart");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (firedTimestamps.length === 0) return;
+
+  const maxTime = Math.max(...firedTimestamps);
+  const maxBullets = firedTimestamps.length;
+
+  ctx.beginPath();
+  ctx.moveTo(30, canvas.height - 20);
+  ctx.lineTo(30, 10);
+  ctx.moveTo(30, canvas.height - 20);
+  ctx.lineTo(canvas.width - 10, canvas.height - 20);
+  ctx.stroke();
+
+  ctx.beginPath();
+  firedTimestamps.forEach((t, i) => {
+    const x = 30 + (t / maxTime) * (canvas.width - 50);
+    const y = canvas.height - 20 - ((i + 1) / maxBullets) * (canvas.height - 40);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+}
+</script>
+
 </body>
 </html>

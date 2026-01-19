@@ -17,7 +17,7 @@ const totalShield = document.getElementById('total-shield');
 const totalDamage = document.getElementById('total-damage');
 const totalDPS = document.getElementById('total-dps');
 const totalMana = document.getElementById('total-mana');
-const cheapestRecycleCostDisplay = document.getElementById('cheapest-recycle-cost'); // YENİ: Ən ucuz çevirmə elementi
+const cheapestRecycleCostDisplay = document.getElementById('cheapest-recycle-cost');
 const clearTeamBtn = document.getElementById('clear-team-btn');
 const placeholderText = document.getElementById('placeholder-text');
 
@@ -76,7 +76,7 @@ function createCardElement(data) {
     // TEAM BUILDER DÜYMƏSİ
     const addButton = document.createElement('button');
     addButton.className = 'add-to-team-btn hidden-team-btn action-button'; // 'action-button' əlavə edildi
-    addButton.textContent = '+ Team'; 
+    addButton.textContent = '+ Team'; // Mətn dəyişmədi, amma stil dəyişdi
     addButton.title = 'Komandaya Əlavə Et';
     addButton.dataset.cardName = data.name;
 
@@ -88,20 +88,19 @@ function createCardElement(data) {
     // MÜQAYİSƏ DÜYMƏSİ
     const compareButton = document.createElement('button');
     compareButton.className = 'add-to-compare-btn hidden-team-btn action-button'; // 'action-button' əlavə edildi
-    compareButton.textContent = '+ Comp'; 
+    compareButton.textContent = '+ Comp'; // Mətn '+ Comp' olaraq dəyişdirildi
     compareButton.title = 'Müqayisəyə Əlavə Et';
     compareButton.dataset.cardName = data.name;
 
     compareButton.addEventListener('click', (e) => {
         e.stopPropagation(); 
         addToComparison(data);
+        // comparisonModal artıq yoxlanıldığı üçün yoxlamaya ehtiyac yoxdur.
         // if (comparisonModal) comparisonModal.classList.remove('hidden'); 
     });
     
-    // SIRALAMA: Comp düyməsi üstə (birinci əlavə olunur), Team düyməsi altdan (ikinci əlavə olunur)
-    // CSS-də flex-direction: column olduğu üçün birinci əlavə olunan yuxarıda görünür.
     buttonsContainer.appendChild(compareButton);
-    buttonsContainer.appendChild(addButton); 
+    buttonsContainer.appendChild(addButton); // Sıralama dəyişdi: Comp, Team
     
     cardContainer.appendChild(buttonsContainer); 
     
@@ -236,7 +235,7 @@ function createCardContent(data) {
 
 // Kartları render edən funksiya
 function renderCards(cardsToRender) {
-    if (!cardsContainer) return; 
+    if (!cardsContainer) return; // cardsContainer tapılmasa funksiyanı dayandır
     
     cardsContainer.innerHTML = '';
     if (cardsToRender.length === 0) {
@@ -335,7 +334,7 @@ function updateTeamStats() {
     
     // 2. Reducer vasitəsilə ümumi statistikaları hesablayırıq
     const stats = currentTeam.reduce((acc, card) => {
-        // Mövcud statistikaların toplanması
+        // Mövcud statistikaların toplanması (original kodunuzu dəyişmədən saxlayırıq)
         acc.health += card.health;
         acc.shield += card.shield;
         acc.damage += card.damage; 
@@ -365,7 +364,7 @@ function updateTeamStats() {
     if (totalDPS) totalDPS.textContent = stats.dps;
     if (totalMana) totalMana.textContent = stats.mana;
 
-    // 5. ƏN UCUZ ÇEVİRMƏ STATİSTİKASINI YENİLƏ 
+    // 5. ƏN UCUZ ÇEVİRMƏ STATİSTİKASINI YENİLƏ (aşağıdakı təlimata uyğun olaraq bu elementi HTML-ə əlavə edin)
     if (cheapestRecycleCostDisplay) cheapestRecycleCostDisplay.textContent = cheapestRecycleCost; 
 
     if (openTeamBuilderBtn) {
@@ -391,7 +390,11 @@ function filterAndRender() {
 
     renderCards(filteredCards);
     
-    // Team builder panel açıqdırsa düymələri göstər
+    const isAnyPanelOpen = !teamBuilderPanel.classList.contains('hidden') || 
+                       !document.getElementById('comparison-panel').classList.contains('hidden');
+toggleCardButtons(isAnyPanelOpen);
+    
+    // XƏTA DÜZƏLİŞİ: teamBuilderModal əvəzinə teamBuilderPanel-in mövcudluğunu və vəziyyətini yoxlayın
     if (teamBuilderPanel && !teamBuilderPanel.classList.contains('hidden')) { 
         toggleCardButtons(true);
     } else {
@@ -400,25 +403,89 @@ function filterAndRender() {
 }
 
 
+// MÜQAYİSƏ SİSTEMİ
 function addToComparison(cardData) {
-    // Təkrar kartın əlavə edilməsinin qarşısını alın
     if (comparisonCards.some(card => card.name === cardData.name)) {
+        alert("Bu kart artıq müqayisə siyahısındadır.");
         return;
     }
 
     if (comparisonCards.length >= 2) {
-        alert('Eyni anda yalnız 2 kartı müqayisə edə bilərsiniz.');
+        alert('Maksimum 2 kartı müqayisə edə bilərsiniz.');
         return;
     }
-    
-    const cardToAdd = {
+
+    comparisonCards.push({
         name: cardData.name,
         originalCardData: cardData 
-    };
+    });
 
-    comparisonCards.push(cardToAdd);
+    updateComparisonView();
 }
 
+function updateComparisonView() {
+    const panel = document.getElementById('comparison-panel');
+    const resultsContainer = document.getElementById('comparison-results');
+    
+    if (!panel || !resultsContainer) return;
+    resultsContainer.innerHTML = '';
+
+    // Müqayisə ediləcək statistikalar
+    const statsToCompare = ['health', 'shield', 'damage', 'sps', 'mana'];
+    const winners = {};
+
+    if (comparisonCards.length === 2) {
+        statsToCompare.forEach(stat => {
+            const val1 = getNumericStat(comparisonCards[0].originalCardData.stats[stat]);
+            const val2 = getNumericStat(comparisonCards[1].originalCardData.stats[stat]);
+            
+            if (val1 > val2) {
+                winners[stat] = stat === 'mana' ? 1 : 0; 
+            } else if (val2 > val1) {
+                winners[stat] = stat === 'mana' ? 0 : 1;
+            } else {
+                winners[stat] = null; 
+            }
+        });
+    }
+
+    comparisonCards.forEach((card, index) => {
+        const d = card.originalCardData;
+        const item = document.createElement('div');
+        item.className = 'compare-item';
+        
+        const getStyle = (s) => {
+            if (comparisonCards.length < 2 || winners[s] === null) return '';
+            return winners[s] === index ? 'color: #4CAF50; font-weight: bold;' : 'color: #f44336;';
+        };
+
+        const getArrow = (s) => {
+            if (comparisonCards.length < 2 || winners[s] === null) return '';
+            return winners[s] === index ? ' ↑' : ' ↓';
+        };
+
+        item.innerHTML = `
+            <h3 style="color: var(--${d.rarity.toLowerCase()}); border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 10px;">${d.name}</h3>
+            <div class="comp-stat-row"><b>HP:</b> <span style="${getStyle('health')}">${d.stats.health}${getArrow('health')}</span></div>
+            <div class="comp-stat-row"><b>Shield:</b> <span style="${getStyle('shield')}">${d.stats.shield}${getArrow('shield')}</span></div>
+            <div class="comp-stat-row"><b>DMG:</b> <span style="${getStyle('damage')}">${d.stats.damage}${getArrow('damage')}</span></div>
+            <div class="comp-stat-row"><b>DPS:</b> <span style="${getStyle('sps')}">${d.stats.sps}${getArrow('sps')}</span></div>
+            <div class="comp-stat-row"><b>Mana:</b> <span style="${getStyle('mana')}">${d.stats.mana}${getArrow('mana')}</span></div>
+            <button onclick="removeFromComparison('${d.name}')" class="remove-comp-btn">Sil</button>
+        `;
+        resultsContainer.appendChild(item);
+    });
+
+    if (comparisonCards.length > 0) {
+        panel.classList.remove('hidden');
+        cardsSection.classList.add('team-mode-active');
+    } else {
+        panel.classList.add('hidden');
+        if (teamBuilderPanel.classList.contains('hidden')) {
+            cardsSection.classList.remove('team-mode-active');
+        }
+    }
+}
 // Məlumatları çəkən funksiya
 async function fetchAndRender(rarity) {
     if (cardsContainer) cardsContainer.innerHTML = '<p>Məlumatlar yüklənir...</p>';
@@ -427,7 +494,7 @@ async function fetchAndRender(rarity) {
         
         // 'all' kartları çəkmək lazımdırsa VƏ hələ çəkilməyibsə:
         if (allCardsData.length === 0) {
-            const rarities = ['mundane', 'familiar', 'arcane', 'mythic', 'legendary', 'ethereal'];
+            const rarities = ['mundane', 'familiar', 'arcane', 'relic', 'ascendant', 'apex', 'ethereal'];
             const fetchPromises = rarities.map(r =>
                 fetch(`${r}.json`).then(async res => {
                     if (!res.ok) {

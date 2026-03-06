@@ -348,38 +348,23 @@ function createCardContent(data) {
         </div>
 
         <div class="new-card-body">
-            <!-- Sol tablar -->
-            <div class="new-card-tabs">
-                <button class="new-tab-btn active" data-section="stats-panel">
-                    <i class="fa-solid fa-chart-bar"></i><span>Stats</span>
-                </button>
-                <button class="new-tab-btn" data-section="ability-panel">
-                    <i class="fa-solid fa-wand-sparkles"></i><span>Ability</span>
-                </button>
-                <button class="new-tab-btn" data-section="levels-panel">
-                    <i class="fa-solid fa-arrow-up"></i><span>Levels</span>
-                </button>
-                <button class="new-tab-btn" data-section="story-panel">
-                    <i class="fa-solid fa-book-open"></i><span>Story</span>
-                </button>
-            </div>
 
-            <!-- Mərkəz: şəkil + tip -->
-            <div class="new-card-center">
-                <div class="new-card-image-wrap">
-                    <img src="${rarityLower}.jpg" alt="${data.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="new-card-image-placeholder" style="display:none;">
-                        <i class="fa-solid fa-user" style="font-size:48px; color:#8a92b2;"></i>
-                    </div>
-                </div>
-                <div class="new-card-type-badge">${badgeText || 'Unknown'}</div>
-            </div>
-
-            <!-- Sağ panel (məzmun) -->
+            <!-- Sol: məzmun paneli -->
             <div class="new-card-panel-area">
 
+                <!-- CARD PANELİ — ilk açılan, şəkil burada -->
+                <div class="new-panel visible" data-panel-id="card-panel">
+                    <div class="new-card-image-wrap">
+                        <img src="${rarityLower}.jpg" alt="${data.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="new-card-image-placeholder" style="display:none;">
+                            <i class="fa-solid fa-user" style="font-size:64px; color:#8a92b2;"></i>
+                        </div>
+                    </div>
+                    <div class="new-card-type-badge">${badgeText || 'Unknown'}</div>
+                </div>
+
                 <!-- STATS PANELİ -->
-                <div class="new-panel visible" data-panel-id="stats-panel">
+                <div class="new-panel" data-panel-id="stats-panel">
                     <div class="stats-sub-tabs">
                         <button class="stats-sub-btn active" data-stats-tab="main">Main</button>
                         <button class="stats-sub-btn" data-stats-tab="other">Other</button>
@@ -426,6 +411,26 @@ function createCardContent(data) {
                 </div>
 
             </div>
+
+            <!-- Sağ tablar -->
+            <div class="new-card-tabs">
+                <button class="new-tab-btn active" data-section="card-panel">
+                    <i class="fa-solid fa-id-card"></i><span>Card</span>
+                </button>
+                <button class="new-tab-btn" data-section="stats-panel">
+                    <i class="fa-solid fa-chart-bar"></i><span>Stats</span>
+                </button>
+                <button class="new-tab-btn" data-section="ability-panel">
+                    <i class="fa-solid fa-wand-sparkles"></i><span>Ability</span>
+                </button>
+                <button class="new-tab-btn" data-section="levels-panel">
+                    <i class="fa-solid fa-arrow-up"></i><span>Levels</span>
+                </button>
+                <button class="new-tab-btn" data-section="story-panel">
+                    <i class="fa-solid fa-book-open"></i><span>Story</span>
+                </button>
+            </div>
+
         </div>
     `;
 

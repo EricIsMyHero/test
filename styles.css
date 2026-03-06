@@ -841,10 +841,10 @@ body, .wrap {
 }
 
 /* ═══════════════════════════════════════════════════
-   YENİ KART LAYOUT — Sol tablar | Mərkəz şəkil | Sağ panel
+/* ═══════════════════════════════════════════════════
+   YENİ KART LAYOUT — Məzmun paneli | Sağ tablar
    ═══════════════════════════════════════════════════ */
 
-/* Kart konteyneri yüksəkliyi artırılır */
 .card-container,
 .card-single {
   height: 340px;
@@ -855,7 +855,6 @@ body, .wrap {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  gap: 0;
 }
 
 /* HEADER: Ad + Nadir */
@@ -889,31 +888,31 @@ body, .wrap {
 }
 
 /* Nadir badge rəngləri */
-.r-badge-mundane  { color: var(--mundane); border-color: var(--mundane); }
-.r-badge-familiar { color: var(--familiar); border-color: var(--familiar); }
-.r-badge-arcane   { color: var(--arcane); border-color: var(--arcane); }
-.r-badge-relic    { color: var(--relic); border-color: var(--relic); }
-.r-badge-ascendant{ color: var(--ascendant); border-color: var(--ascendant); }
-.r-badge-apex     { color: var(--apex); border-color: var(--apex); }
-.r-badge-ethereal { color: var(--ethereal); border-color: var(--ethereal); }
+.r-badge-mundane   { color: var(--mundane);   border-color: var(--mundane); }
+.r-badge-familiar  { color: var(--familiar);  border-color: var(--familiar); }
+.r-badge-arcane    { color: var(--arcane);    border-color: var(--arcane); }
+.r-badge-relic     { color: var(--relic);     border-color: var(--relic); }
+.r-badge-ascendant { color: var(--ascendant); border-color: var(--ascendant); }
+.r-badge-apex      { color: var(--apex);      border-color: var(--apex); }
+.r-badge-ethereal  { color: var(--ethereal);  border-color: var(--ethereal); }
 
-/* BODY: 3 sütun — sol tablar | mərkəz şəkil | sağ panel */
+/* BODY: Sol panel + Sağ tablar */
 .new-card-body {
   display: flex;
   flex: 1;
   overflow: hidden;
-  gap: 0;
 }
 
-/* ── SOL TABLAR ── */
+/* ── SAĞ TABLAR ── */
 .new-card-tabs {
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 8px 6px;
-  width: 58px;
+  width: 60px;
   flex-shrink: 0;
   justify-content: center;
+  border-left: 1px solid rgba(255,255,255,0.06);
 }
 
 .new-tab-btn {
@@ -923,19 +922,18 @@ body, .wrap {
   justify-content: center;
   gap: 3px;
   padding: 6px 2px;
-  background: rgba(34, 40, 79, 0.6);
-  border: 1px solid rgba(47, 55, 105, 0.8);
+  background: rgba(34, 40, 79, 0.5);
+  border: 1px solid rgba(47, 55, 105, 0.7);
   border-radius: 10px;
   color: #8a92b2;
-  font-size: 9px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: none;
-  min-height: 46px;
+  min-height: 44px;
 }
 
 .new-tab-btn i {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .new-tab-btn span {
@@ -957,65 +955,11 @@ body, .wrap {
   box-shadow: 0 0 8px rgba(93,102,162,0.4);
 }
 
-/* ── MƏRKƏZ ŞƏKİL ── */
-.new-card-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 4px;
-  flex-shrink: 0;
-  width: 100px;
-  gap: 6px;
-}
-
-.new-card-image-wrap {
-  width: 84px;
-  height: 84px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 2px solid rgba(255,255,255,0.12);
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.new-card-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.new-card-image-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(22, 27, 58, 0.6);
-}
-
-.new-card-type-badge {
-  font-size: 9px;
-  padding: 3px 8px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: #bfc7ff;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 90px;
-}
-
-/* ── SAĞ PANEL ── */
+/* ── SOL PANEL ── */
 .new-card-panel-area {
   flex: 1;
   min-width: 0;
-  padding: 8px 10px 8px 4px;
+  padding: 8px 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1030,6 +974,53 @@ body, .wrap {
 
 .new-panel.visible {
   display: flex;
+}
+
+/* CARD PANELİ — şəkil tam dolu */
+.new-panel[data-panel-id="card-panel"] {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.new-card-image-wrap {
+  width: 100%;
+  flex: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 220px;
+}
+
+.new-card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.new-card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(22, 27, 58, 0.6);
+}
+
+.new-card-type-badge {
+  font-size: 10px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #bfc7ff;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 /* STATS PANELİ */
@@ -1119,6 +1110,7 @@ body, .wrap {
   padding: 4px;
   overflow-y: auto;
   flex: 1;
+  text-align: center;
 }
 
 /* Levels paneli */

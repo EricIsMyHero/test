@@ -340,10 +340,7 @@ function createCardContent(data) {
 
     content.innerHTML = `
         <div class="new-card-header">
-            <div class="new-card-name">
-                ${data.name || 'Unknown'}
-                ${data.note ? `<span class="note">${data.note}</span>` : ""}
-            </div>
+            <div class="new-card-name">${data.name || 'Unknown'}</div>
             <span class="new-card-rarity r-badge-${rarityLower}">${data.rarity || ''}</span>
         </div>
 
@@ -360,7 +357,10 @@ function createCardContent(data) {
                             <i class="fa-solid fa-user" style="font-size:64px; color:#8a92b2;"></i>
                         </div>
                     </div>
-                    <div class="new-card-type-badge">${badgeText || 'Unknown'}</div>
+                    <div class="new-card-type-badge">
+                        ${data.note ? `<span class="type-note-line">${data.note}</span>` : ''}
+                        <span class="type-main-line">${badgeText || 'Unknown'}</span>
+                    </div>
                 </div>
 
                 <!-- STATS PANELİ -->

@@ -87,13 +87,39 @@ function createCardElement(data) {
 
     // ── Tab listener köməkçisi ────────────────────────────────────────────
     const setupCardListeners = el => {
+        // Yeni layout sol tab listenerları
+        el.querySelectorAll('.new-tab-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                el.querySelectorAll('.new-tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const target = btn.dataset.section;
+                el.querySelectorAll('.new-panel').forEach(p => {
+                    p.classList.toggle('visible', p.dataset.panelId === target);
+                });
+            });
+        });
+        // Stats sub-tab listenerları
+        el.querySelectorAll('.stats-sub-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                el.querySelectorAll('.stats-sub-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const target = btn.dataset.statsTab;
+                el.querySelectorAll('.stats-sub-panel').forEach(p => {
+                    p.classList.toggle('visible', p.dataset.statsPanel === target);
+                });
+            });
+        });
+        // Köhnə card-tabs (spell cards üçün)
         el.querySelectorAll('.card-tabs button').forEach(btn => {
             btn.addEventListener('click', e => {
                 e.stopPropagation();
                 el.querySelectorAll('.card-tabs button').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 el.querySelectorAll('.stats-section').forEach(s => s.classList.remove('visible'));
-                el.querySelector(`[data-section-id="${btn.dataset.section}"]`).classList.add('visible');
+                const target = el.querySelector(`[data-section-id="${btn.dataset.section}"]`);
+                if (target) target.classList.add('visible');
             });
         });
     };
@@ -301,6 +327,7 @@ function createCardElement(data) {
 // Kartın iç məzmununu yaradan köməkçi funksiya
 function createCardContent(data) {
     const content = document.createElement('div');
+    content.className = 'new-card-layout';
 
     if (!data || !data.stats) {
         console.error('Invalid card data:', data);
@@ -309,63 +336,111 @@ function createCardContent(data) {
     }
 
     const badgeText = Array.isArray(data.type) ? data.type.join('/') : data.type;
+    const rarityLower = (data.rarity || 'mundane').toLowerCase();
+
     content.innerHTML = `
-        <div class="stripe"></div>
-        <div class="head">
-            <div class="name">
+        <div class="new-card-header">
+            <div class="new-card-name">
                 ${data.name || 'Unknown'}
                 ${data.note ? `<span class="note">${data.note}</span>` : ""}
             </div>
-            <span class="badge">${badgeText || 'Unknown'}</span>
+            <span class="new-card-rarity r-badge-${rarityLower}">${data.rarity || ''}</span>
         </div>
 
-        <div class="card-tabs">
-            <button class="active" data-section="main-stats">Main</button>
-            <button data-section="additional-stats">Other</button>
-            <button data-section="trait">Ability</button>
-            <button data-section="showlevels">Levels</button>
-            <button data-section="story-section">Story</button>
+        <div class="new-card-body">
+            <!-- Sol tablar -->
+            <div class="new-card-tabs">
+                <button class="new-tab-btn active" data-section="stats-panel">
+                    <i class="fa-solid fa-chart-bar"></i><span>Stats</span>
+                </button>
+                <button class="new-tab-btn" data-section="ability-panel">
+                    <i class="fa-solid fa-wand-sparkles"></i><span>Ability</span>
+                </button>
+                <button class="new-tab-btn" data-section="levels-panel">
+                    <i class="fa-solid fa-arrow-up"></i><span>Levels</span>
+                </button>
+                <button class="new-tab-btn" data-section="story-panel">
+                    <i class="fa-solid fa-book-open"></i><span>Story</span>
+                </button>
+            </div>
+
+            <!-- Mərkəz: şəkil + tip -->
+            <div class="new-card-center">
+                <div class="new-card-image-wrap">
+                    <img src="${rarityLower}.jpg" alt="${data.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="new-card-image-placeholder" style="display:none;">
+                        <i class="fa-solid fa-user" style="font-size:48px; color:#8a92b2;"></i>
+                    </div>
+                </div>
+                <div class="new-card-type-badge">${badgeText || 'Unknown'}</div>
+            </div>
+
+            <!-- Sağ panel (məzmun) -->
+            <div class="new-card-panel-area">
+
+                <!-- STATS PANELİ -->
+                <div class="new-panel visible" data-panel-id="stats-panel">
+                    <div class="stats-sub-tabs">
+                        <button class="stats-sub-btn active" data-stats-tab="main">Main</button>
+                        <button class="stats-sub-btn" data-stats-tab="other">Other</button>
+                    </div>
+                    <div class="stats-sub-content">
+                        <div class="stats-sub-panel visible" data-stats-panel="main">
+                            <div class="stat-item"><b><i class="fa-solid fa-heart"></i> HP</b><span>${data.stats.health || 0}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-shield-halved"></i> Shield</b><span>${data.stats.shield || 0}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-hand-fist"></i> DMG</b><span>${data.stats.damage || 0}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-bolt"></i> DPS</b><span>${data.stats.sps || 0}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-tachometer-alt"></i> Atk Spd</b><span>${data.stats.attackSpeed || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-clock"></i> Delay</b><span>${data.stats.delay || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-certificate"></i> Mana</b><span>${data.stats.mana || 0}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-user"></i> Count</b><span>${data.stats.number || 0}</span></div>
+                        </div>
+                        <div class="stats-sub-panel" data-stats-panel="other">
+                            <div class="stat-item"><b><i class="fa-solid fa-road"></i> Range</b><span>${data.additionalStats?.range || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-person-running"></i> Speed</b><span>${data.additionalStats?.speed || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-percent"></i> Crit%</b><span>${data.additionalStats?.criticalChance || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-crosshairs"></i> Crit DMG</b><span>${data.additionalStats?.criticDamage || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-percent"></i> LS%</b><span>${data.additionalStats?.lifestealChance || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-skull-crossbones"></i> Lifesteal</b><span>${data.additionalStats?.lifesteal || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-helmet-un"></i> DMG Red</b><span>${data.additionalStats?.damageminimiser || '-'}</span></div>
+                            <div class="stat-item"><b><i class="fa-solid fa-wind"></i> Dodge</b><span>${data.additionalStats?.dodge || '-'}</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABİLİTY PANELİ -->
+                <div class="new-panel" data-panel-id="ability-panel">
+                    <div class="trait trait-center">${data.trait || '-'}</div>
+                </div>
+
+                <!-- LEVELS PANELİ -->
+                <div class="new-panel" data-panel-id="levels-panel">
+                    <div class="stat-item"><b>Level 1</b><span>${data.showlevels?.level1 || '-'}</span></div>
+                    <div class="stat-item"><b>Level 2</b><span>${data.showlevels?.level2 || '-'}</span></div>
+                    <div class="stat-item"><b>Level 3</b><span>${data.showlevels?.level3 || '-'}</span></div>
+                </div>
+
+                <!-- STORY PANELİ -->
+                <div class="new-panel" data-panel-id="story-panel">
+                    <div class="story-content">${data.story || '-'}</div>
+                </div>
+
+            </div>
         </div>
+    `;
 
-        <div class="card-content-area">
-
-            <div class="stats-section visible" data-section-id="main-stats">
-                <div class="stat-item"><b>Health <i class="fa-solid fa-heart"></i></b><span>${data.stats.health || 0}</span></div>
-                <div class="stat-item"><b>Shield <i class="fa-solid fa-shield-halved"></i></b><span>${data.stats.shield || 0}</span></div>
-                <div class="stat-item"><b>Damage <i class="fa-solid fa-hand-fist"></i></b><span>${data.stats.damage || 0}</span></div>
-                <div class="stat-item"><b>D.P.S <i class="fa-solid fa-bolt"></i></b><span>${data.stats.sps || 0}</span></div>
-                <div class="stat-item"><b>Attack Speed <i class="fa-solid fa-tachometer-alt"></i></b><span>${data.stats.attackSpeed || '-'}</span></div>
-                <div class="stat-item"><b>Delay <i class="fa-solid fa-clock"></i></b><span>${data.stats.delay || '-'}</span></div>
-                <div class="stat-item"><b>Mana <i class="fa-solid fa-certificate"></i></b><span>${data.stats.mana || 0}</span></div>
-                <div class="stat-item"><b>Number <i class="fa-solid fa-user"></i></b><span>${data.stats.number || 0}</span></div>
-            </div>
-
-            <div class="stats-section" data-section-id="additional-stats">
-                <div class="stat-item"><b>Range <i class="fa-solid fa-road"></i></b><span>${data.additionalStats?.range || '-'}</span></div>
-                <div class="stat-item"><b>Speed <i class="fa-solid fa-person-running"></i></b><span>${data.additionalStats?.speed || '-'}</span></div>
-                <div class="stat-item"><b>Critical Chance <i class="fa-solid fa-percent"></i></b><span>${data.additionalStats?.criticalChance || '-'}</span></div>
-                <div class="stat-item"><b>Critical Damage <i class="fa-solid fa-crosshairs"></i></b><span>${data.additionalStats?.criticDamage || '-'}</span></div>
-                <div class="stat-item"><b>Life Steal Chance <i class="fa-solid fa-percent "></i></b><span>${data.additionalStats?.lifestealChance || '-'}</span></div>
-                <div class="stat-item"><b>Life Steal <i class="fa-solid fa-skull-crossbones "></i></b><span>${data.additionalStats?.lifesteal || '-'}</span></div>
-                <div class="stat-item"><b>Damage Reduction <i class="fa-solid fa-helmet-un "></i></b><span>${data.additionalStats?.damageminimiser || '-'}</span></div>
-                <div class="stat-item"><b>Dodge Chance <i class="fa-solid fa-wind "></i></b><span>${data.additionalStats?.dodge || '-'}</span></div>
-            </div>
-
-            <div class="stats-section" data-section-id="trait">
-                <div class="trait trait-center">${data.trait || '-'}</div>
-            </div>
-
-            <div class="stats-section" data-section-id="showlevels">
-                <div class="stat-item"><b>Level 1</b><span>${data.showlevels?.level1 || '-'}</span></div>
-                <div class="stat-item"><b>Level 2</b><span>${data.showlevels?.level2 || '-'}</span></div>
-                <div class="stat-item"><b>Level 3</b><span>${data.showlevels?.level3 || '-'}</span></div>
-            </div>
-
-            <div class="stats-section" data-section-id="story-section">
-                <div class="story-content">${data.story || '-'}</div>
-            </div>
-
-        </div>`;
+    // Stats sub-tab listeners
+    content.querySelectorAll('.stats-sub-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            content.querySelectorAll('.stats-sub-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const target = btn.dataset.statsTab;
+            content.querySelectorAll('.stats-sub-panel').forEach(p => {
+                p.classList.toggle('visible', p.dataset.statsPanel === target);
+            });
+        });
+    });
 
     return content;
 }

@@ -107,16 +107,13 @@ button.active {
 
 .card-container {
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
 }
 
 /* İKİÜZLÜ KARTIN DAXİLİ STRUKTURU */
 .card-inner {
   position: relative;
   width: 100%;
-  flex: 1;
-  min-height: 0;
+  height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
 }
@@ -131,13 +128,20 @@ button.active {
 .card-single {
   background: var(--card);
   border: 1px solid #2a2f57;
-  border-radius: 8px 8px 0 0;
+  border-radius: 8px;
   padding: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow);
   height: 100%;
+}
+
+/* Evolution controls olan kartlarda alt boşluq */
+.has-multi-controls .card-front,
+.has-multi-controls .card-back,
+.has-multi-controls .card-single {
+  padding-bottom: 46px;
 }
 
 .card-front,
@@ -435,16 +439,20 @@ button.active {
 /* EVOLUTION VƏ SUMMONER SİSTEMİ */
 /* Progress Bar Konteyner */
 .evolution-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  flex-shrink: 0;
-  background: rgba(21, 25, 52, 0.95);
-  padding: 6px 12px;
+  gap: 8px;
+  background: rgba(15, 18, 40, 0.97);
+  padding: 5px 10px;
   border-radius: 0 0 8px 8px;
-  border-top: 1px solid rgba(255,255,255,.1);
-  width: 100%;
+  border-top: 1px solid rgba(255,255,255,.08);
+  z-index: 10;
+  height: 38px;
 }
 
 /* Ox Düymələri */
@@ -452,8 +460,8 @@ button.active {
   background: linear-gradient(135deg, #4CAF50, #66BB6A);
   border: 1px solid rgba(76, 175, 80, 0.5);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   display: flex;
   align-items: center;

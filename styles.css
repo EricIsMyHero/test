@@ -99,22 +99,24 @@ button.active {
 .card-container,
 .card-single {
   width: 100%;
-  height: 320px;
-  border-radius: 12px;
+  height: 360px;
+  border-radius: 8px;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-container {
-  perspective: 1000px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* İKİÜZLÜ KARTIN DAXİLİ STRUKTURU */
 .card-inner {
   position: relative;
   width: 100%;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
 }
@@ -129,12 +131,13 @@ button.active {
 .card-single {
   background: var(--card);
   border: 1px solid #2a2f57;
-  border-radius: 8px;
-  padding: 8px; /* Azaldılmış padding */
+  border-radius: 8px 8px 0 0;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow);
+  height: 100%;
 }
 
 .card-front,
@@ -432,22 +435,16 @@ button.active {
 /* EVOLUTION VƏ SUMMONER SİSTEMİ */
 /* Progress Bar Konteyner */
 .evolution-controls {
-  position: absolute;      /* relative-dən absolute-ə */
-  bottom: 8px;             /* Kartın aşağısından məsafə */
-  left: 50%;               /* Mərkəzləşdirmə üçün */
-  transform: translateX(-50%);  /* Mərkəzə gətir */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-
-  background: rgba(21, 25, 52, 0.9);
+  flex-shrink: 0;
+  background: rgba(21, 25, 52, 0.95);
   padding: 6px 12px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,.15);
-  z-index: 5;              /* Kartın içində ən üstdə olsun */
-  width: calc(100% - 24px); /* Kənarlardan 12px boşluq */
-  max-width: 280px;         /* Maksimum genişlik */
+  border-radius: 0 0 8px 8px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  width: 100%;
 }
 
 /* Ox Düymələri */
@@ -783,10 +780,7 @@ body, .wrap {
   width: 100%;
 }
 
-/* Spell cards with multi controls need padding adjustment */
-.spell-card.has-multi-controls {
-  padding-bottom: 50px;
-}
+/* Spell cards with multi controls — evolution controls normal flow-dadır */
 
 /* ETHEREAL DUAL MODE DÜYMƏSİ */
 .dual-mode-button {
@@ -848,7 +842,7 @@ body, .wrap {
 
 .card-container,
 .card-single {
-  height: 340px;
+  height: 360px;
 }
 
 .new-card-layout {
@@ -994,7 +988,7 @@ body, .wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 220px;
+  max-height: 190px;
 }
 
 .new-card-image-wrap img {

@@ -438,50 +438,51 @@ button.active {
   position: absolute;
   bottom: 8px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0.85);
+  transform-origin: center bottom;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: rgba(10, 13, 32, 0.82);
-  padding: 4px 10px;
+  background: rgba(10, 14, 38, 0.88);
+  padding: 5px 12px;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
   z-index: 10;
-  scale: 0.8;
-  opacity: 0.7;
-  transition: opacity 0.2s ease, scale 0.2s ease;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   pointer-events: auto;
   white-space: nowrap;
 }
 
 .evolution-controls:hover {
-  opacity: 0.95;
-  scale: 0.85;
+  opacity: 1;
+  transform: translateX(-50%) scale(0.9);
 }
 
 /* Ox Düymələri */
 .evolution-arrow {
-  background: rgba(76, 175, 80, 0.25);
-  border: 1px solid rgba(76, 175, 80, 0.4);
+  background: rgba(76, 175, 80, 0.55);
+  border: 1px solid rgba(100, 220, 100, 0.7);
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  color: #a5d6a7;
-  font-size: 10px;
+  color: #ccffcc;
+  font-size: 11px;
   font-weight: bold;
   padding: 0;
-  box-shadow: none;
+  box-shadow: 0 0 6px rgba(76, 200, 80, 0.4);
 }
 
 .evolution-arrow:hover {
-  background: rgba(76, 175, 80, 0.45);
-  transform: scale(1.1);
+  background: rgba(76, 200, 80, 0.80);
+  box-shadow: 0 0 10px rgba(76, 200, 80, 0.65);
+  transform: scale(1.12);
 }
 
 .evolution-arrow:disabled {
@@ -499,20 +500,20 @@ button.active {
 }
 
 .progress-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.30);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
 .progress-dot.active {
-  background: #4CAF50;
-  border-color: #66BB6A;
-  box-shadow: 0 0 4px rgba(76, 175, 80, 0.7);
-  transform: scale(1.2);
+  background: #5dde60;
+  border-color: #88f08a;
+  box-shadow: 0 0 6px rgba(93, 222, 96, 0.85);
+  transform: scale(1.35);
 }
 
 /* Stage Info */

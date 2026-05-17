@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-adsense-account" content="ca-pub-4095192858738222">
   <title>UNEC İmtahan Materialları</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/home.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/components.css">
   <link rel="stylesheet" href="styles/features.css">
@@ -566,39 +567,146 @@
 
 <!-- ── TAB 1: ANA SƏHİFƏ ─────────────────────────────────── -->
 <div id="main-home" class="main-tab active-tab">
-  <div class="container">
-    <div class="hero">
-      <div class="hero-badge" id="hero-badge">İmtahan Materialları</div>
-      <h1 id="hero-title">UNEC <span>İmtahan</span><br>Materialları</h1>
-      <p id="hero-desc">Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçərək, PDF-i açın.</p>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-num" id="stat-courses">4</div>
-          <div class="stat-label" id="stat-courses-label">Kurs</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" id="stat-subjects">21</div>
-          <div class="stat-label" id="stat-subjects-label">Fənn</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" id="stat-pdfs">21</div>
-          <div class="stat-label" id="stat-pdfs-label">PDF</div>
-        </div>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hs-hero">
+    <div class="hs-hero-left">
+      <div class="hs-badge">
+        <span class="hs-badge-dot"></span>
+        UNEC Students
+      </div>
+      <h1 class="hs-title">
+        Bütün imtahan<br>
+        materialları <span class="hs-grad">bir yerdə</span>
+      </h1>
+      <p class="hs-desc">
+        Fənlər, PDF-lər, testlər, GPA hesablayıcı və AI köməkçi —
+        UNEC tələbələri üçün hazırlanmış vahid platforma.
+      </p>
+      <div class="hs-cta-row">
+        <button class="hs-btn-primary" onclick="switchBottomTab('courses')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Materiallara başla
+        </button>
+        <button class="hs-btn-secondary" onclick="switchBottomTab('ai')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          AI köməkçidən soruş
+        </button>
       </div>
     </div>
 
-    <!-- Footer content in home tab -->
-    <div class="home-footer-block">
-      <p class="home-footer-note" id="footer-text">Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb.</p>
-      <div class="home-footer-links">
-        <span class="home-footer-copy">&copy; 2025 - 2026 AliVerse Studio ✦</span>
-        <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank" class="home-footer-link">Portfolio</a>
-        <a href="mailto:unecimtahanmateriallari@gmail.com" class="home-footer-link">Əlaqə</a>
-        <span class="home-footer-link" onclick="openPrivacyModal()">Məxfilik</span>
-        <span class="home-footer-link" onclick="openTermsModal()">Şərtlər</span>
+    <div class="hs-hero-right">
+      <div class="hs-mockup">
+        <div class="hs-mockup-header">
+          <span class="hs-mockup-dot r"></span>
+          <span class="hs-mockup-dot y"></span>
+          <span class="hs-mockup-dot g"></span>
+          <span class="hs-mockup-title">Dashboard</span>
+        </div>
+        <div class="hs-mockup-stats">
+          <div class="hs-ms-card">
+            <div class="hs-ms-val" id="mock-stat-subjects">43</div>
+            <div class="hs-ms-lbl">Fənn</div>
+          </div>
+          <div class="hs-ms-card">
+            <div class="hs-ms-val" id="mock-stat-pdfs">72</div>
+            <div class="hs-ms-lbl">PDF</div>
+          </div>
+          <div class="hs-ms-card">
+            <div class="hs-ms-val" id="mock-stat-courses">4</div>
+            <div class="hs-ms-lbl">Kurs</div>
+          </div>
+          <div class="hs-ms-card hs-ms-card--accent">
+            <div class="hs-ms-val" id="mock-stat-users"><span id="stat-monthly-visitors">5k+</span></div>
+            <div class="hs-ms-lbl">Bu ay</div>
+          </div>
+        </div>
+        <div class="hs-mockup-bar-label">Aylıq aktivlik</div>
+        <div class="hs-mockup-bars">
+          <div class="hs-bar" style="--h:40%"></div>
+          <div class="hs-bar" style="--h:65%"></div>
+          <div class="hs-bar" style="--h:50%"></div>
+          <div class="hs-bar" style="--h:80%"></div>
+          <div class="hs-bar" style="--h:60%"></div>
+          <div class="hs-bar" style="--h:90%"></div>
+          <div class="hs-bar hs-bar--active" style="--h:75%"></div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ── STATS BAND ─────────────────────────────────────── -->
+  <section class="hs-stats-band">
+    <div class="hs-stat-card">
+      <div class="hs-stat-num" data-target="5842" id="cnt-users">0</div>
+      <div class="hs-stat-sub">Aktiv tələbə</div>
+    </div>
+    <div class="hs-stat-divider"></div>
+    <div class="hs-stat-card">
+      <div class="hs-stat-num" data-target="72" id="cnt-pdfs">0</div>
+      <div class="hs-stat-sub">Material</div>
+    </div>
+    <div class="hs-stat-divider"></div>
+    <div class="hs-stat-card">
+      <div class="hs-stat-num" data-target="43" id="cnt-subjects">0</div>
+      <div class="hs-stat-sub">Fənn</div>
+    </div>
+    <div class="hs-stat-divider"></div>
+    <div class="hs-stat-card">
+      <div class="hs-stat-num">24/7</div>
+      <div class="hs-stat-sub">Açıq platforma</div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ───────────────────────────────────────── -->
+  <section class="hs-features">
+    <h2 class="hs-section-title">Niyə <span class="hs-grad">UNEC Students?</span></h2>
+    <div class="hs-features-grid">
+      <div class="hs-feat-card">
+        <div class="hs-feat-icon">⚡</div>
+        <h3>Sürətli axtarış</h3>
+        <p>Fənni seç, materialı tap. 3 saniyədən az.</p>
+      </div>
+      <div class="hs-feat-card">
+        <div class="hs-feat-icon">📄</div>
+        <h3>PDF preview</h3>
+        <p>Yükləmədən birbaşa brauzerda aç, oxu, şərh et.</p>
+      </div>
+      <div class="hs-feat-card">
+        <div class="hs-feat-icon">🤖</div>
+        <h3>AI sual-cavab</h3>
+        <p>İmtahan materialı üzrə sualını AI-a ver, izah al.</p>
+      </div>
+      <div class="hs-feat-card">
+        <div class="hs-feat-icon">🎯</div>
+        <h3>Test sistemi</h3>
+        <p>Özünü yoxla. Səhvlərini gör. Hazırlaş.</p>
+      </div>
+      <div class="hs-feat-card">
+        <div class="hs-feat-icon">📊</div>
+        <h3>GPA hesablayıcı</h3>
+        <p>Kreditlərini daxil et, GPA-nı real vaxtda gör.</p>
+      </div>
+      <div class="hs-feat-card">
+        <div class="hs-feat-icon">📱</div>
+        <h3>Mobil uyğun</h3>
+        <p>Telefon, planşet, noutbuk — hər cihazda işləyir.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="hs-footer">
+    <p class="hs-footer-note">Bu sayt rəsmi deyildir. Tələbələr tərəfindən, tələbələr üçün hazırlanıb.</p>
+    <div class="hs-footer-links">
+      <span class="hs-footer-copy">© 2025–2026 AliVerse Studio ✦</span>
+      <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank">Portfolio</a>
+      <a href="mailto:unecimtahanmateriallari@gmail.com">Əlaqə</a>
+      <span onclick="openPrivacyModal()" style="cursor:pointer">Məxfilik</span>
+      <span onclick="openTermsModal()" style="cursor:pointer">Şərtlər</span>
+    </div>
+  </footer>
+
 </div>
 
 <!-- ── TAB 2: KURSLAR ─────────────────────────────────────── -->
@@ -1211,5 +1319,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
+<script src="scripts/home.js"></script>
 </body>
 </html>

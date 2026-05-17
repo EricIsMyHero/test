@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-4095192858738222">
+  <title>UNEC İmtahan Materialları</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/features.css">
+  <link rel="stylesheet" href="styles/gpa.css">
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4095192858738222" crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZCMB8RSH3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HZCMB8RSH3');
+  </script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PWA INSTALL BANNER                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="installBanner">
+  <span>📱 Bu saytı tətbiq kimi əlavə et</span>
+  <div class="banner-actions">
+    <button class="banner-btn-dismiss" onclick="dismissBanner()">Sonra</button>
+    <button class="banner-btn-install" onclick="installApp()">Əlavə et</button>
+  </div>
+</div>
+
+<div class="grid-bg"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SIDEBAR OVERLAY                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SIDEBAR PANEL — Sağ tərəfdə                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-title">Menyu</span>
+    <button class="sidebar-close-btn" onclick="closeSidebar()">✕</button>
+  </div>
+
+  <!-- Tema Seç -->
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">🎨 Tema Seç</div>
+    <div class="sidebar-theme-options" id="themeOptions">
+      <button class="sidebar-theme-opt active" data-theme="ocean" onclick="applyTheme('ocean',this)">
+        <span class="theme-dot" style="background:#3b82f6"></span>
+        <span class="theme-dot" style="background:#06b6d4"></span>
+        <span class="theme-dot" style="background:#8b5cf6"></span>
+        <span class="sidebar-theme-name">Ocean</span>
+      </button>
+      <button class="sidebar-theme-opt" data-theme="forest" onclick="applyTheme('forest',this)">
+        <span class="theme-dot" style="background:#22c55e"></span>
+        <span class="theme-dot" style="background:#4ade80"></span>
+        <span class="theme-dot" style="background:#86efac"></span>
+        <span class="sidebar-theme-name">Forest</span>
+      </button>
+      <button class="sidebar-theme-opt" data-theme="sunset" onclick="applyTheme('sunset',this)">
+        <span class="theme-dot" style="background:#f97316"></span>
+        <span class="theme-dot" style="background:#ec4899"></span>
+        <span class="theme-dot" style="background:#fbbf24"></span>
+        <span class="sidebar-theme-name">Sunset</span>
+      </button>
+      <button class="sidebar-theme-opt theme-extra" data-theme="midnight" onclick="applyTheme('midnight',this)">
+        <span class="theme-dot" style="background:#ffffff"></span>
+        <span class="theme-dot" style="background:#a3a3a3"></span>
+        <span class="theme-dot" style="background:#737373"></span>
+        <span class="sidebar-theme-name">Midnight</span>
+      </button>
+      <button class="sidebar-theme-opt theme-extra" data-theme="candy" onclick="applyTheme('candy',this)">
+        <span class="theme-dot" style="background:#a855f7"></span>
+        <span class="theme-dot" style="background:#ec4899"></span>
+        <span class="theme-dot" style="background:#8b5cf6"></span>
+        <span class="sidebar-theme-name">Candy</span>
+      </button>
+      <button class="sidebar-theme-opt theme-extra" data-theme="arctic" onclick="applyTheme('arctic',this)">
+        <span class="theme-dot" style="background:#0284c7"></span>
+        <span class="theme-dot" style="background:#0ea5e9"></span>
+        <span class="theme-dot" style="background:#38bdf8"></span>
+        <span class="sidebar-theme-name">Arctic</span>
+      </button>
+    </div>
+    <button class="theme-expand-btn" id="themeExpandBtn" onclick="toggleExtraThemes()">
+      <span id="themeExpandLabel">Daha çox tema</span>
+      <svg id="themeExpandIcon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <!-- Yeniliklər -->
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">🔔 Yeniliklər</div>
+    <a class="sidebar-menu-item" href="https://t.me/unecimtahanmateriallari" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
+      <span class="sidebar-menu-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </span>
+      Teleqram Kanalı
+      <span class="sidebar-menu-arrow">›</span>
+    </a>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <!-- Təşəkkürlər -->
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">💛 Töhfəçilər</div>
+    <button class="sidebar-menu-item" onclick="closeSidebar(); openThanks();">
+      <span class="sidebar-menu-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </span>
+      Təşəkkürlər
+      <span class="sidebar-menu-arrow">›</span>
+    </button>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <!-- About, Privacy, Terms -->
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">ℹ️ Sayt haqqında</div>
+    <button class="sidebar-menu-item" onclick="openAboutModal()">
+      <span class="sidebar-menu-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </span>
+      Haqqımızda
+      <span class="sidebar-menu-arrow">›</span>
+    </button>
+    <button class="sidebar-menu-item" onclick="openPrivacyModal()">
+      <span class="sidebar-menu-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </span>
+      Məxfilik siyasəti
+      <span class="sidebar-menu-arrow">›</span>
+    </button>
+    <button class="sidebar-menu-item" onclick="openTermsModal()">
+      <span class="sidebar-menu-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </span>
+      İstifadə Şərtləri
+      <span class="sidebar-menu-arrow">›</span>
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    &copy; 2025 - 2026 AliVerse Studio ✦
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SUPPORT TOAST NOTIFICATION                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="supportToast" class="support-toast">
+  <div class="st-left">
+    <div class="st-icon">☕</div>
+    <div class="st-text">
+      <span class="st-title">Layihəyə dəstək ol</span>
+      <span class="st-sub">Birbank və ya m10 ilə töhfə ver</span>
+    </div>
+  </div>
+  <div class="st-right">
+    <a href="https://app.birbank.az/qp?t=2&id=3F12353F2088F167E0634C0214ACD220" target="_blank" rel="noopener" class="st-btn st-btn-birbank" onclick="dismissToast()">Birbank</a>
+    <a href="https://m10.onelink.me/g54T/cw5bg1gx" target="_blank" rel="noopener" class="st-btn st-btn-m10" onclick="dismissToast()">m10</a>
+    <button class="st-close" onclick="dismissToast()" aria-label="Bağla">✕</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- HEADER                                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<header>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" title="Menyu" aria-label="Menyu aç">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <div class="logo" id="logo-easter" onclick="easterEggClick()">UNEC · İMTAHAN</div>
+  </div>
+  <div class="header-right">
+    <button id="authHeaderBtn" class="header-auth-btn"></button>
+    <div class="header-lang-pill" id="headerLangPill">
+      <button class="lang-pill-btn active" id="lang-btn-az" data-lang="az" onclick="setLang('az')">AZ</button>
+      <button class="lang-pill-btn" id="lang-btn-en" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- MODALS                                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<!-- Easter Egg Modal -->
+<div id="easterOverlay" class="thanks-overlay hidden" onclick="closeEasterIfOutside(event)">
+  <div class="thanks-modal" id="easterModal">
+    <div class="thanks-modal-header">
+      <span class="thanks-modal-icon" style="animation:none">🫥</span>
+      <h2 class="thanks-modal-title" style="font-size:1rem">Gizli Bölmə</h2>
+      <button class="thanks-modal-close" onclick="closeEaster()">✕</button>
+    </div>
+    <div class="easter-body">
+      <div class="easter-icon">🏆</div>
+      <h3 class="easter-title">Xüsusi Təşəkkürlər</h3>
+      <p class="easter-desc">Bu sayta <strong>heç bir töhfə vermədiyiniz</strong> üçün sizə xüsusi minnətdarlığımızı bildiririk.</p>
+      <div class="easter-list">
+        <div class="easter-person"><span class="easter-num">🥇</span><span>Vəlizadə Kərim</span></div>
+        <div class="easter-person"><span class="easter-num">🥈</span><span>Atakişiyev Xəzər</span></div>
+        <div class="easter-person"><span class="easter-num">🥉</span><span>Paşayev Səid</span></div>
+      </div>
+      <p class="easter-footer">Siz olmadan bu sayt tamamilə eyni olardı 💅</p>
+    </div>
+  </div>
+</div>
+
+<!-- Xəta Bildiriş Modalı -->
+<div id="reportOverlay" class="thanks-overlay hidden" onclick="closeReportIfOutside(event)">
+  <div class="report-modal">
+    <div class="report-modal-header">
+      <div class="report-modal-icon">⚠️</div>
+      <h2 class="report-modal-title">Xəta Bildir</h2>
+      <button class="report-modal-close" onclick="closeReportModal()">✕</button>
+    </div>
+    <p class="report-modal-subject" id="report-context"></p>
+    <div id="report-form">
+      <div class="report-field">
+        <label for="report-type">Xəta növü</label>
+        <select id="report-type">
+          <option>PDF açılmır</option>
+          <option>PDF yanlış fəndədir</option>
+          <option>Görünüş xətası</option>
+          <option>Köhnə / yanlış material</option>
+          <option>Düymə işləmir</option>
+          <option>Digər</option>
+        </select>
+      </div>
+      <div class="report-field">
+        <label for="report-message">Xətanın məzmunu</label>
+        <textarea id="report-message" placeholder="Xətanı qısa izah edin..."></textarea>
+      </div>
+      <div class="report-modal-footer">
+        <button class="report-cancel-btn" onclick="closeReportModal()">Ləğv et</button>
+        <button class="report-send-btn" id="report-send-btn" onclick="sendReport()">↗ Göndər</button>
+      </div>
+    </div>
+    <div id="report-success" class="report-success hidden">
+      <div class="report-success-icon">✅</div>
+      <div class="report-success-title">Təşəkkür edirik!</div>
+      <p class="report-success-desc">Xəta bildirişiniz alındı.<br>Ən qısa zamanda düzəldiləcək.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Təşəkkürlər Modalı -->
+<div id="thanksOverlay" class="thanks-overlay hidden" onclick="closeThanksIfOutside(event)">
+  <div class="thanks-modal" id="thanksModal">
+    <div class="thanks-modal-header">
+      <span class="thanks-modal-icon">💛</span>
+      <h2 class="thanks-modal-title">Təşəkkürlər</h2>
+      <button class="thanks-modal-close" onclick="closeThanks()">✕</button>
+    </div>
+    <p class="thanks-modal-desc">Bu layihəyə töhfə verən hər kəsə ürəkdən təşəkkür edirik:</p>
+    <ul class="thanks-list" id="thanks-list"></ul>
+    <div class="thanks-footer-note">Bu sayt tələbələr üçün, tələbələr tərəfindən hazırlanıb 🎓</div>
+  </div>
+</div>
+
+<!-- About Modalı -->
+<div id="aboutOverlay" class="thanks-overlay hidden" onclick="if(event.target===this)closeAboutModal()">
+  <div class="thanks-modal">
+    <div class="thanks-modal-header">
+      <span class="thanks-modal-icon" style="animation:none">ℹ️</span>
+      <h2 class="thanks-modal-title">Sayt Haqqında</h2>
+      <button class="thanks-modal-close" onclick="closeAboutModal()">✕</button>
+    </div>
+    <div class="about-body">
+      <p>Bu sayt UNEC tələbələrinin imtahan materiallarına daha rahat çatması üçün <strong>tələbələr tərəfindən</strong> hazırlanmış qeyri-rəsmi bir resursdur.</p>
+      <div class="about-list">
+        <div class="about-item"><span class="about-item-icon">📚</span><span>Bütün kurslar üzrə PDF materiallar</span></div>
+        <div class="about-item"><span class="about-item-icon">🔍</span><span>Sürətli axtarış və filtrasiya</span></div>
+        <div class="about-item"><span class="about-item-icon">★</span><span>Seçilmişlərə əlavə etmə funksiyası</span></div>
+        <div class="about-item"><span class="about-item-icon">📱</span><span>Mobil tətbiq kimi quraşdırma (PWA)</span></div>
+      </div>
+      <p class="about-note">⚠️ Bu sayt UNEC-in rəsmi saytı deyildir. Materiallardakı məlumatların dəqiqliyinə görə məsuliyyət daşımırıq.</p>
+      <div class="about-contact">
+        <a href="mailto:unecimtahanmateriallari@gmail.com">📧 Əlaqə saxla</a>
+        <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank">🌐 Portfolio</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Privacy Policy Modalı -->
+<div id="privacyOverlay" class="thanks-overlay hidden" onclick="if(event.target===this)closePrivacyModal()">
+  <div class="thanks-modal privacy-modal">
+    <div class="thanks-modal-header">
+      <span class="thanks-modal-icon" style="animation:none">🔒</span>
+      <h2 class="thanks-modal-title">Məxfilik Siyasəti</h2>
+      <button class="thanks-modal-close" onclick="closePrivacyModal()">✕</button>
+    </div>
+    <div class="privacy-body">
+      <div class="privacy-section">
+        <h3>Toplanan məlumatlar</h3>
+    <p>Platformadan istifadə zamanı aşağıdakı məlumatlar toplana və saxlanıla bilər:</p>
+    <ul>
+      <li>Hesab məlumatları, email ünvanı və Google giriş məlumatları</li>
+      <li>İstifadəçi dashboard statistikaları və XP məlumatları</li>
+      <li>Seçilmiş tema, dil seçimi və local storage məlumatları</li>
+      <li>Oxunan material tarixçəsi və platforma fəaliyyəti</li>
+      <li>AI sisteminə göndərilən sorğular</li>
+    </ul>
+    <p style="margin-top:8px;">Bu məlumatlar platformanın düzgün işləməsi və istifadəçi təcrübəsinin yaxşılaşdırılması üçün istifadə olunur.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h3>Hesab və giriş məlumatları</h3>
+    <p>Platformada hesab yaratdığınız zaman <strong>Firebase Authentication</strong> vasitəsilə məlumatlar emal olunur. Google ilə giriş zamanı ad, email ünvanı, profil şəkli və hesab identifikatoru əldə edilə bilər.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h3>Xəta bildirişləri</h3>
+    <p>Saytda xəta göndərdiyiniz zaman daxil etdiyiniz mətn və seçdiyiniz fənn adı <strong>Formspree</strong> vasitəsilə bizə ötürülür. Bu məlumatlar yalnız problemi həll etmək üçün istifadə olunur.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h3>Üçüncü tərəf xidmətlər</h3>
+    <p>Saytda aşağıdakı xidmətlər istifadə olunur:</p>
+    <ul>
+      <li><strong>Firebase Authentication & Firestore</strong>, hesab və istifadəçi məlumatlarının saxlanılması üçün</li>
+      <li><strong>Google Fonts</strong>, şriftlərin göstərilməsi üçün</li>
+      <li><strong>Google Analytics</strong>, statistika üçün</li>
+      <li><strong>Formspree</strong>, form məlumatlarının göndərilməsi üçün</li>
+      <li><strong>Vercel & Gemini API</strong>, süni intellekt funksiyaları üçün</li>
+    </ul>
+    <p>Bu xidmətlər öz məxfilik siyasətlərinə uyğun fəaliyyət göstərir.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h3>Google Analytics</h3>
+    <p>Bu platforma istifadəçi davranışını analiz etmək üçün Google Analytics xidmətindən istifadə edir.</p>
+    <ul>
+      <li>Ziyarət edilən səhifələr</li>
+      <li>Kliklənən linklər və materiallar</li>
+      <li>Cihaz və brauzer məlumatları</li>
+      <li>Anonimləşdirilmiş IP məlumatı</li>
+    </ul>
+    <p>Bu məlumatlar platformanın inkişafı üçün istifadə olunur.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Cookies və local storage</h3>
+    <p>Platforma giriş sessiyası, tema seçimi, dil parametrləri və istifadəçi seçimlərini yadda saxlamaq üçün cookie və local storage texnologiyalarından istifadə edə bilər.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Süni intellekt istifadəsi</h3>
+    <p>AI funksiyalarından istifadə etdiyiniz zaman sorğular üçüncü tərəf AI xidmətlərinə göndərilə bilər. Cavablar avtomatik yaradılır və tam düzgünlük zəmanəti verilmir.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Hesab silinməsi</h3>
+    <p>İstifadəçi hesabının silinməsi üçün əlaqə bölməsindən müraciət edilə bilər. Təsdiqdən sonra məlumatlar silinə və ya deaktiv edilə bilər.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Gələcək dəyişikliklər</h3>
+    <p>Bu siyasət platformanın inkişafına uyğun olaraq yenilənə bilər. Dəyişikliklər bu səhifədə paylaşılır.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Əlaqə</h3>
+    <p>Hər hansı sual üçün <a href="mailto:unecimtahanmateriallari@gmail.com" class="privacy-link">əlaqə bölməsindən</a> istifadə edin.</p>
+  </div>
+  <p class="privacy-updated">Son yenilənmə: 12 May 2026</p>
+</div>
+</div>
+</div>
+
+<!-- İstifadə Şərtləri Modalı -->
+<div id="termsOverlay" class="thanks-overlay hidden" onclick="if(event.target===this)closeTermsModal()">
+  <div class="thanks-modal privacy-modal">
+    <div class="thanks-modal-header">
+      <span class="thanks-modal-icon" style="animation:none">📄</span>
+      <h2 class="thanks-modal-title">İstifadə Şərtləri</h2>
+      <button class="thanks-modal-close" onclick="closeTermsModal()">✕</button>
+    </div>
+    <div class="privacy-body">
+      <div class="privacy-section">
+        <h3>Saytdan istifadə</h3>
+    <p>Bu platformadan istifadə etməklə aşağıdakı şərtlərlə razılaşırsınız. Əgər bu şərtlərlə razı deyilsinizsə, platformadan istifadə etməyin.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Platformanın məqsədi</h3>
+    <p>Bu platforma tələbələr üçün imtahan materiallarını, öyrənmə resurslarını və akademik alətləri bir araya gətirmək məqsədi daşıyır. Platforma heç bir universitet və ya rəsmi qurum ilə birbaşa əlaqəli deyil.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Hesab və istifadəçi məlumatları</h3>
+    <p>İstifadəçilər Firebase Authentication vasitəsilə hesab yarada bilər. Hesab təhlükəsizliyinə görə istifadəçi özü məsuliyyət daşıyır. Şübhəli fəaliyyət aşkar edildikdə hesab müvəqqəti məhdudlaşdırıla və ya silinə bilər.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>XP və dashboard sistemi</h3>
+    <p>Platformada göstərilən XP, progress və digər statistik göstəricilər istifadəçi inkişafını izləmək məqsədi daşıyır. Texniki nasazlıqlar səbəbilə statistik məlumatlarda dəyişiklik və ya sıfırlanma baş verə bilər.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>PDF və materiallar</h3>
+    <p>Platformada yerləşdirilən PDF və digər materiallar istifadəçilər tərəfindən paylaşılmış və ya açıq mənbələrdən əldə olunmuş ola bilər. Bütün hüquqlar orijinal müəlliflərə məxsusdur.</p>
+    <p style="margin-top:8px;">Əgər materialın sizə məxsus olduğunu və yerləşdirilməsinin uyğun olmadığını düşünürsünüzsə, <a href="mailto:ericismyhero2467@gmail.com" class="privacy-link">bizə bildirin</a>.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Süni intellekt xidmətləri</h3>
+    <p>Platformadakı AI funksiyaları avtomatik cavablar yaradır. Bu cavabların tam düzgünlüyünə zəmanət verilmir və akademik qərarlar üçün əlavə yoxlama tövsiyə olunur.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Qadağan olunan istifadə</h3>
+    <p>Aşağıdakı hallar qadağandır:</p>
+    <ul>
+      <li>Platformanın texniki işinə müdaxilə etmək</li>
+      <li>Saxta hesab yaratmaq</li>
+      <li>Sistemdən sui istifadə etmək</li>
+      <li>Başqa istifadəçilərin məlumatlarına müdaxilə etmək</li>
+      <li>Platformanı zərərli məqsədlərlə istifadə etmək</li>
+    </ul>
+  </div>
+  <div class="privacy-section">
+    <h3>Üçüncü tərəf xidmətlər</h3>
+    <p>Platformada aşağıdakı xidmətlər istifadə olunur:</p>
+    <ul>
+      <li><strong>Firebase Authentication & Firestore</strong></li>
+      <li><strong>Google Analytics</strong></li>
+      <li><strong>Google Fonts</strong></li>
+      <li><strong>Formspree</strong></li>
+      <li><strong>Vercel & Gemini API</strong></li>
+    </ul>
+  </div>
+  <div class="privacy-section">
+    <h3>Məsuliyyətin məhdudlaşdırılması</h3>
+    <p>Platformada təqdim olunan məlumatların və xidmətlərin fasiləsiz və tam səhvsiz işləməsinə zəmanət verilmir. İstifadə nəticəsində yaranan hər hansı zərərə görə platforma sahibi məsuliyyət daşımır.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Xidmət dəyişiklikləri</h3>
+    <p>Platformanın funksiyaları əvvəlcədən xəbərdarlıq edilmədən dəyişdirilə, dayandırıla və ya yenilənə bilər.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Şərtlərin yenilənməsi</h3>
+    <p>Bu şərtlər istənilən vaxt yenilənə bilər. Yenilənmiş versiya bu səhifədə paylaşılır.</p>
+  </div>
+  <div class="privacy-section">
+    <h3>Əlaqə</h3>
+    <p>Hər hansı sual və ya şikayət üçün <a href="mailto:unecimtahanmateriallari@gmail.com" class="privacy-link">əlaqə bölməsindən</a> istifadə edin.</p>
+  </div>
+  <p class="privacy-updated">Son yenilənmə: 12 May 2026</p>
+
+</div>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- AUTH MODAL                                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="authOverlay" class="hidden" onclick="if(event.target===this)this.classList.add('hidden')">
+  <div class="auth-modal">
+    <button class="auth-modal-close" onclick="document.getElementById('authOverlay').classList.add('hidden')">✕</button>
+    <div class="auth-logo">🎓</div>
+    <div class="auth-title">UNEC İmtahan</div>
+    <div class="auth-sub">Hesabına daxil ol, irəliləyişini izlə</div>
+
+    <!-- Login panel -->
+    <div class="auth-panel" id="auth-panel-login">
+      <button class="auth-google-btn" onclick="signInWithGoogle()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Google ilə daxil ol
+      </button>
+      <div class="auth-divider">və ya email ilə</div>
+      <form onsubmit="handleLoginSubmit();return false;" autocomplete="on">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="example@gmail.com" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>Şifrə</label>
+        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button type="submit" class="auth-submit-btn">Daxil ol</button>
+      </form>
+      <div class="auth-error"></div>
+      <div class="auth-switch">
+        Hesabın yoxdur? <span class="auth-switch-link" onclick="setAuthMode('register')">Qeydiyyat</span>
+        &nbsp;·&nbsp; <span class="auth-switch-link" onclick="setAuthMode('reset')">Şifrəmi unutdum</span>
+      </div>
+    </div>
+
+    <!-- Register panel -->
+    <div class="auth-panel hidden" id="auth-panel-register">
+      <button class="auth-google-btn" onclick="signInWithGoogle()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Google ilə qeydiyyat
+      </button>
+      <div class="auth-divider">və ya email ilə</div>
+      <form onsubmit="handleRegisterSubmit();return false;" autocomplete="on">
+      <div class="auth-field">
+        <label>Ad Soyad</label>
+        <input type="text" id="reg-name" placeholder="Filankəs Filankəsov" autocomplete="name">
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="reg-email" placeholder="example@gmail.com" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>Şifrə</label>
+        <input type="password" id="reg-password" placeholder="minumum 8 simvol, böyük hərf, rəqəm" autocomplete="new-password">
+      </div>
+      <button type="submit" class="auth-submit-btn">Qeydiyyatdan keç</button>
+      </form>
+      <div class="auth-error"></div>
+      <div class="auth-switch">
+        Hesabın var? <span class="auth-switch-link" onclick="setAuthMode('login')">Daxil ol</span>
+      </div>
+    </div>
+
+    <!-- Reset panel -->
+    <div class="auth-panel hidden" id="auth-panel-reset">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="reset-email" placeholder="example@gmail.com">
+      </div>
+      <button class="auth-submit-btn" onclick="handleResetSubmit()">Sıfırlama linki göndər</button>
+      <div class="auth-error"></div>
+      <div class="auth-switch">
+        <span class="auth-switch-link" onclick="setAuthMode('login')">← Geri qayıt</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PDF LOADING OVERLAY                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="pdfLoadingOverlay" class="hidden">
+  <div class="pdf-loading-card">
+    <div class="pdf-spinner-wrap">
+      <div class="pdf-spinner-outer"></div>
+      <div class="pdf-spinner-inner"></div>
+      <div class="pdf-spinner-icon">PDF</div>
+    </div>
+    <div class="pdf-loading-title" id="pdfLoadingTitle">PDF Açılır...</div>
+    <div class="pdf-loading-subtitle">Fayl hazırlanır, bir an gözləyin</div>
+    <div class="pdf-progress-bar">
+      <div class="pdf-progress-fill" id="pdfProgressFill"></div>
+    </div>
+    <div class="pdf-loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT — TAB SİSTEMİ                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<!-- ── TAB 1: ANA SƏHİFƏ ─────────────────────────────────── -->
+<div id="main-home" class="main-tab active-tab">
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge" id="hero-badge">İmtahan Materialları</div>
+      <h1 id="hero-title">UNEC <span>İmtahan</span><br>Materialları</h1>
+      <p id="hero-desc">Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçərək, PDF-i açın.</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num" id="stat-courses">4</div>
+          <div class="stat-label" id="stat-courses-label">Kurs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-subjects">21</div>
+          <div class="stat-label" id="stat-subjects-label">Fənn</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="stat-pdfs">21</div>
+          <div class="stat-label" id="stat-pdfs-label">PDF</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer content in home tab -->
+    <div class="home-footer-block">
+      <p class="home-footer-note" id="footer-text">Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb.</p>
+      <div class="home-footer-links">
+        <span class="home-footer-copy">&copy; 2025 - 2026 AliVerse Studio ✦</span>
+        <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank" class="home-footer-link">Portfolio</a>
+        <a href="mailto:unecimtahanmateriallari@gmail.com" class="home-footer-link">Əlaqə</a>
+        <span class="home-footer-link" onclick="openPrivacyModal()">Məxfilik</span>
+        <span class="home-footer-link" onclick="openTermsModal()">Şərtlər</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TAB 2: KURSLAR ─────────────────────────────────────── -->
+<div id="main-courses" class="main-tab" style="display:none;">
+  <div class="container">
+
+    <div id="view-home">
+      <p class="section-label" id="label-courses">Kurslar</p>
+      <div class="courses-grid" id="courses-grid"></div>
+    </div>
+
+    <div id="view-subjects" class="hidden">
+      <div class="back-btn" onclick="goTo('home')">
+        <span>←</span> <span id="back1-text">Kurslara qayıt</span>
+      </div>
+      <div class="breadcrumb">
+        <span class="breadcrumb-item" onclick="goTo('home')" id="bc-home">Ana səhifə</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current" id="bc-course"></span>
+      </div>
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tab-subjects-btn" onclick="switchTab('subjects')">
+          📚 <span id="label-subjects">Fənlər</span>
+        </button>
+        <button class="tab-btn" id="tab-extras-btn" onclick="switchTab('extras')">
+          📦 <span id="label-extras">Əlavələr</span>
+        </button>
+        <button class="tab-btn" id="tab-favorites-btn" onclick="switchTab('favorites')">
+          ★ <span id="label-favorites">Seçilmişlər</span>
+        </button>
+      </div>
+
+      <div class="search-bar-container" id="searchBarContainer">
+        <div class="search-bar-wrapper">
+          <div class="search-icon">🔍</div>
+          <input type="text" id="searchInput" placeholder="PDF axtar..." autocomplete="off">
+          <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+        </div>
+        <div class="search-results-info" id="searchResultsInfo"></div>
+      </div>
+
+      <div id="tab-subjects-content">
+        <div class="subjects-grid" id="subjects-grid"></div>
+      </div>
+      <div id="tab-extras-content" class="hidden">
+        <div class="pdf-items" id="extras-list"></div>
+      </div>
+      <div id="tab-favorites-content" class="hidden">
+        <div class="pdf-items" id="favorites-list"></div>
+      </div>
+    </div>
+
+    <div id="view-pdfs" class="hidden">
+      <div class="back-btn" onclick="goTo('subjects')">
+        <span>←</span> <span id="back2-text">Fənlərə qayıt</span>
+      </div>
+      <div class="breadcrumb">
+        <span class="breadcrumb-item" onclick="goTo('home')" id="bc-home2">Ana səhifə</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-item" onclick="goTo('subjects')" id="bc-course2"></span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current" id="bc-subject"></span>
+      </div>
+      <div class="pdf-section-header">
+        <p class="section-label" id="label-pdfs">PDF Materiallar</p>
+        <div class="pdf-subject-title" id="pdf-subject-title"></div>
+      </div>
+      <div class="pdf-items" id="pdf-items"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── TAB 3: DƏSTƏK ──────────────────────────────────────── -->
+<div id="main-support" class="main-tab" style="display:none;">
+  <div class="container">
+    <div class="support-page">
+      <div class="support-page-header">
+        <div class="support-page-icon">☕</div>
+        <h2 class="support-page-title">Layihəyə Dəstək Ol</h2>
+        <p class="support-page-desc">Bu sayt tamamilə pulsuz və reklamsızdır. Server xərclərini ödəməyə kömək etsəniz, layihə davam edər.</p>
+      </div>
+
+      <div class="support-card">
+        <div class="support-card-label">
+          <span class="ssb-method-dot ssb-dot-birbank"></span>
+          Birbank / Bank Kartı
+        </div>
+        <div class="sidebar-support-btns">
+          <a href="https://app.birbank.az/qp?t=2&id=3F12353F2088F167E0634C0214ACD220" target="_blank" rel="noopener" class="sidebar-support-btn">
+            <span class="ssb-amount">3 ₼</span>
+            <span class="ssb-label">Kofe</span>
+          </a>
+          <a href="https://app.birbank.az/qp?t=2&id=3F12353F2088F167E0634C0214ACD220" target="_blank" rel="noopener" class="sidebar-support-btn ssb-featured">
+            <span class="ssb-pop">★</span>
+            <span class="ssb-amount">5 ₼</span>
+            <span class="ssb-label">Populyar</span>
+          </a>
+          <a href="https://app.birbank.az/qp?t=2&id=3F12353F2088F167E0634C0214ACD220" target="_blank" rel="noopener" class="sidebar-support-btn">
+            <span class="ssb-amount">7 ₼</span>
+            <span class="ssb-label">Server</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="support-card" style="margin-top:16px;">
+        <div class="support-card-label">
+          <span class="ssb-method-dot ssb-dot-m10"></span>
+          m10 ilə sürətli
+        </div>
+        <a href="https://m10.onelink.me/g54T/cw5bg1gx" target="_blank" rel="noopener" class="ssb-m10-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          İstənilən məbləği göndər
+        </a>
+      </div>
+
+      <div class="support-trust-row">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Visa · Mastercard · m10 dəstəklənir
+      </div>
+
+      <div class="support-divider"></div>
+
+      <div class="support-contact-row">
+        <a href="mailto:ericismyhero2467@gmail.com" class="support-contact-btn">
+          📧 Əlaqə saxla
+        </a>
+        <button class="support-contact-btn" onclick="openThanks()">
+          💛 Töhfəçilər
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TAB 4: TESTLƏR ─────────────────────────────────────── -->
+<div id="main-tests" class="main-tab" style="display:none;">
+  <div class="container">
+
+    <!-- Landing screen -->
+    <div id="test-landing">
+      <div class="test-hero">
+        <div class="test-hero-icon">🎯</div>
+        <h2 id="test-hero-title">UNEC <span>Test</span><br>Sistemi ᵇᵉᵗᵃ</h2>
+        <p class="test-hero-desc">Bu sistem beta versiyada olduğu üçün cavabların səhv olma ehtimalı vardır.</p>
+      </div>
+
+      <div class="test-subject-selector">
+        <div class="test-selector-label">Fənn seçin</div>
+        <div class="test-subject-grid" id="testSubjectGrid"></div>
+      </div>
+
+      <div class="test-config-section" id="testConfigSection" style="display:none;">
+        <div class="test-selected-info" id="testSelectedInfo"></div>
+        <div class="test-count-row">
+          <div class="test-count-label">Sual sayı</div>
+          <div class="test-count-btns">
+            <button class="test-count-btn active" data-count="10" onclick="selectCount(this)">10</button>
+            <button class="test-count-btn" data-count="20" onclick="selectCount(this)">20</button>
+            <button class="test-count-btn" data-count="30" onclick="selectCount(this)">30</button>
+            <button class="test-count-btn" data-count="50" onclick="selectCount(this)">50</button>
+          </div>
+        </div>
+        <button class="test-start-btn" onclick="startTest()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Testi Başlat
+        </button>
+      </div>
+    </div>
+
+    <!-- Quiz screen -->
+    <div id="test-quiz" style="display:none;">
+      <div class="test-quiz-header">
+        <div class="test-quiz-progress-text">
+          Sual <span id="qCurrentNum">1</span> / <span id="qTotalNum">30</span>
+        </div>
+        <div class="test-timer" id="testTimer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="timerDisplay">--:--</span>
+        </div>
+      </div>
+      <div class="test-progress-bar-wrap">
+        <div class="test-progress-bar-fill" id="testProgressFill"></div>
+      </div>
+
+      <div class="test-question-card" id="testQuestionCard">
+        <div class="test-q-number" id="testQNumber"></div>
+        <div class="test-q-text" id="testQText"></div>
+        <div class="test-options" id="testOptions"></div>
+      </div>
+
+      <div class="test-nav-row">
+        <button class="test-nav-btn" id="testPrevBtn" onclick="quizNav(-1)">← Əvvəlki</button>
+        <button class="test-nav-btn test-nav-next" id="testNextBtn" onclick="quizNav(1)">Növbəti →</button>
+        <button class="test-finish-btn" id="testFinishBtn" onclick="confirmFinishTest()" style="display:none;">✓ Bitir</button>
+      </div>
+
+      <div class="test-answered-info" id="testAnsweredInfo"></div>
+    </div>
+
+    <!-- Result screen -->
+    <div id="test-result" style="display:none;">
+      <div class="test-result-card">
+        <div class="test-result-emoji" id="resultEmoji">🏆</div>
+        <h2 class="test-result-title" id="resultTitle">Nəticə</h2>
+        <div class="test-result-score" id="resultScore"></div>
+        <div class="test-result-percent" id="resultPercent"></div>
+        <div class="test-result-bar-wrap">
+          <div class="test-result-bar-fill" id="resultBarFill"></div>
+        </div>
+        <div class="test-result-stats" id="resultStats"></div>
+        <button class="test-start-btn" style="margin-top:24px;" onclick="resetTest()">
+          🔄 Yenidən Başla
+        </button>
+      </div>
+
+      <div class="test-review-section">
+        <h3 class="test-review-title">Cavabların Baxışı</h3>
+        <div id="testReviewList"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- AI WIDGET                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="ai-button" onclick="toggleAI()" title="AI Köməkçi">AI</div>
+
+<div id="ai-chat">
+  <div id="ai-header">
+    <div class="ai-header-left">
+      <div class="ai-avatar">AI</div>
+      <div class="ai-header-info">
+        <span>AI Köməkçi ᵇᵉᵗᵃ</span>
+        <small><span class="ai-status-dot"></span>Onlayn</small>
+      </div>
+    </div>
+    <button onclick="toggleAI()" title="Bağla">×</button>
+  </div>
+  <div id="ai-messages"></div>
+  <div id="ai-input-area">
+    <input type="text" id="ai-input" placeholder="Sualını yaz..." autocomplete="off" />
+    <button onclick="sendMessage()">Göndər</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- GLASS BOTTOM NAVIGATION BAR                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ── Daha çox menyusu ─────────────────────────────────────── -->
+<div id="more-menu-overlay" onclick="closeMoreMenu()" style="display:none;position:fixed;inset:0;z-index:498;"></div>
+<div id="more-menu" class="more-menu">
+  <div class="more-menu-inner">
+    <button class="more-menu-item" id="btn-tests" onclick="switchBottomTab('tests');closeMoreMenu()">
+      <span class="more-menu-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+      </span>
+      <span class="more-menu-label">Testlər</span>
+      <svg class="more-menu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button class="more-menu-item" id="btn-gpa" onclick="switchBottomTab('gpa');closeMoreMenu()">
+      <span class="more-menu-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <path d="M8 12h4m0 0h4m-4 0V8m0 4v4"/>
+        </svg>
+      </span>
+      <span class="more-menu-label">GPA Kalkulyator</span>
+      <svg class="more-menu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button class="more-menu-item" id="btn-dashboard" onclick="openDashboardTab();closeMoreMenu()">
+      <span class="more-menu-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+      </span>
+      <span class="more-menu-label">Dashboard</span>
+      <svg class="more-menu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bottom-nav-btn active" id="btn-home" onclick="switchBottomTab('home')">
+    <span class="bottom-nav-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </span>
+    <span class="bottom-nav-label">Ana Səhifə</span>
+    <span class="bottom-nav-dot"></span>
+  </button>
+
+  <button class="bottom-nav-btn" id="btn-courses" onclick="switchBottomTab('courses')">
+    <span class="bottom-nav-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+    </span>
+    <span class="bottom-nav-label">Kurslar</span>
+    <span class="bottom-nav-dot"></span>
+  </button>
+
+  <button class="bottom-nav-btn" id="btn-support" onclick="switchBottomTab('support')">
+    <span class="bottom-nav-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </span>
+    <span class="bottom-nav-label">Dəstək</span>
+    <span class="bottom-nav-dot"></span>
+  </button>
+
+  <button class="bottom-nav-btn" id="btn-more" onclick="toggleMoreMenu()">
+    <span class="bottom-nav-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>
+      </svg>
+    </span>
+    <span class="bottom-nav-label">Daha çox</span>
+    <span class="bottom-nav-dot"></span>
+  </button>
+</nav>
+
+<!-- ── TAB 5: GPA CALCULATOR ─────────────────────────────── -->
+<div id="main-gpa" class="main-tab" style="display:none;">
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="gpa-hero">
+      <div class="gpa-page-badge">🎓 UNEC · Akademik</div>
+      <h1 class="gpa-page-title">UNEC <span>GPA</span> Calculator</h1>
+      <p class="gpa-hero-sub">GPA-nı real vaxtda hesabla. Kreditlərini izləyərək nəticəni əvvəlcədən gör.</p>
+    </div>
+
+    <!-- Mode Toggle -->
+    <div class="gpa-mode-toggle">
+      <button class="gpa-mode-btn active" id="gpa-mode-calc" onclick="gpaSetMode('calculator')">
+        🧮 Kalkulyator
+      </button>
+      <button class="gpa-mode-btn" id="gpa-mode-pred" onclick="gpaSetMode('predictor')">
+        🎯 Proqnozlaşdırıcı
+      </button>
+    </div>
+
+    <!-- GPA Result Card (always visible) -->
+    <div class="gpa-result-card">
+      <svg width="0" height="0" style="position:absolute">
+        <defs>
+          <linearGradient id="gpaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop id="gpaGradStop1" offset="0%" stop-color="#6366f1"/>
+            <stop id="gpaGradStop2" offset="100%" stop-color="#06b6d4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="gpa-ring-wrap">
+        <svg class="gpa-ring-svg" viewBox="0 0 148 148">
+          <circle class="gpa-ring-bg" cx="74" cy="74" r="63"/>
+          <circle class="gpa-ring-fill" cx="74" cy="74" r="63"/>
+        </svg>
+        <div class="gpa-ring-inner">
+          <span id="gpa-current">0.00</span>
+          <span id="gpa-grade-label">—</span>
+        </div>
+      </div>
+      <div class="gpa-stats-row">
+        <div class="gpa-stat-cell">
+          <span class="gpa-stat-val" id="gpa-stat-total">0</span>
+          <span class="gpa-stat-lbl">Ümumi Kredit</span>
+        </div>
+        <div class="gpa-stat-cell">
+          <span class="gpa-stat-val" id="gpa-stat-earned">0</span>
+          <span class="gpa-stat-lbl">Qazanılan GPA</span>
+        </div>
+        <div class="gpa-stat-cell">
+          <span class="gpa-stat-val" id="gpa-stat-gpa">0.00</span>
+          <span class="gpa-stat-lbl">Ümumi GPA</span>
+        </div>
+      </div>
+      <button class="gpa-share-btn" onclick="gpaShare()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        GPA-nı paylaş
+      </button>
+    </div>
+
+    <!-- Smart Message -->
+    <div id="gpa-smart-msg"></div>
+
+    <!-- Semester Memory Card -->
+    <div class="gpa-memory-card" id="gpa-memory-card" style="display:none;"></div>
+
+    <!-- Calculator View -->
+    <div id="gpa-calc-view">
+      <div class="gpa-section-header">
+        <div class="gpa-section-title">Fənnlər</div>
+        <div class="gpa-subject-count-badge" id="gpa-count-badge">1 fənn</div>
+      </div>
+
+      <div id="gpa-subject-list"></div>
+
+      <button class="gpa-add-btn" onclick="addSubject()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Yeni fənn əlavə et
+      </button>
+    </div>
+
+    <!-- Predictor View -->
+    <div id="gpa-pred-view" style="display:none;">
+      <div class="gpa-predictor-card">
+        <div class="gpa-predictor-header">
+          <div class="gpa-predictor-icon">🎯</div>
+          <div class="gpa-predictor-title">Hədəf GPA Proqnozlaşdırıcı</div>
+        </div>
+        <div class="gpa-predictor-sub">
+          Hədəfinizə çatmaq üçün qalan fənlərdən neçə bal lazım olduğunu hesablayın.
+        </div>
+        <div class="gpa-predictor-inputs">
+          <div class="gpa-predictor-group">
+            <label>Hədəf GPA</label>
+            <input class="gpa-predictor-inp" id="gpa-pred-target" type="number" min="0" max="100" step="0.1" placeholder="məs. 80"/>
+          </div>
+          <div class="gpa-predictor-group">
+            <label>Qalan Kredit</label>
+            <input class="gpa-predictor-inp" id="gpa-pred-credits" type="number" min="1" max="300" step="1" placeholder="məs. 30"/>
+          </div>
+        </div>
+        <div id="gpa-target-result"></div>
+      </div>
+
+      <div class="gpa-section-header">
+        <div class="gpa-section-title">Cari fənlər</div>
+        <div class="gpa-subject-count-badge" id="gpa-count-badge2"></div>
+      </div>
+      <div id="gpa-subject-list2" style="pointer-events:none;opacity:0.55;"></div>
+    </div>
+
+    <div class="gpa-footer">Built for <strong>UNEC Students</strong> · AliVerse Studio ✦</div>
+  </div>
+</div>
+
+
+<!-- ── TAB 6: DASHBOARD ──────────────────────────────────────── -->
+<div id="main-dashboard" class="main-tab" style="display:none;">
+  <div class="dash-container">
+
+    <!-- Giriş etməyib -->
+    <div id="dash-guest-view">
+      <div class="dash-login-prompt">
+        <div class="dash-login-prompt-icon">🎓</div>
+        <h3>Öz İrəliləyişini İzlə</h3>
+        <p>Giriş et — streak, XP, GPA və test nəticələrin burada saxlanır.</p>
+        <button class="dash-login-btn" onclick="openAuthModal('login')">Daxil ol / Qeydiyyat</button>
+      </div>
+    </div>
+
+    <!-- Giriş etmiş -->
+    <div id="dash-user-view" style="display:none;">
+
+      <div id="dash-greeting" class="dash-greeting">Salam 👋</div>
+      <div id="dash-date" class="dash-date"></div>
+
+      <!-- 4 stat kartı -->
+      <div class="dash-stats-grid">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">🔥</div>
+          <div class="dash-stat-body">
+            <div class="dash-stat-top">
+              <span class="dash-stat-val" id="dash-streak">0</span>
+              <span class="dash-stat-unit">gün</span>
+            </div>
+            <div class="dash-stat-label">Streak</div>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">🎯</div>
+          <div class="dash-stat-body">
+            <div class="dash-stat-top">
+              <span class="dash-stat-val" id="dash-solved">0</span>
+              <span class="dash-stat-unit">test</span>
+            </div>
+            <div class="dash-stat-label">Həll edilən</div>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">⚡</div>
+          <div class="dash-stat-body">
+            <div class="dash-stat-top">
+              <span class="dash-stat-val" id="dash-xp">0</span>
+              <span class="dash-stat-unit">xp</span>
+            </div>
+            <div class="dash-stat-label">Bal</div>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">🎓</div>
+          <div class="dash-stat-body">
+            <div class="dash-stat-top">
+              <span class="dash-stat-val" id="dash-gpa">—</span>
+              <span class="dash-stat-unit" id="dash-gpa-unit"></span>
+            </div>
+            <div class="dash-stat-label">GPA</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Streak vəziyyəti -->
+      <div id="dash-streak-msg" class="dash-streak-msg" onclick="toggleStreakInfo()">
+        <span id="dash-streak-msg-text"></span>
+        <svg class="streak-msg-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="streak-info-panel hidden" id="streak-info-panel">
+        <div class="streak-info-title">🔥 Streak necə qazanılır?</div>
+        <div class="streak-info-item">
+          <span class="streak-info-icon">🎯</span>
+          <div><strong>Quiz həll et</strong> — hər gün ən azı 1 test</div>
+        </div>
+        <div class="streak-info-item">
+          <span class="streak-info-icon">📄</span>
+          <div><strong>PDF aç</strong> — materialları oxu</div>
+        </div>
+        <div class="streak-info-item">
+          <span class="streak-info-icon">🎓</span>
+          <div><strong>GPA yenilə</strong> — qiymətlərini əlavə et</div>
+        </div>
+        <div class="streak-info-item">
+          <span class="streak-info-icon">⏱️</span>
+          <div><strong>Study timer işlət</strong> — ən azı 5 dəqiqə</div>
+        </div>
+        <div class="streak-info-note">Streak hər gün saat 00:00-da sıfırlanır. Günlük aktivlik saxla!</div>
+      </div>
+
+      <!-- Rank kartı -->
+      <div class="dash-rank-card">
+        <div class="dash-rank-header">
+          <div class="dash-rank-icon-wrap" id="dash-rank-icon">🌱</div>
+          <div class="dash-rank-info">
+            <div class="dash-rank-title" id="dash-rank-name">Freshman</div>
+            <div class="dash-rank-xp"   id="dash-rank-xp">0 XP</div>
+          </div>
+        </div>
+        <div class="dash-rank-next" id="dash-rank-next"></div>
+        <div class="dash-rank-bar-bg">
+          <div class="dash-rank-bar" id="dash-rank-bar"></div>
+        </div>
+      </div>
+
+      <!-- Son quizlər -->
+      <div class="dash-section-header">
+        <div class="dash-section-title">SON TEST NƏTİCƏLƏRİ</div>
+        <button class="dash-section-more" onclick="openQuizResultsModal()">Hamısına bax →</button>
+      </div>
+      <div id="dash-recent-quizzes"></div>
+
+      <!-- Profil -->
+      <div class="dash-profile-card" style="margin-top:16px;">
+        <div class="dash-profile-row">
+          <div class="dash-profile-avatar" id="dash-avatar">?</div>
+          <div>
+            <div class="dash-profile-name"  id="dash-pname">—</div>
+            <div class="dash-profile-email" id="dash-pemail">—</div>
+          </div>
+        </div>
+        <div class="dash-faculty-row">
+          <input class="dash-faculty-input" id="dash-faculty-input" placeholder="Fakültəni daxil et (məs. İqtisadiyyat)">
+          <button class="dash-faculty-btn" onclick="handleFacultyUpdate()">Saxla</button>
+        </div>
+        <button class="dash-signout-btn" onclick="signOut()">Çıxış</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ── Quiz Nəticələri Modali ──────────────────────────────── -->
+<div id="quizResultsOverlay" class="quiz-results-overlay hidden" onclick="if(event.target===this)closeQuizResultsModal()">
+  <div class="quiz-results-modal">
+    <div class="quiz-results-header">
+      <div class="quiz-results-title">Son Test Nəticələri</div>
+      <button class="quiz-results-close" onclick="closeQuizResultsModal()">✕</button>
+    </div>
+    <div id="quiz-results-body" class="quiz-results-body">
+      <div class="quiz-results-loading">Yüklənir...</div>
+    </div>
+  </div>
+</div>
+<!-- Share toast -->
+<div class="gpa-share-toast" id="gpa-share-toast">✓ Kopyalandı / Paylaşıldı</div>
+<div id="xp-toast"></div>
+
+
+  <!-- Firebase v9 compat (CDN) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+<script src="pdfs.js"></script>
+<script src="scripts/data-utils.js"></script>
+<script src="scripts/ui.js"></script>
+<script src="scripts/features.js"></script>
+<script src="scripts/pdf-loader.js"></script>
+<script src="scripts/gpa.js"></script>
+<script src="scripts/firebase.js"></script>
+<script src="scripts/dashboard.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+</body>
+</html>

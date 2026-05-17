@@ -419,10 +419,63 @@ function getProfile()     { return currentProfile; }
 function getDb()          { return _db; }
 function isLoggedIn()     { return !!currentUser; }
 
+// ============================================================
+// VISITOR COUNTER — aylıq göstərici
+// ============================================================
+
+function _currentMonthKey() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  return `${y}-${m}`;
+}
+
+async function trackMonthlyVisit() {
+  if (!_db) return;
+
+  const monthKey  = _currentMonthKey();
+  const lsKey     = `visited_${monthKey}`;
+  const lastVisit = localStorage.getItem(lsKey);
+  const now       = Date.now();
+
+  // Eyni ayda 24 saat ərzində yenidən saymaq
+  if (lastVisit && now - parseInt(lastVisit) < 24 * 60 * 60 * 1000) return;
+
+  const ref = _db.collection('stats').doc(`monthly_${monthKey}`);
+  try {
+    const snap = await ref.get();
+    if (!snap.exists) {
+      await ref.set({ count: 1, month: monthKey });
+    } else {
+      await ref.update({ count: firebase.firestore.FieldValue.increment(1) });
+    }
+    localStorage.setItem(lsKey, String(now));
+  } catch (e) {
+    console.warn('[firebase] Visitor track xətası:', e);
+  }
+}
+
+async function showMonthlyVisitors() {
+  if (!_db) return;
+  const monthKey = _currentMonthKey();
+  const ref      = _db.collection('stats').doc(`monthly_${monthKey}`);
+  try {
+    const snap = await ref.get();
+    const count = snap.exists ? (snap.data().count || 0) : 0;
+    const el    = document.getElementById('stat-monthly-visitors');
+    if (el) el.textContent = count.toLocaleString('az-AZ');
+  } catch (e) {
+    console.warn('[firebase] Visitor oxuma xətası:', e);
+  }
+}
+
 // ── Init ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   const ok = await initFirebase();
   if (!ok) {
     _showGuestBadge();
+    return;
   }
+  await trackMonthlyVisit();
+  await showMonthlyVisitors();
 });

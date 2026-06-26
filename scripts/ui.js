@@ -39,6 +39,8 @@ function goTo(view) {
   document.getElementById('view-' + view).classList.remove('hidden');
   clearSearch();
   if (view === 'home') renderCourses();
+  if (view !== 'pdfs' && typeof unsubscribeSubjectChat === 'function') unsubscribeSubjectChat();
+  if (view !== 'pdfs' && typeof unsubscribePdfRatings  === 'function') unsubscribePdfRatings();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -137,10 +139,8 @@ function renderCourses() {
     const div = document.createElement('div');
     div.className = 'course-card animate-in';
     div.innerHTML = `
-      <span class="course-icon">${courseData.icon}</span>
       <h3>${courseName}</h3>
       <div class="sub-count">${subCount} ${t.subjects} · ${pdfCount} ${t.pdfs}</div>
-      <div class="tag">${courseName}</div>
     `;
     div.onclick = () => openSubjects(courseName);
     grid.appendChild(div);
@@ -194,7 +194,9 @@ function renderExtras() {
       <div class="pdf-actions">
         <button class="fav-btn ${isFav ? 'active' : ''}"
           onclick="toggleFavorite('pdf-extra/${pdf.file}', this)"
-          title="Sevimlilərə əlavə et">
+          title="Sevimlilərə əlavə et"
+          aria-label="${isFav ? 'Seçilmişlərdən sil' : 'Sevimlilərə əlavə et'}"
+          aria-pressed="${isFav}">
           ${isFav ? '★' : '☆'}
         </button>
         <button class="pdf-open-btn" data-url="${EXTRAS_BASE}${pdf.file}" data-file="${pdf.file}" data-action="open" data-category="PDF-Extra">
@@ -251,7 +253,7 @@ function renderFavorites() {
         </div>
       </div>
       <div class="pdf-actions">
-        <button class="fav-btn active" onclick="removeFavAndRefresh('${item.path}')" title="Sil">★</button>
+        <button class="fav-btn active" onclick="removeFavAndRefresh('${item.path}')" title="Sil" aria-label="Seçilmişlərdən sil" aria-pressed="true">★</button>
         <button class="pdf-open-btn" data-url="${BASE}${item.path}" data-file="${item.path}" data-action="open" data-category="PDF-Favorite">
           ↗ ${t.openPdf}
         </button>
@@ -366,12 +368,15 @@ function openPDFs(subjectName) {
         <div class="pdf-info">
           <div class="pdf-name"><span class="pdf-number">${index + 1}.</span> ${pdf.name}</div>
           <div class="pdf-meta">Fayl adı: ${pdf.file} ${typeBadge}</div>
+          <div class="pdf-rating" data-course="${currentCourse}" data-subject="${subjectName}" data-file="${pdf.file}"></div>
         </div>
       </div>
       <div class="pdf-actions">
         <button class="fav-btn ${isFav ? 'active' : ''}"
           onclick="toggleFavorite('pdf/${pdf.file}', this)"
-          title="Seçilmişlərə əlavə et">
+          title="Seçilmişlərə əlavə et"
+          aria-label="${isFav ? 'Seçilmişlərdən sil' : 'Seçilmişlərə əlavə et'}"
+          aria-pressed="${isFav}">
           ${isFav ? '★' : '☆'}
         </button>
         <button class="pdf-open-btn" data-url="/pdf/${pdf.file}" data-file="${pdf.file}" data-action="open">
@@ -398,6 +403,9 @@ function openPDFs(subjectName) {
   reportBtn.onclick = () => openReportModal(subjectName, currentCourse);
   list.appendChild(reportBtn);
 
+  if (typeof renderAllPdfRatings === 'function') renderAllPdfRatings();
+  if (typeof renderSubjectChat   === 'function') renderSubjectChat(currentCourse, subjectName, pdfs);
+
   goTo('pdfs');
 }
 
@@ -410,10 +418,20 @@ function toggleFavorite(filePath, btn) {
   let favs = getFavorites();
   if (favs.includes(filePath)) {
     favs = favs.filter(f => f !== filePath);
-    if (btn) { btn.textContent = '☆'; btn.classList.remove('active'); }
+    if (btn) {
+      btn.textContent = '☆';
+      btn.classList.remove('active');
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', 'Seçilmişlərə əlavə et');
+    }
   } else {
     favs.push(filePath);
-    if (btn) { btn.textContent = '★'; btn.classList.add('active'); }
+    if (btn) {
+      btn.textContent = '★';
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      btn.setAttribute('aria-label', 'Seçilmişlərdən sil');
+    }
   }
   localStorage.setItem("favorites", JSON.stringify(favs));
 }
@@ -640,13 +658,16 @@ const TAB_MAP = {
   support: { main: 'main-support', btn: 'btn-support' },
   gpa:       { main: 'main-gpa',       btn: 'btn-gpa'       },
   dashboard: { main: 'main-dashboard', btn: 'btn-dashboard' },
+  curriculum: { main: 'main-curriculum', btn: 'btn-curriculum' },
+  requests:   { main: 'main-requests',   btn: 'btn-requests'   },
+  timer:      { main: 'main-timer',      btn: 'btn-timer'      },
 };
 
 let currentBottomTab = 'home';
 
 function switchBottomTab(tab) {
   // More menu tab-larından biridirsə, btn-more active olsun
-  const moreTabs = ['tests', 'gpa', 'dashboard'];
+  const moreTabs = ['tests', 'gpa', 'dashboard', 'curriculum', 'requests', 'timer'];
   if (moreTabs.includes(tab)) {
     document.querySelectorAll('.bottom-nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('btn-more')?.classList.add('active');
@@ -683,17 +704,19 @@ function switchBottomTab(tab) {
   if (tab === 'gpa') {
     if (typeof initGPA === 'function') initGPA();
   }
+  if (tab === 'curriculum') {
+    initCurriculum();
+  }
+  if (tab === 'requests') {
+    if (typeof initMaterialRequests === 'function') initMaterialRequests();
+  }
+  if (tab === 'timer') {
+    if (typeof initTimer === 'function') initTimer();
+  }
   if (tab === 'dashboard') {
     if (isLoggedIn()) {
       document.getElementById('dash-guest-view').style.display = 'none';
       document.getElementById('dash-user-view').style.display  = '';
-      const p = getProfile();
-      if (p) {
-        document.getElementById('dash-avatar').textContent  = (p.name || '?').charAt(0).toUpperCase();
-        document.getElementById('dash-pname').textContent   = p.name  || '—';
-        document.getElementById('dash-pemail').textContent  = p.email || '—';
-        if (p.faculty) document.getElementById('dash-faculty-input').value = p.faculty;
-      }
       renderDashboard();
     } else {
       document.getElementById('dash-guest-view').style.display = '';
@@ -708,7 +731,7 @@ function switchBottomTab(tab) {
 (function initBottomNav() {
   const homeEl = document.getElementById('main-home');
   if (homeEl) { homeEl.style.display = ''; homeEl.classList.add('active-tab'); }
-  ['main-courses', 'main-support', 'main-tests', 'main-gpa'].forEach(id => {
+  ['main-courses', 'main-support', 'main-tests', 'main-gpa', 'main-curriculum'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
@@ -717,10 +740,12 @@ function switchBottomTab(tab) {
 })();
 
 // ── Başlanğıc ─────────────────────────────────────────────────
-computeStats();
-applyTranslations();
-renderCourses();
-initSearch();
+document.addEventListener('DOMContentLoaded', function () {
+  try { computeStats(); }      catch(e) { console.warn('computeStats:', e); }
+  try { applyTranslations(); } catch(e) { console.warn('applyTranslations:', e); }
+  try { renderCourses(); }     catch(e) { console.warn('renderCourses:', e); }
+  try { initSearch(); }        catch(e) { console.warn('initSearch:', e); }
+});
 
 // ── Daha çox menyusu ─────────────────────────────────────────
 function toggleMoreMenu() {

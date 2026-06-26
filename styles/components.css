@@ -52,50 +52,37 @@
 .pdf-item {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 22px;
+  border-radius: 12px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   gap: 16px;
-  transition: all 0.25s;
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .pdf-item:hover {
-  border-color: rgba(59,130,246,0.4);
-  background: var(--surface2);
+  border-color: rgba(192,57,43,0.3);
+  transform: translateY(-1px);
 }
 
 /* ─── PDF File Icon ─────────────────────────────────────────── */
 .pdf-file-icon {
-  width: 48px;
-  height: 58px;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+  width: 46px;
+  height: 54px;
+  background: #ef4444;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  position: relative;
-  box-shadow: 0 4px 12px rgba(239,68,68,0.3);
-}
-
-.pdf-file-icon::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 0; height: 0;
-  border-style: solid;
-  border-width: 0 12px 12px 0;
-  border-color: transparent var(--surface) transparent transparent;
 }
 
 .pdf-file-icon span {
-  font-size: 0.55rem;
+  font-size: 0.6rem;
   font-weight: 800;
   color: white;
   letter-spacing: 0.05em;
-  margin-top: 4px;
 }
 
 /* ─── PDF Info ──────────────────────────────────────────────── */
@@ -128,12 +115,13 @@
 }
 
 .pdf-meta {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--muted);
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  line-height: 1.5;
 }
 
 /* ─── PDF Actions (Desktop) ─────────────────────────────────── */
@@ -200,40 +188,50 @@
 .pdf-open-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
-  padding: 9px 18px;
+  min-height: 44px;
+  padding: 0 18px;
   background: var(--accent);
   color: white;
   text-decoration: none;
+  border: none;
   border-radius: 10px;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 600;
   font-family: 'Arial Nova', 'Nunito', 'Arial', sans-serif;
-  transition: all 0.2s;
+  cursor: pointer;
+  transition: background 0.2s;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .pdf-open-btn:hover {
   background: var(--accent2);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59,130,246,0.4);
+}
+
+.pdf-open-btn:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
 }
 
 /* ─── Endir düyməsi ─────────────────────────────────────────── */
 .pdf-download-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
-  padding: 9px 18px;
+  min-height: 44px;
+  padding: 0 18px;
   background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
   text-decoration: none;
   border-radius: 10px;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 600;
   font-family: 'Arial Nova', 'Nunito', 'Arial', sans-serif;
-  transition: all 0.2s;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
   white-space: nowrap;
   flex-shrink: 0;
   border: 1px solid rgba(239, 68, 68, 0.3);
@@ -242,14 +240,17 @@
 .pdf-download-btn:hover {
   background: rgba(239, 68, 68, 0.25);
   border-color: rgba(239, 68, 68, 0.55);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.pdf-download-btn:focus-visible {
+  outline: 2px solid #ef4444;
+  outline-offset: 2px;
 }
 
 /* ─── Fav düyməsi ───────────────────────────────────────────── */
 .fav-btn {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: transparent;
@@ -261,6 +262,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.fav-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .fav-btn:hover {
@@ -2187,16 +2193,16 @@
   }
 
   .fav-btn {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
     flex-shrink: 0;
   }
 
   .pdf-open-btn {
     flex: 1;
     justify-content: center;
-    height: 38px;
+    min-height: 44px;
     padding: 0;
     font-size: 0.8rem;
   }
@@ -2204,8 +2210,172 @@
   .pdf-download-btn {
     flex: 1;
     justify-content: center;
-    height: 38px;
+    min-height: 44px;
     padding: 0;
     font-size: 0.8rem;
   }
+}
+
+/* ─── QR Ödəniş Düyməsi ─────────────────────────────────────── */
+.qr-pay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.qr-pay-btn--birbank {
+  background: rgba(227, 30, 36, 0.1);
+  border: 1px solid rgba(227, 30, 36, 0.3);
+  color: #e31e24;
+}
+
+.qr-pay-btn--birbank:hover {
+  transform: translateY(-2px);
+  background: rgba(227, 30, 36, 0.18);
+  border-color: rgba(227, 30, 36, 0.55);
+  box-shadow: 0 4px 14px rgba(227, 30, 36, 0.15);
+}
+
+.qr-pay-btn--m10 {
+  background: rgba(0, 223, 139, 0.1);
+  border: 1px solid rgba(0, 223, 139, 0.3);
+  color: #00c97a;
+}
+
+.qr-pay-btn--m10:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 223, 139, 0.18);
+  border-color: rgba(0, 223, 139, 0.55);
+  box-shadow: 0 4px 14px rgba(0, 223, 139, 0.15);
+}
+
+/* ─── QR Ödəniş Modali ──────────────────────────────────────── */
+.qr-pay-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: qrOverlayIn 0.22s ease;
+}
+
+.qr-pay-overlay.hidden {
+  display: none;
+}
+
+@keyframes qrOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.qr-pay-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 20px 20px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: qrModalIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes qrModalIn {
+  from { transform: scale(0.88) translateY(16px); opacity: 0; }
+  to   { transform: scale(1) translateY(0);       opacity: 1; }
+}
+
+.qr-pay-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.qr-pay-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qr-pay-modal-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.qr-pay-modal-title {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.qr-pay-modal-close {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.qr-pay-modal-close:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.qr-pay-modal-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0 0 16px;
+  line-height: 1.45;
+}
+
+.qr-pay-img-wrap {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.qr-pay-img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+}
+
+.qr-pay-modal-note {
+  font-size: 0.73rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.4;
+  opacity: 0.75;
 }

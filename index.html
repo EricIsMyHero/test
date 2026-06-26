@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-adsense-account" content="ca-pub-4095192858738222">
   <title>UNEC İmtahan Materialları</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/home.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/components.css">
   <link rel="stylesheet" href="styles/features.css">
+  <link rel="stylesheet" href="styles/curriculum.css">
   <link rel="stylesheet" href="styles/gpa.css">
   <link rel="stylesheet" href="styles/dashboard.css">
+  <link rel="stylesheet" href="styles/chat.css">
+  <link rel="stylesheet" href="styles/ratings.css">
+  <link rel="stylesheet" href="styles/requests.css">
+  <link rel="stylesheet" href="styles/timer.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#3b82f6">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -189,7 +193,7 @@
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
     </button>
-    <div class="logo" id="logo-easter" onclick="easterEggClick()">UNEC · İMTAHAN</div>
+    <div class="logo" id="logo-easter" onclick="easterEggClick()"><span>UNEC</span> · İMTAHAN</div>
   </div>
   <div class="header-right">
     <button id="authHeaderBtn" class="header-auth-btn"></button>
@@ -551,7 +555,7 @@
       <div class="pdf-spinner-icon">PDF</div>
     </div>
     <div class="pdf-loading-title" id="pdfLoadingTitle">PDF Açılır...</div>
-    <div class="pdf-loading-subtitle">Fayl hazırlanır, bir an gözləyin</div>
+    <div class="pdf-loading-subtitle">Fayl hazırlanır, bir az gözləyin</div>
     <div class="pdf-progress-bar">
       <div class="pdf-progress-fill" id="pdfProgressFill"></div>
     </div>
@@ -567,146 +571,165 @@
 
 <!-- ── TAB 1: ANA SƏHİFƏ ─────────────────────────────────── -->
 <div id="main-home" class="main-tab active-tab">
-
-  <!-- ── HERO ─────────────────────────────────────────────── -->
-  <section class="hs-hero">
-    <div class="hs-hero-left">
-      <div class="hs-badge">
-        <span class="hs-badge-dot"></span>
-        UNEC Students
+  <div class="container">
+    <!-- ═══ YENİ HERO ═══ -->
+    <div class="hero hero-v2">
+      <div class="hero-badge" id="hero-badge">
+        <span class="hero-badge-dot"></span>İmtahan Materialları
       </div>
-      <h1 class="hs-title">
-        Bütün imtahan<br>
-        materialları <span class="hs-grad">bir yerdə</span>
-      </h1>
-      <p class="hs-desc">
-        Fənlər, PDF-lər, testlər, GPA hesablayıcı və AI köməkçi —
-        UNEC tələbələri üçün hazırlanmış vahid platforma.
-      </p>
-      <div class="hs-cta-row">
-        <button class="hs-btn-primary" onclick="switchBottomTab('courses')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Materiallara başla
-        </button>
-        <button class="hs-btn-secondary" onclick="switchBottomTab('ai')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          AI köməkçidən soruş
-        </button>
-      </div>
-    </div>
+      <h1 id="hero-title">UNEC <span>İmtahan</span><br>Materialları</h1>
+      <p id="hero-desc">Bütün kurslar üzrə imtahan materiallarına tez çatın. Fənni seçərək, PDF-i açın.</p>
 
-    <div class="hs-hero-right">
-      <div class="hs-mockup">
-        <div class="hs-mockup-header">
-          <span class="hs-mockup-dot r"></span>
-          <span class="hs-mockup-dot y"></span>
-          <span class="hs-mockup-dot g"></span>
-          <span class="hs-mockup-title">Dashboard</span>
+      <!-- ── BIG STAT CARDS ── -->
+      <div class="stat-cards-grid">
+        <div class="stat-card stat-card--blue">
+          <div class="stat-card-icon"></div>
+          <div class="stat-card-num" data-target="2467" id="sc-students">0</div>
+          <div class="stat-card-label">Aktiv Tələbə</div>
+          <div class="stat-card-sub">Firebase-dən canlı</div>
         </div>
-        <div class="hs-mockup-stats">
-          <div class="hs-ms-card">
-            <div class="hs-ms-val" id="mock-stat-subjects">43</div>
-            <div class="hs-ms-lbl">Fənn</div>
-          </div>
-          <div class="hs-ms-card">
-            <div class="hs-ms-val" id="mock-stat-pdfs">72</div>
-            <div class="hs-ms-lbl">PDF</div>
-          </div>
-          <div class="hs-ms-card">
-            <div class="hs-ms-val" id="mock-stat-courses">4</div>
-            <div class="hs-ms-lbl">Kurs</div>
-          </div>
-          <div class="hs-ms-card hs-ms-card--accent">
-            <div class="hs-ms-val" id="mock-stat-users"><span id="stat-monthly-visitors">5k+</span></div>
-            <div class="hs-ms-lbl">Bu ay</div>
-          </div>
+        <div class="stat-card stat-card--cyan">
+          <div class="stat-card-icon"></div>
+          <div class="stat-card-num" data-target="72" id="sc-materials">0</div>
+          <div class="stat-card-label">Material</div>
+          <div class="stat-card-sub">PDF formatında</div>
         </div>
-        <div class="hs-mockup-bar-label">Aylıq aktivlik</div>
-        <div class="hs-mockup-bars">
-          <div class="hs-bar" style="--h:40%"></div>
-          <div class="hs-bar" style="--h:65%"></div>
-          <div class="hs-bar" style="--h:50%"></div>
-          <div class="hs-bar" style="--h:80%"></div>
-          <div class="hs-bar" style="--h:60%"></div>
-          <div class="hs-bar" style="--h:90%"></div>
-          <div class="hs-bar hs-bar--active" style="--h:75%"></div>
+        <div class="stat-card stat-card--purple">
+          <div class="stat-card-icon"></div>
+          <div class="stat-card-num" data-target="43" id="sc-subjects">0</div>
+          <div class="stat-card-label">Fənn</div>
+          <div class="stat-card-sub">4 kurs ərzində</div>
+        </div>
+        <div class="stat-card stat-card--green">
+          <div class="stat-card-icon"></div>
+          <div class="stat-card-num stat-card-num--text">24/7</div>
+          <div class="stat-card-label">Açıq Platforma</div>
+          <div class="stat-card-sub">Həmişə əlçatan</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ── STATS BAND ─────────────────────────────────────── -->
-  <section class="hs-stats-band">
-    <div class="hs-stat-card">
-      <div class="hs-stat-num" data-target="5842" id="cnt-users">0</div>
-      <div class="hs-stat-sub">Aktiv tələbə</div>
+      <!-- köhnə stat elementlər — JS hələ bunlara baxır -->
+      <div style="display:none">
+        <div id="stat-courses">4</div>
+        <div id="stat-courses-label">Kurs</div>
+        <div id="stat-subjects">43</div>
+        <div id="stat-subjects-label">Fənn</div>
+        <div id="stat-pdfs">72</div>
+        <div id="stat-pdfs-label">PDF</div>
+        <div id="stat-monthly-visitors">—</div>
+      </div>
     </div>
-    <div class="hs-stat-divider"></div>
-    <div class="hs-stat-card">
-      <div class="hs-stat-num" data-target="72" id="cnt-pdfs">0</div>
-      <div class="hs-stat-sub">Material</div>
-    </div>
-    <div class="hs-stat-divider"></div>
-    <div class="hs-stat-card">
-      <div class="hs-stat-num" data-target="43" id="cnt-subjects">0</div>
-      <div class="hs-stat-sub">Fənn</div>
-    </div>
-    <div class="hs-stat-divider"></div>
-    <div class="hs-stat-card">
-      <div class="hs-stat-num">24/7</div>
-      <div class="hs-stat-sub">Açıq platforma</div>
-    </div>
-  </section>
 
-  <!-- ── FEATURES ───────────────────────────────────────── -->
-  <section class="hs-features">
-    <h2 class="hs-section-title">Niyə <span class="hs-grad">UNEC Students?</span></h2>
-    <div class="hs-features-grid">
-      <div class="hs-feat-card">
-        <div class="hs-feat-icon">⚡</div>
-        <h3>Sürətli axtarış</h3>
-        <p>Fənni seç, materialı tap. 3 saniyədən az.</p>
+    <!-- ═══ NİYƏ UNEC STUDENTS? ═══ -->
+    <div class="why-section">
+      <div class="why-section-header">
+        <div class="why-badge">Niyə UNEC Students?</div>
+        <p class="why-subtitle">Tələbə həyatını asanlaşdıran hər şey bir yerdə</p>
       </div>
-      <div class="hs-feat-card">
-        <div class="hs-feat-icon">📄</div>
-        <h3>PDF preview</h3>
-        <p>Yükləmədən birbaşa brauzerda aç, oxu, şərh et.</p>
-      </div>
-      <div class="hs-feat-card">
-        <div class="hs-feat-icon">🤖</div>
-        <h3>AI sual-cavab</h3>
-        <p>İmtahan materialı üzrə sualını AI-a ver, izah al.</p>
-      </div>
-      <div class="hs-feat-card">
-        <div class="hs-feat-icon">🎯</div>
-        <h3>Test sistemi</h3>
-        <p>Özünü yoxla. Səhvlərini gör. Hazırlaş.</p>
-      </div>
-      <div class="hs-feat-card">
-        <div class="hs-feat-icon">📊</div>
-        <h3>GPA hesablayıcı</h3>
-        <p>Kreditlərini daxil et, GPA-nı real vaxtda gör.</p>
-      </div>
-      <div class="hs-feat-card">
-        <div class="hs-feat-icon">📱</div>
-        <h3>Mobil uyğun</h3>
-        <p>Telefon, planşet, noutbuk — hər cihazda işləyir.</p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-card-icon why-icon--blue">🔍</div>
+          <div class="why-card-body">
+            <h3>Sürətli Axtarış</h3>
+            <p>Fənn adını yaz, anında tap. Bütün materiallar indeksləşdirilib.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon why-icon--cyan">📖</div>
+          <div class="why-card-body">
+            <h3>PDF Preview</h3>
+            <p>Yükləmədən birbaşa brauzerda aç, oxu, hazırlaş.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon why-icon--purple">🤖</div>
+          <div class="why-card-body">
+            <h3>AI Sual–Cavab</h3>
+            <p>Material haqqında sual ver, AI sənə izah etsin.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon why-icon--amber">🎓</div>
+          <div class="why-card-body">
+            <h3>GPA Hesablayıcı</h3>
+            <p>Kreditlərini daxil et, GPA-nı real vaxtda gör.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon why-icon--green">📱</div>
+          <div class="why-card-body">
+            <h3>Mobil Uyğun</h3>
+            <p>PWA dəstəyi ilə tətbiq kimi quraşdır, oflayn işlə.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon why-icon--rose">⭐</div>
+          <div class="why-card-body">
+            <h3>Seçilmişlər</h3>
+            <p>Sevimli materiallarını saxla, tez tap.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer class="hs-footer">
-    <p class="hs-footer-note">Bu sayt rəsmi deyildir. Tələbələr tərəfindən, tələbələr üçün hazırlanıb.</p>
-    <div class="hs-footer-links">
-      <span class="hs-footer-copy">© 2025–2026 AliVerse Studio ✦</span>
-      <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank">Portfolio</a>
-      <a href="mailto:unecimtahanmateriallari@gmail.com">Əlaqə</a>
-      <span onclick="openPrivacyModal()" style="cursor:pointer">Məxfilik</span>
-      <span onclick="openTermsModal()" style="cursor:pointer">Şərtlər</span>
+    <!-- ═══ POPULAR MATERIALS PREVIEW ═══ -->
+    <div class="popular-section">
+      <div class="popular-header">
+        <div class="why-badge">Populyar Materiallar</div>
+        <button class="popular-see-all" onclick="switchBottomTab('courses')">Hamısına bax →</button>
+      </div>
+      <div class="popular-cards">
+        <div class="popular-card">
+          <div class="popular-card-top">
+            <span class="popular-card-course">2-ci Kurs</span>
+            <span class="popular-card-badge popular-badge--hot">🔥 Trend</span>
+          </div>
+          <h4 class="popular-card-title">Mikroiqtisadiyyat</h4>
+          <p class="popular-card-meta">PDF · Semestr sualları</p>
+          <div class="popular-card-footer">
+            <span class="popular-card-views">👁 199 baxış</span>
+            <button class="popular-card-btn" onclick="switchBottomTab('courses')">Aç →</button>
+          </div>
+        </div>
+        <div class="popular-card">
+          <div class="popular-card-top">
+            <span class="popular-card-course">2-ci Kurs</span>
+            <span class="popular-card-badge popular-badge--new">✨ Yeni</span>
+          </div>
+          <h4 class="popular-card-title">Makroiqtisadiyyat</h4>
+          <p class="popular-card-meta">PDF · Semestr sualları</p>
+          <div class="popular-card-footer">
+            <span class="popular-card-views">👁 115 baxış</span>
+            <button class="popular-card-btn" onclick="switchBottomTab('courses')">Aç →</button>
+          </div>
+        </div>
+        <div class="popular-card">
+          <div class="popular-card-top">
+            <span class="popular-card-course">2-ci Kurs</span>
+            <span class="popular-card-badge popular-badge--hot">🔥 Trend</span>
+          </div>
+          <h4 class="popular-card-title">Maliyyə Uçotu</h4>
+          <p class="popular-card-meta">PDF · Kollekvium sualları</p>
+          <div class="popular-card-footer">
+            <span class="popular-card-views">👁 69 baxış</span>
+            <button class="popular-card-btn" onclick="switchBottomTab('courses')">Aç →</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
 
+    <!-- Footer content in home tab -->
+    <div class="home-footer-block">
+      <p class="home-footer-note" id="footer-text">Bu sayt rəsmi deyildir. Yalnız tələbələrin imtahan zamanı materialları daha rahat və əlçatan tapması üçün hazırlanıb.</p>
+      <div class="home-footer-links">
+        <span class="home-footer-copy">&copy; 2025 - 2026 AliVerse Studio ✦</span>
+        <a href="https://ericismyhero.github.io/my-portfolio/" target="_blank" class="home-footer-link">Portfolio</a>
+        <a href="mailto:unecimtahanmateriallari@gmail.com" class="home-footer-link">Əlaqə</a>
+        <span class="home-footer-link" onclick="openPrivacyModal()">Məxfilik</span>
+        <span class="home-footer-link" onclick="openTermsModal()">Şərtlər</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ── TAB 2: KURSLAR ─────────────────────────────────────── -->
@@ -775,6 +798,8 @@
         <div class="pdf-subject-title" id="pdf-subject-title"></div>
       </div>
       <div class="pdf-items" id="pdf-items"></div>
+
+      <div class="subject-chat" id="subject-chat"></div>
     </div>
 
   </div>
@@ -810,6 +835,10 @@
             <span class="ssb-label">Server</span>
           </a>
         </div>
+        <button class="qr-pay-btn qr-pay-btn--birbank" onclick="openQRModal('birbank')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
+          QR ilə ödəniş et
+        </button>
       </div>
 
       <div class="support-card" style="margin-top:16px;">
@@ -821,6 +850,10 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           İstənilən məbləği göndər
         </a>
+        <button class="qr-pay-btn qr-pay-btn--m10" onclick="openQRModal('m10')" style="margin-top:10px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
+          QR ilə ödəniş et
+        </button>
       </div>
 
       <div class="support-trust-row">
@@ -849,7 +882,7 @@
     <!-- Landing screen -->
     <div id="test-landing">
       <div class="test-hero">
-        <div class="test-hero-icon">🎯</div>
+
         <h2 id="test-hero-title">UNEC <span>Test</span><br>Sistemi ᵇᵉᵗᵃ</h2>
         <p class="test-hero-desc">Bu sistem beta versiyada olduğu üçün cavabların səhv olma ehtimalı vardır.</p>
       </div>
@@ -989,6 +1022,34 @@
         </svg>
       </span>
       <span class="more-menu-label">Dashboard</span>
+      <svg class="more-menu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button class="more-menu-item" id="btn-curriculum" onclick="switchBottomTab('curriculum');closeMoreMenu()">
+      <span class="more-menu-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/>
+        </svg>
+      </span>
+      <span class="more-menu-label">İxtisas Planı</span>
+      <svg class="more-menu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button class="more-menu-item" id="btn-requests" onclick="switchBottomTab('requests');closeMoreMenu()">
+      <span class="more-menu-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </span>
+      <span class="more-menu-label">Material İstəkləri</span>
+      <svg class="more-menu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <button class="more-menu-item" id="btn-timer" onclick="switchBottomTab('timer');closeMoreMenu()">
+      <span class="more-menu-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </span>
+      <span class="more-menu-label">Taymer &amp; İmtahan</span>
       <svg class="more-menu-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
   </div>
@@ -1173,7 +1234,76 @@
       <div id="dash-greeting" class="dash-greeting">Salam 👋</div>
       <div id="dash-date" class="dash-date"></div>
 
-      <!-- 4 stat kartı -->
+      <!-- Tələbə Profili -->
+      <div class="dash-profile-card">
+        <div class="dash-profile-row">
+          <div class="dash-profile-avatar" id="dash-avatar">?</div>
+          <div class="dash-profile-id">
+            <div class="dash-profile-name"  id="dash-pname">—</div>
+            <div class="dash-profile-email" id="dash-pemail">—</div>
+          </div>
+          <button class="dash-profile-edit-btn" onclick="toggleProfileEdit()" aria-label="Profili redaktə et" title="Profili redaktə et">✏️</button>
+        </div>
+
+        <!-- Baxış rejimi -->
+        <div class="dash-profile-facts" id="dash-profile-facts">
+          <div class="dash-fact">
+            <span class="dash-fact-icon">🏛️</span>
+            <span class="dash-fact-label">Fakültə</span>
+            <span class="dash-fact-val" id="dash-fact-faculty">—</span>
+          </div>
+          <div class="dash-fact">
+            <span class="dash-fact-icon">📚</span>
+            <span class="dash-fact-label">İxtisas</span>
+            <span class="dash-fact-val" id="dash-fact-major">—</span>
+          </div>
+          <div class="dash-fact">
+            <span class="dash-fact-icon">🎓</span>
+            <span class="dash-fact-label">Kurs</span>
+            <span class="dash-fact-val" id="dash-fact-year">—</span>
+          </div>
+          <div class="dash-fact">
+            <span class="dash-fact-icon">⚡</span>
+            <span class="dash-fact-label">Səviyyə</span>
+            <span class="dash-fact-val" id="dash-fact-rank">—</span>
+          </div>
+          <div class="dash-fact">
+            <span class="dash-fact-icon">🎯</span>
+            <span class="dash-fact-label">Həll edilən test</span>
+            <span class="dash-fact-val" id="dash-fact-solved">0</span>
+          </div>
+        </div>
+
+        <!-- Redaktə rejimi -->
+        <div class="dash-profile-edit hidden" id="dash-profile-edit">
+          <label class="dash-edit-label">Fakültə</label>
+          <input class="dash-edit-input" id="dash-faculty-input" placeholder="məs. İqtisadiyyat">
+
+          <label class="dash-edit-label">İxtisas</label>
+          <input class="dash-edit-input" id="dash-major-input" placeholder="məs. Maliyyə">
+
+          <label class="dash-edit-label">Kurs</label>
+          <select class="dash-edit-input" id="dash-year-input">
+            <option value="">Seç...</option>
+            <option value="1-ci kurs">1-ci kurs</option>
+            <option value="2-ci kurs">2-ci kurs</option>
+            <option value="3-cü kurs">3-cü kurs</option>
+            <option value="4-cü kurs">4-cü kurs</option>
+          </select>
+
+          <div class="dash-edit-actions">
+            <button class="dash-edit-save" id="dash-profile-save-btn" onclick="handleProfileUpdate()">Yadda saxla</button>
+            <button class="dash-edit-cancel" onclick="toggleProfileEdit(false)">Ləğv et</button>
+          </div>
+        </div>
+
+        <button class="dash-signout-btn" onclick="signOut()">Çıxış</button>
+      </div>
+
+      <!-- Statistika -->
+      <div class="dash-section-header">
+        <div class="dash-section-title">STATİSTİKA</div>
+      </div>
       <div class="dash-stats-grid">
         <div class="dash-stat-card">
           <div class="dash-stat-icon">🔥</div>
@@ -1243,7 +1373,10 @@
         <div class="streak-info-note">Streak hər gün saat 00:00-da sıfırlanır. Günlük aktivlik saxla!</div>
       </div>
 
-      <!-- Rank kartı -->
+      <!-- Səviyyə -->
+      <div class="dash-section-header">
+        <div class="dash-section-title">SƏVİYYƏ</div>
+      </div>
       <div class="dash-rank-card">
         <div class="dash-rank-header">
           <div class="dash-rank-icon-wrap" id="dash-rank-icon">🌱</div>
@@ -1265,26 +1398,37 @@
       </div>
       <div id="dash-recent-quizzes"></div>
 
-      <!-- Profil -->
-      <div class="dash-profile-card" style="margin-top:16px;">
-        <div class="dash-profile-row">
-          <div class="dash-profile-avatar" id="dash-avatar">?</div>
-          <div>
-            <div class="dash-profile-name"  id="dash-pname">—</div>
-            <div class="dash-profile-email" id="dash-pemail">—</div>
-          </div>
+      <!-- Badges -->
+      <div class="dash-section" style="margin-top:20px;">
+        <div class="dash-badges-header">
+          <span class="dash-badges-title">🏅 Badgelər</span>
+          <span class="dash-badges-count" id="dash-badges-count">0/14</span>
         </div>
-        <div class="dash-faculty-row">
-          <input class="dash-faculty-input" id="dash-faculty-input" placeholder="Fakültəni daxil et (məs. İqtisadiyyat)">
-          <button class="dash-faculty-btn" onclick="handleFacultyUpdate()">Saxla</button>
-        </div>
-        <button class="dash-signout-btn" onclick="signOut()">Çıxış</button>
+        <div class="dash-badges-grid" id="dash-badges-grid"></div>
       </div>
 
     </div>
   </div>
 </div>
 
+
+<!-- ── QR Ödəniş Modali ───────────────────────────────────── -->
+<div id="qrPayOverlay" class="qr-pay-overlay hidden" onclick="if(event.target===this)closeQRModal()">
+  <div class="qr-pay-modal">
+    <div class="qr-pay-modal-header">
+      <div class="qr-pay-modal-title-row">
+        <span class="qr-pay-modal-icon" id="qrModalIcon">💳</span>
+        <span class="qr-pay-modal-title" id="qrModalTitle">QR ilə Ödəniş</span>
+      </div>
+      <button class="qr-pay-modal-close" onclick="closeQRModal()">✕</button>
+    </div>
+    <p class="qr-pay-modal-desc">Tətbiqlə QR kodu skan edin və istədiyiniz məbləği göndərin</p>
+    <div class="qr-pay-img-wrap">
+      <img id="qrModalImg" src="" alt="QR kod" class="qr-pay-img" />
+    </div>
+    <div class="qr-pay-modal-note" id="qrModalNote"></div>
+  </div>
+</div>
 
 <!-- ── Quiz Nəticələri Modali ──────────────────────────────── -->
 <div id="quizResultsOverlay" class="quiz-results-overlay hidden" onclick="if(event.target===this)closeQuizResultsModal()">
@@ -1315,10 +1459,446 @@
 <script src="scripts/pdf-loader.js"></script>
 <script src="scripts/gpa.js"></script>
 <script src="scripts/firebase.js"></script>
+<script src="scripts/chat.js"></script>
+<script src="scripts/ratings.js"></script>
+<script src="scripts/requests.js"></script>
 <script src="scripts/dashboard.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
-<script src="scripts/home.js"></script>
+<!-- ═══ ANIMATED COUNTER ═══ -->
+<script>
+(function() {
+  function animateCounter(el, target, duration) {
+    var start = 0;
+    var startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      // easeOutExpo
+      var ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      var val = Math.floor(ease * target);
+      el.textContent = val.toLocaleString('az-AZ');
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString('az-AZ') + '+';
+    }
+    requestAnimationFrame(step);
+  }
+
+  function initCounters() {
+    // sc-students → Firebase, sc-materials/sc-subjects → computeStats() idarə edir
+    // Inline counter buradan işə düşmür — hər biri öz mənbəyindən gəlir
+  }
+
+  // set delays — sc-students Firebase-dən gəlir, fallback 5842
+  var ids = ['sc-students','sc-materials','sc-subjects'];
+  var delays = [0, 200, 400];
+  ids.forEach(function(id, i) {
+    var el = document.getElementById(id);
+    if (el) el.setAttribute('data-delay', delays[i]);
+  });
+  // sc-students üçün Firebase gəlməyincə counter-i skip et;
+  // Firebase gəldikdə _animateCounter birbaşa çağırılacaq.
+  // Burada yalnız materials + subjects counter işə düşür.
+  var skipFirebase = ['sc-students'];
+
+  // observe hero entering view
+  if ('IntersectionObserver' in window) {
+    var hero = document.querySelector('.stat-cards-grid');
+    if (hero) {
+      var obs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) { initCounters(); obs.disconnect(); }
+      }, { threshold: 0.3 });
+      obs.observe(hero);
+    }
+  } else {
+    initCounters();
+  }
+})();
+</script>
+
+<!-- ── TAB 7: İXTİSAS PLANI ──────────────────────────────────── -->
+<div id="main-curriculum" class="main-tab" style="display:none;">
+  <div class="curr-container">
+    <div class="curr-header">
+      <div class="curr-header-icon">📚</div>
+      <h2 id="curr-header-title">UNEC <span>İxtisas</span><br>Planı</h2>
+      <p class="curr-header-sub">İxtisasını seç, fənnlərini, kreditlərini və qayıb limitini öyrən</p>
+    </div>
+
+    <!-- İxtisas seçici -->
+    <div class="curr-selector-wrap">
+      <div class="curr-selector-label">İxtisasını seç</div>
+      <div class="curr-specialty-grid" id="currSpecialtyGrid">
+        <button class="curr-specialty-btn" data-spec="economics" onclick="selectSpecialty('economics')">
+          <span class="curr-spec-icon">📈</span>
+          <span class="curr-spec-name">İqtisadiyyat</span>
+        </button>
+        <button class="curr-specialty-btn" data-spec="finance" onclick="selectSpecialty('finance')">
+          <span class="curr-spec-icon">💰</span>
+          <span class="curr-spec-name">Maliyyə</span>
+        </button>
+        <button class="curr-specialty-btn" data-spec="accounting" onclick="selectSpecialty('accounting')">
+          <span class="curr-spec-icon">📊</span>
+          <span class="curr-spec-name">Mühasibat</span>
+        </button>
+        <button class="curr-specialty-btn" data-spec="management" onclick="selectSpecialty('management')">
+          <span class="curr-spec-icon">🏢</span>
+          <span class="curr-spec-name">Menecment</span>
+        </button>
+        <button class="curr-specialty-btn" data-spec="marketing" onclick="selectSpecialty('marketing')">
+          <span class="curr-spec-icon">📣</span>
+          <span class="curr-spec-name">Marketinq</span>
+        </button>
+        <button class="curr-specialty-btn" data-spec="banking" onclick="selectSpecialty('banking')">
+          <span class="curr-spec-icon">🏦</span>
+          <span class="curr-spec-name">Bank işi</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Seçilmiş ixtisas paneli -->
+    <div id="currPlanPanel" class="curr-plan-panel" style="display:none;">
+      <div class="curr-plan-header">
+        <div class="curr-plan-spec-badge" id="currSpecBadge"></div>
+        <button class="curr-change-btn" onclick="clearSpecialty()">← Dəyiş</button>
+      </div>
+
+      <!-- Semester 1 -->
+      <div class="curr-semester-block" id="curr-semester-block-s1">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">1</span>
+          <span>I Semestr,I Kurs</span>
+          <div class="curr-sem-stats" id="curr-s1-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s1">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s1"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Semester 2 -->
+      <div class="curr-semester-block" id="curr-semester-block-s2">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">2</span>
+          <span>II Semestr, I Kurs</span>
+          <div class="curr-sem-stats" id="curr-s2-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s2">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s2"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Semester 3 -->
+      <div class="curr-semester-block" id="curr-semester-block-s3">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">3</span>
+          <span>III Semestr, II Kurs</span>
+          <div class="curr-sem-stats" id="curr-s3-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s3">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s3"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Semester 4 -->
+      <div class="curr-semester-block" id="curr-semester-block-s4">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">4</span>
+          <span>IV Semestr, II Kurs</span>
+          <div class="curr-sem-stats" id="curr-s4-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s4">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s4"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Semester 5 -->
+      <div class="curr-semester-block" id="curr-semester-block-s5">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">5</span>
+          <span>V Semestr, III Kurs</span>
+          <div class="curr-sem-stats" id="curr-s5-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s5">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s5"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Semester 6 -->
+      <div class="curr-semester-block" id="curr-semester-block-s6">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">6</span>
+          <span>VI Semestr, III Kurs</span>
+          <div class="curr-sem-stats" id="curr-s6-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s6">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s6"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Semester 7 -->
+      <div class="curr-semester-block" id="curr-semester-block-s7">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">7</span>
+          <span>VII Semestr, IV Kurs</span>
+          <div class="curr-sem-stats" id="curr-s7-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s7">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s7"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Semester 8 -->
+      <div class="curr-semester-block" id="curr-semester-block-s8">
+        <div class="curr-semester-title">
+          <span class="curr-sem-num">8</span>
+          <span>VIII Semestr, IV Kurs</span>
+          <div class="curr-sem-stats" id="curr-s8-stats"></div>
+        </div>
+        <div class="curr-table-wrap">
+          <table class="curr-table" id="curr-table-s8">
+            <thead>
+              <tr>
+                <th>Fənn</th>
+                <th>Kredit</th>
+                <th>Saat</th>
+                <th>Qayıb</th>
+                <th>Həftəlik</th>
+              </tr>
+            </thead>
+            <tbody id="curr-tbody-s8"></tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- GPA məsləhəti -->
+      <div class="curr-gpa-tip">
+        <div class="curr-gpa-tip-icon">💡</div>
+        <div class="curr-gpa-tip-text">Bu məlumatlar bir-başa UNEC-in rəsmi saytından alınmışdır, məlumatlar 2024-cü ilə aiddir. Seçmə fənnlərin qarşısında mötərizə ilə fərqləndirilmiş fənlər keçirilməsi ehtimal olunan fənlərdir.</div>
+      </div>
+    </div>
+
+    <!-- Boş vəziyyət -->
+    <div id="currEmptyState" class="curr-empty">
+      <div class="curr-empty-icon">🎓</div>
+      <div class="curr-empty-text">Yuxarıdan öz ixtisasını seç</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Material İstəkləri ─────────────────────────────────── -->
+<div id="main-requests" class="main-tab" style="display:none;">
+  <div class="container">
+
+    <div class="req-hero">
+      <div class="req-page-badge">🔎 Material İstəkləri</div>
+      <h1 class="req-page-title">Axtardığını <span>tapa bilmirsən?</span></h1>
+      <p class="req-hero-sub">İstək yaz — başqa tələbələr kömək etsin.</p>
+    </div>
+
+    <button class="req-new-btn" onclick="openRequestForm()">+ Yeni istək yaz</button>
+
+    <div class="req-form hidden" id="req-form">
+      <textarea class="req-form-textarea" id="req-text-input" maxlength="300" placeholder="Məs: Maliyyə bazarları final sualları axtarıram"></textarea>
+      <div class="req-form-row">
+        <select class="req-form-select" id="req-course-input">
+          <option value="">Kurs (istəyə görə)</option>
+          <option value="1-ci kurs">1-ci kurs</option>
+          <option value="2-ci kurs">2-ci kurs</option>
+          <option value="3-cü kurs">3-cü kurs</option>
+          <option value="4-cü kurs">4-cü kurs</option>
+        </select>
+        <input class="req-form-input" id="req-subject-input" placeholder="Fənn adı (istəyə görə)">
+      </div>
+      <div class="req-form-actions">
+        <button class="req-form-submit" id="req-submit-btn" onclick="submitMaterialRequest()">Göndər</button>
+        <button class="req-form-cancel" onclick="closeRequestForm()">Ləğv et</button>
+      </div>
+    </div>
+
+    <div class="req-filters">
+      <button class="req-filter-btn active" data-filter="all" onclick="setRequestsFilter('all')">Hamısı</button>
+      <button class="req-filter-btn" data-filter="open" onclick="setRequestsFilter('open')">Açıq</button>
+      <button class="req-filter-btn" data-filter="fulfilled" onclick="setRequestsFilter('fulfilled')">Tapılıb</button>
+    </div>
+
+    <div id="req-list" class="req-list">
+      <div class="req-loading">Yüklənir...</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Taymer & İmtahan Geri Sayımı ─────────────────────── -->
+<div id="main-timer" class="main-tab" style="display:none;">
+  <div class="timer-container">
+
+    <!-- Notification banner -->
+    <div class="timer-notif-banner hidden" id="timer-notif-banner">
+      <span>🔔 Bildiriş icazəsi ver</span>
+      <button class="timer-notif-btn" onclick="requestTimerNotif()">İcazə ver</button>
+    </div>
+
+    <!-- ── Pomodoro ── -->
+    <div class="timer-section-title">Pomodoro Taymer</div>
+    <div class="pomodoro-card">
+
+      <!-- Mode tabs -->
+      <div class="pomodoro-modes">
+        <button class="pomodoro-mode-btn active" id="pmode-focus"  onclick="pomodoroSetMode('focus')">Fokus</button>
+        <button class="pomodoro-mode-btn"        id="pmode-short"  onclick="pomodoroSetMode('short')">Qısa fasilə</button>
+        <button class="pomodoro-mode-btn"        id="pmode-long"   onclick="pomodoroSetMode('long')">Uzun fasilə</button>
+      </div>
+
+      <!-- Circle -->
+      <div class="pomodoro-circle-wrap">
+        <svg class="pomodoro-svg" viewBox="0 0 200 200">
+          <circle class="pomodoro-track"    cx="100" cy="100" r="90"/>
+          <circle class="pomodoro-progress" cx="100" cy="100" r="90"
+            id="pomodoro-ring"
+            style="stroke-dasharray:565.48;stroke-dashoffset:0"/>
+        </svg>
+        <div class="pomodoro-center">
+          <div class="pomodoro-time" id="pomodoro-time">25:00</div>
+          <div class="pomodoro-label" id="pomodoro-mode-label">Fokus</div>
+        </div>
+      </div>
+
+      <!-- Session dots -->
+      <div class="pomodoro-sessions">
+        <div class="pomodoro-dot" id="pdot-0"></div>
+        <div class="pomodoro-dot" id="pdot-1"></div>
+        <div class="pomodoro-dot" id="pdot-2"></div>
+        <div class="pomodoro-dot" id="pdot-3"></div>
+      </div>
+
+      <!-- Controls -->
+      <div class="pomodoro-controls">
+        <button class="pomodoro-btn-secondary" onclick="pomodoroReset()" title="Sıfırla">↺</button>
+        <button class="pomodoro-btn-main" id="pomodoro-play-btn" onclick="pomodoroToggle()">▶</button>
+        <button class="pomodoro-btn-secondary" onclick="pomodoroSkip()" title="Keç">⏭</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="pomodoro-stats">
+        <div class="pomodoro-stat">
+          <div class="pomodoro-stat-val" id="pstat-done">0</div>
+          <div class="pomodoro-stat-lbl">Sessiya</div>
+        </div>
+        <div class="pomodoro-stat">
+          <div class="pomodoro-stat-val" id="pstat-mins">0</div>
+          <div class="pomodoro-stat-lbl">Dəq (bu gün)</div>
+        </div>
+      </div>
+
+    </div><!-- /pomodoro-card -->
+
+    <!-- ── Exam Countdown ── -->
+    <div class="timer-section-title">İmtahan Geri Sayımı</div>
+
+    <div class="exam-form hidden" id="exam-form">
+      <div class="exam-form-row">
+        <input class="exam-form-input" id="exam-name-input" placeholder="Fənn adı (məs: Makroiqtisadiyyat)" maxlength="60">
+      </div>
+      <div class="exam-form-row">
+        <input class="exam-form-input" id="exam-date-input" type="date">
+      </div>
+      <div class="exam-form-actions">
+        <button class="exam-form-cancel" onclick="hideExamForm()">Ləğv et</button>
+        <button class="exam-form-submit" onclick="addExam()">Əlavə et</button>
+      </div>
+    </div>
+
+    <button class="exam-add-btn" onclick="showExamForm()">＋ İmtahan əlavə et</button>
+
+    <div class="exam-list" id="exam-list">
+      <p class="exam-empty">İmtahan əlavə edilməyib.</p>
+    </div>
+
+  </div>
+</div>
+
+  <script src="scripts/curriculum.js"></script>
+  <script src="scripts/badges.js"></script>
+  <script src="scripts/timer.js"></script>
 </body>
 </html>
